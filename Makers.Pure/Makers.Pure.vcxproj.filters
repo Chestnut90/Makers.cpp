@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Include">
+      <UniqueIdentifier>{b61a31ad-44af-440c-aa70-5516b82f9292}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Computables">
+      <UniqueIdentifier>{c298721b-d1b0-4549-b8f5-6bea6c04e951}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Documents">
+      <UniqueIdentifier>{9d7d2eb5-c79a-4d9b-ae26-2ae36a388869}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Items">
+      <UniqueIdentifier>{e2b5bdbd-eee4-4a77-a616-491af4107f62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Properties">
+      <UniqueIdentifier>{e82f39a2-1723-487d-96ad-339c927180ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Items\Criterias">
+      <UniqueIdentifier>{ccd2b543-9ea8-4820-8306-b843f6f5bffe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Items\Images">
+      <UniqueIdentifier>{3e19fe67-f231-4587-98f0-a13ed17e50f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Items\InspInfos">
+      <UniqueIdentifier>{38e47322-ed02-4289-ba47-4b58b2562813}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Items\Numericals">
+      <UniqueIdentifier>{54a0aada-b626-417e-9a23-5dfe30e84487}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Items\ROIs">
+      <UniqueIdentifier>{db12d3f5-0a99-4196-8271-e239e4657800}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Items\Samples">
+      <UniqueIdentifier>{9417f72a-734e-470a-a0cd-38c397432540}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Items\Symbols">
+      <UniqueIdentifier>{3cbb8c8c-5fe1-44f2-b6a9-111145df9175}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{b9b485b2-75cc-4d32-9950-2d4220fd7209}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Computables">
+      <UniqueIdentifier>{6eb028c9-07bd-4a0c-a7ea-b104a1d78b35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Documents">
+      <UniqueIdentifier>{68fb00f4-395c-4e1a-a471-0597b9a812b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Items">
+      <UniqueIdentifier>{00d92a1b-af28-45f1-893f-deb5d235abbb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Properties">
+      <UniqueIdentifier>{751a0bde-4309-4725-8a2e-a046f4a783ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Items\Symbols">
+      <UniqueIdentifier>{f5c1ba13-5a19-44c9-a44f-686688d5d029}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Items\Samples">
+      <UniqueIdentifier>{26a31879-c901-4b56-8517-0dcf53704c80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Items\Numericals">
+      <UniqueIdentifier>{5608c436-e497-4021-8585-44b141a54087}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Items\ROIs">
+      <UniqueIdentifier>{d76d48db-c942-4961-be3a-3d253e3bbe80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Items\InspInfos">
+      <UniqueIdentifier>{59bf0b90-2f90-401c-8d3c-183ef8751a84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Items\Images">
+      <UniqueIdentifier>{7d97c002-77f6-45a5-8667-9647caa66b88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Items\Criterias">
+      <UniqueIdentifier>{81bb7f57-117e-48a8-85f7-1a453954f3fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{4ffdb706-b97a-4932-b83e-aca119ebe3ff}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Include\Items\Samples\FloatThresholdingItem.h">
+      <Filter>Include\Items\Samples</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Items\Samples\RandomFloatImageItem.h">
+      <Filter>Include\Items\Samples</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Items\Samples\SampleItem0.h">
+      <Filter>Include\Items\Samples</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Items\FactoryRegister.h">
+      <Filter>Include\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Items\ItemBase.h">
+      <Filter>Include\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Items\ItemFactory.h">
+      <Filter>Include\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Properties\InputProperty.h">
+      <Filter>Include\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Properties\OutputProperty.h">
+      <Filter>Include\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Properties\PropertyBase.h">
+      <Filter>Include\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Properties\PropertyGroup.h">
+      <Filter>Include\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Properties\StaticProperty.h">
+      <Filter>Include\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\IMapableData.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\IRunAble.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nTest.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Documents\ArrayMemoryPool.h">
+      <Filter>Include\Documents</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Documents\Document.h">
+      <Filter>Include\Documents</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Computables\IComputable.h">
+      <Filter>Include\Computables</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Computables\Image.h">
+      <Filter>Include\Computables</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Computables\Real.h">
+      <Filter>Include\Computables</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\UniqueIDs\GUIDGen.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="framework.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Include\nTest.cpp">
+      <Filter>Include</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Items\Samples\FloatThresholdingItem.cpp">
+      <Filter>src\Items\Samples</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Items\Samples\RandomFloatImageItem.cpp">
+      <Filter>src\Items\Samples</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Items\Samples\SampleItem0.cpp">
+      <Filter>src\Items\Samples</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Items\ItemBase.cpp">
+      <Filter>src\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Items\ItemFactory.cpp">
+      <Filter>src\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Computables\Image.cpp">
+      <Filter>src\Computables</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Computables\Real.cpp">
+      <Filter>src\Computables</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Documents\ArrayMemoryPool.cpp">
+      <Filter>src\Documents</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Documents\Document.cpp">
+      <Filter>src\Documents</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Properties\InputProperty.cpp">
+      <Filter>src\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Properties\OutputProperty.cpp">
+      <Filter>src\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Properties\PropertyBase.cpp">
+      <Filter>src\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Properties\PropertyGroup.cpp">
+      <Filter>src\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Properties\StaticProperty.cpp">
+      <Filter>src\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\UniqueIDs\GUIDGen.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="dllmain.cpp" />
+  </ItemGroup>
+</Project>
