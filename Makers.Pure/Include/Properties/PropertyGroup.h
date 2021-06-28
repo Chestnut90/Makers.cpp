@@ -12,8 +12,7 @@ namespace Makers
 	namespace Properties
 	{
 		class PropertyBase;
-
-		class __declspec(dllexport) PropertyGroup 
+		class __declspec(dllexport) PropertyGroup
 		{
 		private:
 			//@ properties

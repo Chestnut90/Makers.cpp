@@ -193,6 +193,7 @@
     <ClCompile Include="src\Documents\Document.cpp" />
     <ClCompile Include="src\Items\ItemBase.cpp" />
     <ClCompile Include="src\Items\ItemFactory.cpp" />
+    <ClCompile Include="src\Items\ItemFactory.ItemDefine.Samples.cpp" />
     <ClCompile Include="src\Items\Samples\FloatThresholdingItem.cpp" />
     <ClCompile Include="src\Items\Samples\RandomFloatImageItem.cpp" />
     <ClCompile Include="src\Items\Samples\SampleItem0.cpp" />

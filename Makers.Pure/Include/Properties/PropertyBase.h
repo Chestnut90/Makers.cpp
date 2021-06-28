@@ -7,12 +7,16 @@
 namespace Makers
 {
 	namespace Computables { class IComputable; }
-	namespace Items { class ItemBase; }
+	namespace Items 
+	{
+		class ItemFactory;
+		class ItemBase;
+	}
 	namespace Properties
 	{
 		class __declspec(dllexport) PropertyBase : public IMapableData
 		{
-			friend class ItemBase;
+			friend class Makers::Items::ItemFactory;
 
 		private:
 			//@ id

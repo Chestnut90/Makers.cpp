@@ -192,5 +192,8 @@
     </ClCompile>
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="src\Items\ItemFactory.ItemDefine.Samples.cpp">
+      <Filter>src\Items</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
