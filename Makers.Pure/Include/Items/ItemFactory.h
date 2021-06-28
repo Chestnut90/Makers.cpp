@@ -4,12 +4,14 @@
 
 #include <map>
 #include <string>
+#include <vector>
 
 namespace Makers
 {
+	namespace Properties { class PropertyBase; }
 	namespace Items
 	{
-		__declspec(dllexport) class ItemBase;
+		class ItemBase;
 
 		class __declspec(dllexport) ItemFactory
 		{
@@ -45,6 +47,12 @@ namespace Makers
 
 			void DeleteItem(ItemBase*);
 			ItemBase* Create(std::string);
+			std::map<std::string, std::vector<std::string>> ContainingItems();
+
+			//@ item base id handle when load files
+			void IDHandle(ItemBase&, std::string);
+			//@ property base id handle when load files
+			void IDHandle(Makers::Properties::PropertyBase&, std::string);
 
 		};
 	}

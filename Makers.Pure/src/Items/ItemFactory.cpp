@@ -2,6 +2,8 @@
 #include "../../Include/Items/ItemFactory.h"
 #include "../../Include/Items/ItemBase.h"
 
+#include "../../Include/Properties/PropertyBase.h"
+
 #pragma region Include Sample Item
 #include "../../Include/Items/Samples/FloatThresholdingItem.h"
 #include "../../Include/Items/Samples/RandomFloatImageItem.h"
@@ -94,9 +96,9 @@ void Makers::Items::ItemFactory::InitItems_Samples()
 
 Makers::Items::ItemBase * Makers::Items::ItemFactory::Create(std::string _item_name)
 {
-	for (auto itemGroup : item_maps_)
+	for (auto item_group : item_maps_)
 	{
-		auto group = itemGroup.second;
+		auto group = item_group.second;
 
 		if (group.count(_item_name) == 1)
 		{
@@ -105,27 +107,36 @@ Makers::Items::ItemBase * Makers::Items::ItemFactory::Create(std::string _item_n
 	}
 	return nullptr;
 }
-//
-////@ deprecated
-//void Makers::Items::ItemFactory::Register(std::string _item_name, ItemCreator _item_creator)
-//{
-//
-//	// TODO : error handling
-//	//item_maps_[_item_name] = _item_creator;
-//
-//}
-//
-////@ deprecated
-//void Makers::Items::ItemFactory::Register(void * _instance, std::string _item_name, ItemCreator _item_creator)
-//{
-//	//registers_.push_back(_instance);
-//	Register(_item_name, _item_creator);
-//
-//}
-//
-////@ deprecated
-//void Makers::Items::ItemFactory::UnRegister(std::string _item_name)
-//{
-//	// TODO : error handling
-//	item_maps_.erase(_item_name);
-//}
+
+std::map<std::string, std::vector<std::string>> Makers::Items::ItemFactory::ContainingItems()
+{
+	std::map<std::string, std::vector<std::string>> items;
+
+	for (auto item_group : item_maps_)
+	{
+		std::string group_name = item_group.first;
+		std::vector<std::string> names;
+		auto group = item_group.second;
+		for (auto pair : group)
+		{
+			names.push_back(pair.first); // push back item name
+		}
+
+		items[group_name] = names;
+	}
+
+	return items;
+}
+
+//@ TODO : other ways -> hidden
+void Makers::Items::ItemFactory::IDHandle(ItemBase& _item_base, std::string _id)
+{
+	_item_base.id_ = _id;
+}
+
+//@ TODO : other ways
+void Makers::Items::ItemFactory::IDHandle(Makers::Properties::PropertyBase& _property_base, std::string _id)
+{
+	_property_base.id_ = _id;
+}
+
