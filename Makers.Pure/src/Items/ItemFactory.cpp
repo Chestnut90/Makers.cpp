@@ -82,15 +82,6 @@ void Makers::Items::ItemFactory::InitItems_Symbols()
 	item_maps_["Symbols"] = item_symbols_;
 
 }
-
-void Makers::Items::ItemFactory::InitItems_Samples()
-{
-
-	item_samples_["RandomFloatImageItem"] = []() {return static_cast<ItemBase*>(new Makers::Items::Samples::RandomFloatImageItem()); };
-	item_samples_["FloatThresholdingItem"] = []() {return static_cast<ItemBase*>(new Makers::Items::Samples::FloatThreshodingItem()); };
-	
-	item_maps_["Samples"] = item_samples_;
-}
 #pragma endregion
 
 
