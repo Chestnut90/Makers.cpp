@@ -2,15 +2,15 @@
 #ifndef _ITEMBASE_H_
 #define _ITEMBASE_H_
 
-#include <memory>
+// #include <memory> // TODO : unique_ptr
 #include "../IMapableData.h"
 #include "../IRunAble.h"
 
 namespace Makers
 {
 	// forward declaration
-	namespace Documents { __declspec(dllexport) class Document; }
-	namespace Properties { __declspec(dllexport) class PropertyGroup; }
+	namespace Documents { class Document; }
+	namespace Properties { class PropertyGroup; }
 
 	namespace Items
 	{
