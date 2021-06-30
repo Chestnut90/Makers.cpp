@@ -40,12 +40,12 @@ void Makers::Properties::PropertyGroup::AddProperty(PropertyBase& _property)
 	properties_[_property.name()] = &_property;
 }
 
-std::map<std::string, Properties::PropertyBase*>::const_iterator Makers::Properties::PropertyGroup::Begin()
+std::map<std::string, Properties::PropertyBase*>::iterator Makers::Properties::PropertyGroup::Begin()
 {
 	return properties_.begin();
 }
 
-std::map<std::string, Properties::PropertyBase*>::const_iterator Makers::Properties::PropertyGroup::End()
+std::map<std::string, Properties::PropertyBase*>::iterator Makers::Properties::PropertyGroup::End()
 {
 	return properties_.end();
 }

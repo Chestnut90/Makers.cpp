@@ -32,6 +32,9 @@ namespace Makers
 #pragma region members
 
 		private:
+			//@ wait mutex
+			void* wait_mutex;
+
 			//@ unique id
 			std::string id_;	
 			//@ last computed result

@@ -5,11 +5,34 @@
 
 #include "Itemfactory_test.h"
 
+#include "GotoBed.h"
+#include "SimpleDocTest.h"
+
 int main()
 {
     std::cout << "Hello World!\n";
 
-	Items::ItemFactory_Test();
+	//Items::ItemFactory_Test();
+
+	// test for go to bed example
+	Beds::GoToBedsAsync();
+
+	// serial and multi-threading test
+	std::cout << "\nserial thresholding without buffers" << std::endl;
+	Serials_Test::ThresholdingWithoutBuffers();
+
+	std::cout << "\nserial thresholding without buffers with creation time" << std::endl;
+	Serials_Test::ThresholdingWithoutBuffers(true);
+
+	std::cout << "\nserial thresholding with buffers" << std::endl;
+	Serials_Test::ThresholdingWithBuffers();
+
+	std::cout << "\nserial thresholding with buffers with creation time" << std::endl;
+	Serials_Test::ThresholdingWithBuffers(true);
+
+	std::cout << "\ndocument with multi threading" << std::endl;
+	Documents_Test::Run_Test();
+
 }
 
 // 프로그램 실행: <Ctrl+F5> 또는 [디버그] > [디버깅하지 않고 시작] 메뉴

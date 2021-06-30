@@ -13,9 +13,6 @@
 #include "../../Include/Properties/InputProperty.h"
 #include "../../Utils/UniqueIDs/GUIDGen.h"
 
-// wait mutex
-static std::mutex wait_mutex;
-
 #pragma region getter and setters
 
 //@ get id
@@ -100,6 +97,9 @@ Makers::Items::ItemBase::ItemBase(
 	Properties::PropertyGroup * _output_properties) :
 	ItemBase()
 {
+	std::mutex* mutex = new std::mutex();
+	wait_mutex = (void*)mutex;
+
 	item_name_ = _item_name;
 	compute_ = _compute;
 	input_properties_ = _input_properties;
@@ -115,6 +115,7 @@ Makers::Items::ItemBase::~ItemBase()
 	delete input_properties_;
 	delete static_properties_;
 	delete output_properties_;
+	delete wait_mutex;	// TODO: check
 }
 
 //@ item run
@@ -123,7 +124,7 @@ bool Makers::Items::ItemBase::Run(
 	ItemBase * _caller, 
 	long long _timestamp)
 {
-	std::lock_guard<std::mutex> lock(wait_mutex);
+	std::lock_guard<std::mutex> lock(*(std::mutex*)wait_mutex);
 	{	// lock scope
 
 		if (_timestamp == 0.0)
@@ -139,20 +140,19 @@ bool Makers::Items::ItemBase::Run(
 			return is_last_computed_result_;
 		}
 
+		is_last_computed_result_ = false;
+
 		// collect inputs
-		if (!CollectInputs(_document, _caller, _timestamp))
+		if (CollectInputs(_document, _caller, _timestamp))
 		{
-			last_computed_time_ = std::chrono::high_resolution_clock::now().time_since_epoch().count(); // set current time
-			is_last_computed_result_ = false;
-			return false;
+			// compute
+			//@ TODO :compute null check
+			is_last_computed_result_ = compute_(*this, *input_properties_, *static_properties_, *output_properties_);
 		}
-
-		// compute
-		//@ TODO :compute null check
-		is_last_computed_result_ = compute_(*this, *input_properties_, *static_properties_, *output_properties_);
-		last_computed_time_ = std::chrono::high_resolution_clock::now().time_since_epoch().count(); // set current timestamp
-
 	}	// lock released automatically
+	
+	// set current time
+	last_computed_time_ = std::chrono::high_resolution_clock::now().time_since_epoch().count(); 
 	return is_last_computed_result_;
 }
 

@@ -8,6 +8,12 @@
     <Filter Include="Items_Test">
       <UniqueIdentifier>{bad5fd62-323f-4d26-8adf-9e444d3644a0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="AsyncTest">
+      <UniqueIdentifier>{1aaa7401-a996-4e32-b2e7-c29e36902c14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Document_Test">
+      <UniqueIdentifier>{1532a875-e4e4-445d-8d16-e8d74d0d66ae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -15,6 +21,12 @@
   <ItemGroup>
     <ClInclude Include="Itemfactory_test.h">
       <Filter>Items_Test</Filter>
+    </ClInclude>
+    <ClInclude Include="GotoBed.h">
+      <Filter>AsyncTest</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleDocTest.h">
+      <Filter>Document_Test</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

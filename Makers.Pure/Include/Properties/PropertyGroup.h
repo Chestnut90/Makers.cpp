@@ -31,15 +31,14 @@ namespace Makers
 		public:
 			//@ [name] operator
 			PropertyBase& operator[](const std::string _name);
-
 		public:
 			//@ add property
 			void AddProperty(PropertyBase& _property);
 
 			//@ map iterator begin
-			std::map<std::string, PropertyBase*>::const_iterator Begin();
+			std::map<std::string, PropertyBase*>::iterator Begin();
 			//@ map iterator end
-			std::map<std::string, PropertyBase*>::const_iterator End();
+			std::map<std::string, PropertyBase*>::iterator End();
 
 			// TODO: nullable
 			//@ query property with id
