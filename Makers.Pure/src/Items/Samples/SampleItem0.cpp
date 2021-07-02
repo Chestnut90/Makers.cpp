@@ -37,15 +37,21 @@ Makers::Items::Compute Makers::Items::Samples::SampleItem0::SetCompute()
 
 Makers::Properties::PropertyGroup * Makers::Items::Samples::SampleItem0::SetInputProperties()
 {
+	/*auto inputs =  new Makers::Properties::PropertyGroup();
+	auto property = new Makers::Properties::InputProperty("null", nullptr, new Makers::Computables::Real<int>());
+	inputs->AddProperty(property);
+*/
 	return nullptr;
 }
 
 Makers::Properties::PropertyGroup * Makers::Items::Samples::SampleItem0::SetStaticProperties()
 {
 	return nullptr;
+	//new Makers::Properties::PropertyGroup();
 }
 
 Makers::Properties::PropertyGroup * Makers::Items::Samples::SampleItem0::SetOutputProperties()
 {
 	return nullptr;
+	//new Makers::Properties::PropertyGroup();
 }

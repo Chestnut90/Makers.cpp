@@ -30,10 +30,10 @@ namespace Makers
 
 		public:
 			//@ [name] operator
-			PropertyBase& operator[](const std::string _name);
+			PropertyBase* operator[](const std::string _name);
 		public:
 			//@ add property
-			void AddProperty(PropertyBase& _property);
+			void AddProperty(PropertyBase* _property);
 
 			//@ map iterator begin
 			std::map<std::string, PropertyBase*>::iterator Begin();

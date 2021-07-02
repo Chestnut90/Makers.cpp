@@ -6,8 +6,8 @@
 //@ constructor
 Makers::Properties::OutputProperty::OutputProperty(
 	std::string _name,
-	Items::ItemBase& _owner_item,
-	Computables::IComputable& _data_object,
+	Items::ItemBase* _owner_item,
+	Computables::IComputable* _data_object,
 	bool _is_optional) : 
 	PropertyBase(_name, _owner_item, _data_object, _is_optional), 
 	IRunAble()

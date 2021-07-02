@@ -6,15 +6,9 @@
 
 namespace Makers
 {
-	namespace MemoryPools
-	{
-		class ArrayMemoryPool;
-	}
-
-	namespace Items
-	{
-		class ItemBase;
-	}
+	namespace Computables { class IComputable; template <typename _image_type>class Image; }
+	namespace MemoryPools { class ArrayMemoryPool; }
+	namespace Items { class ItemBase;}
 
 	//@ TODO : memory pool access
 	namespace Documents
@@ -22,9 +16,16 @@ namespace Makers
 		class __declspec(dllexport) Document :
 			public IMapableData
 		{
+			// access to stream_image_;
+			friend class Makers::Items::ItemBase;
+
 #pragma region members
 		private:
+			//@ memory pool
 			MemoryPools::ArrayMemoryPool* memory_pool_;
+
+			//@ stream image
+			Makers::Computables::Image<float>* stream_image_;
 
 		private:
 			//@ unique id 
@@ -45,10 +46,19 @@ namespace Makers
 			std::string id() const;
 			//@ get title
 			std::string title() const;
-
+			//@ get memory pool
+			MemoryPools::ArrayMemoryPool* memory_pool() const;
+			//@ get stream image
+			Makers::Computables::Image<float>* stream_image() const;
+			//@ stream image width
+			unsigned long width() const;
+			//@ stream image height
+			unsigned long height() const;
 		// setters
 		public:
 			void set_title(std::string _title);
+			void set_stream_image(Makers::Computables::Image<float>* _stream_image);
+			void set_stream_image(float* _image, unsigned long _width, unsigned long _height);
 
 #pragma endregion
 #pragma region Constructors & Destructors
@@ -95,12 +105,18 @@ namespace Makers
 			//@ runable
 			bool RunAsync(
 				std::vector<Items::ItemBase*> _items = std::vector<Items::ItemBase*>(),	// default size 0
-				void* _stream = nullptr // default nullptr
+				Makers::Computables::Image<float>* _stream = nullptr // default nullptr
 			);
 
 			//@ to data -> IMapableData override 
 			std::map<std::string, std::string> ToData() override;
 
+		private:
+
+			//@ compute additional buffer numbers
+			int _ComputeImageBufferCounts(Makers::Items::ItemBase*);
+			//@ is it image type
+			bool _IsImageType(Makers::Computables::IComputable*);
 		};
 	}
 }

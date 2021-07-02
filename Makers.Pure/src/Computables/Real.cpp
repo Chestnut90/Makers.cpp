@@ -75,21 +75,21 @@ IComputable & Makers::Computables::Real<_real_type>::operator=(IComputable & _co
 }
 
 //@ deep copy into
-template<typename _real_type>
-void Makers::Computables::Real<_real_type>::CopyInto(IComputable & _computable)
-{
-	Real<_real_type>* real = reinterpret_cast<Real<_real_type>*>(&_computable);
-	if (real == nullptr)
-	{
-		throw std::exception("Cannnot convert to real type instance.");
-	}
-
-	if (typeid(this) != typeid(real))
-	{
-		throw std::exception("Invalid copy. different objects");
-	}
-	set_value(real->value());
-}
+//template<typename _real_type>
+//void Makers::Computables::Real<_real_type>::CopyInto(IComputable & _computable)
+//{
+//	Real<_real_type>* real = reinterpret_cast<Real<_real_type>*>(&_computable);
+//	if (real == nullptr)
+//	{
+//		throw std::exception("Cannnot convert to real type instance.");
+//	}
+//
+//	if (typeid(this) != typeid(real))
+//	{
+//		throw std::exception("Invalid copy. different objects");
+//	}
+//	set_value(real->value());
+//}
 
 //@ TODO :
 //@ to string 

@@ -50,9 +50,9 @@ namespace Makers
 			std::map<std::string, std::vector<std::string>> ContainingItems();
 
 			//@ item base id handle when load files
-			void IDHandle(ItemBase&, std::string);
+			static void IDHandle(ItemBase&, std::string);
 			//@ property base id handle when load files
-			void IDHandle(Makers::Properties::PropertyBase&, std::string);
+			static void IDHandle(Makers::Properties::PropertyBase&, std::string);
 
 		};
 	}

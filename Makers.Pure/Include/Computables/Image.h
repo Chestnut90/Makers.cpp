@@ -23,7 +23,7 @@ namespace Makers
 		public:
 			_image_type* image() const;
 			void set_image(_image_type* _image, long _width, long _height);
-			void set_image(Image<_image_type>& _image);
+			void set_image(Image<_image_type>* _image);
 
 		public:
 			Image();
@@ -42,7 +42,7 @@ namespace Makers
 
 		public:
 
-			virtual void CopyInto(IComputable& _computable) override;
+			//virtual void CopyInto(IComputable& _computable) override;
 
 			virtual std::string ToString() override;
 
@@ -59,7 +59,7 @@ namespace Makers
 		template class Image<unsigned int>;
 
 		template class Image<long>;
-		template class Image<unsigned int>;
+		template class Image<unsigned long>;
 
 		template class Image<float>;
 		template class Image<double>;

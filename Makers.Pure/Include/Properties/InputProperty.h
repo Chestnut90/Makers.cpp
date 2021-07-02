@@ -21,18 +21,18 @@ namespace Makers
 		//@ getter
 		public:
 			//@ get connected property
-			PropertyBase& connected_property() const;
+			PropertyBase* connected_property() const;
 
 		public:
 			//@ set connected property
-			void set_connected_property(PropertyBase& _connected_property);
+			void set_connected_property(PropertyBase* _connected_property);
 
 		public:
 			//@ default contructor
 			InputProperty(
 				std::string _name, 
-				Items::ItemBase& _owner_item,
-				Computables::IComputable& _data_object, 
+				Items::ItemBase* _owner_item,
+				Computables::IComputable* _data_object, 
 				bool _is_optional = false);
 
 			//@ default destructor

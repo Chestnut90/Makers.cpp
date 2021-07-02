@@ -140,6 +140,12 @@
     </ClInclude>
     <ClInclude Include="pch.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Include\Items\Images\StreamImageItem.h">
+      <Filter>Include\Items\Images</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Computables\ImagePointer.h">
+      <Filter>Include\Computables</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Include\nTest.cpp">
@@ -194,6 +200,15 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="src\Items\ItemFactory.ItemDefine.Samples.cpp">
       <Filter>src\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Items\Images\StreamImageItem.cpp">
+      <Filter>src\Items\Images</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Computables\IComputable.cpp">
+      <Filter>src\Computables</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Computables\ImagePointer.cpp">
+      <Filter>src\Computables</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

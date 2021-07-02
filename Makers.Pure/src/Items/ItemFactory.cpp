@@ -7,6 +7,7 @@
 #pragma region Include Sample Item
 #include "../../Include/Items/Samples/FloatThresholdingItem.h"
 #include "../../Include/Items/Samples/RandomFloatImageItem.h"
+#include "../../Include/Items/Samples/SampleItem0.h"
 #pragma endregion
 
 Makers::Items::ItemFactory::ItemFactory()
@@ -96,7 +97,8 @@ Makers::Items::ItemBase * Makers::Items::ItemFactory::Create(std::string _item_n
 			return group[_item_name]();
 		}
 	}
-	return nullptr;
+	const std::string error = "not matched item : " + _item_name;
+	throw std::exception(error.c_str());
 }
 
 std::map<std::string, std::vector<std::string>> Makers::Items::ItemFactory::ContainingItems()

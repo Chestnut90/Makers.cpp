@@ -6,11 +6,14 @@
 #include <ratio>
 #include <thread>
 #include <future>
+#include <mutex>
 
 #include "../../Include/Items/ItemBase.h"
 #include "../../Include/Properties/PropertyGroup.h"
-#include "../../Include/Documents/Document.h"
 #include "../../Include/Properties/InputProperty.h"
+
+#include "../../Include/Documents/Document.h"
+#include "../../Include/Documents/ArrayMemoryPool.h"
 #include "../../Utils/UniqueIDs/GUIDGen.h"
 
 #pragma region getter and setters
@@ -45,28 +48,44 @@ bool Makers::Items::ItemBase::is_last_computed_result() const
 	return is_last_computed_result_;
 }
 
-//@ get input properties
-Makers::Properties::PropertyGroup& Makers::Items::ItemBase::input_properties()
+//@ get owner document
+Makers::Documents::Document* Makers::Items::ItemBase::document() const
 {
-	return *input_properties_;
+	return document_;
+}
+
+//@ get input properties
+Makers::Properties::PropertyGroup* Makers::Items::ItemBase::input_properties()
+{
+	return input_properties_;
 }
 
 //@ get static properties
-Makers::Properties::PropertyGroup& Makers::Items::ItemBase::static_properties()
+Makers::Properties::PropertyGroup* Makers::Items::ItemBase::static_properties()
 {
-	return *static_properties_;
+	return static_properties_;
 }
 
 //@ get output properties
-Makers::Properties::PropertyGroup& Makers::Items::ItemBase::output_properties()
+Makers::Properties::PropertyGroup* Makers::Items::ItemBase::output_properties()
 {
-	return *output_properties_;
+	return output_properties_;
+}
+
+int Makers::Items::ItemBase::buffer_count() const
+{
+	return buffer_counts_;
 }
 
 //@ set custom name
 void Makers::Items::ItemBase::set_custom_name(std::string _name)
 {
 	custom_name_ = _name;
+}
+
+void Makers::Items::ItemBase::set_document(Makers::Documents::Document* _document)
+{
+	document_ = _document;
 }
 
 #pragma endregion
@@ -82,11 +101,17 @@ Makers::Items::ItemBase::ItemBase() :
 	compute_ = nullptr;
 	last_computed_time_ = 0.0;
 	is_last_computed_result_ = false;
-
+	document_ = nullptr;
+	
+	// mutex and lock
+	std::mutex* mutex = new std::mutex();
+	wait_mutex_ = (void*)mutex;
+	
+	buffer_counts_ = 0;
 	// properties
-	input_properties_ = new Properties::PropertyGroup();
-	static_properties_ = new Properties::PropertyGroup();
-	output_properties_ = new Properties::PropertyGroup();
+	// input_properties_ = new Properties::PropertyGroup();
+	// static_properties_ = new Properties::PropertyGroup();
+	// output_properties_ = new Properties::PropertyGroup();
 }
 
 Makers::Items::ItemBase::ItemBase(
@@ -97,9 +122,6 @@ Makers::Items::ItemBase::ItemBase(
 	Properties::PropertyGroup * _output_properties) :
 	ItemBase()
 {
-	std::mutex* mutex = new std::mutex();
-	wait_mutex = (void*)mutex;
-
 	item_name_ = _item_name;
 	compute_ = _compute;
 	input_properties_ = _input_properties;
@@ -115,7 +137,12 @@ Makers::Items::ItemBase::~ItemBase()
 	delete input_properties_;
 	delete static_properties_;
 	delete output_properties_;
-	delete wait_mutex;	// TODO: check
+	if (wait_mutex_ != nullptr)
+	{
+		//((std::mutex*)wait_mutex_)->unlock();
+		delete wait_mutex_;	// TODO: check
+	}
+	// delete document_; // not delete
 }
 
 //@ item run
@@ -124,7 +151,10 @@ bool Makers::Items::ItemBase::Run(
 	ItemBase * _caller, 
 	long long _timestamp)
 {
-	std::lock_guard<std::mutex> lock(*(std::mutex*)wait_mutex);
+	auto wait_mutex = std::move((std::mutex*)wait_mutex_);
+	//((std::unique_lock<std::mutex> *)unique_lock_)->lock();
+	//wait_mutex->lock();
+	std::lock_guard<std::mutex> lock(*wait_mutex);
 	{	// lock scope
 
 		if (_timestamp == 0.0)
@@ -134,25 +164,31 @@ bool Makers::Items::ItemBase::Run(
 			_timestamp = current_long_long;
 		}
 
-		if (last_computed_time_ >= _timestamp)
+		// not computed yet
+		if (last_computed_time_ < _timestamp)
 		{
-			// already computed
-			return is_last_computed_result_;
-		}
+			is_last_computed_result_ = false;
 
-		is_last_computed_result_ = false;
+			// collect inputs
+			if (CollectInputs(_document, _caller, _timestamp))
+			{
+				// set buffer
+				buffers_.clear();
+				for (int i = 0; i < buffer_counts_; i++)
+				{
+					buffers_.push_back(_document->memory_pool()->memory());
+				}
 
-		// collect inputs
-		if (CollectInputs(_document, _caller, _timestamp))
-		{
-			// compute
-			//@ TODO :compute null check
-			is_last_computed_result_ = compute_(*this, *input_properties_, *static_properties_, *output_properties_);
+				// compute
+				//@ TODO :compute null check
+				is_last_computed_result_ = compute_(this, input_properties_, static_properties_, output_properties_);
+			}
+			// set current time
+			last_computed_time_ = std::chrono::high_resolution_clock::now().time_since_epoch().count();
 		}
 	}	// lock released automatically
-	
-	// set current time
-	last_computed_time_ = std::chrono::high_resolution_clock::now().time_since_epoch().count(); 
+	//wait_mutex->unlock();
+	//((std::unique_lock<std::mutex> *)unique_lock_)->unlock();
 	return is_last_computed_result_;
 }
 

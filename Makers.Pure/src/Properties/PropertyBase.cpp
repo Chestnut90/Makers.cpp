@@ -1,7 +1,9 @@
 #include "pch.h"
 #include "../../Include/Properties/PropertyBase.h"
+
 #include "../../Utils/UniqueIDs/GUIDGen.h"
 #include "../../Include/Items/ItemBase.h"
+#include "../../Include/Computables/IComputable.h"
 
 std::string Makers::Properties::PropertyBase::id() const
 {
@@ -39,15 +41,15 @@ void Makers::Properties::PropertyBase::set_is_used(bool _is_used)
 //@ protected Constructor (default)
 Makers::Properties::PropertyBase::PropertyBase(
 	std::string _name,
-	Items::ItemBase& _owner_item,
-	Computables::IComputable& _data_object,
+	Items::ItemBase* _owner_item,
+	Computables::IComputable* _data_object,
 	bool _is_optional) :
 	IMapableData()
 {
 	id_ = Utils::IDGenerators::GUIDGen().Generate(); 
 	name_ = _name;
-	owner_item_ = &_owner_item;
-	data_object_ = &_data_object;
+	owner_item_ = _owner_item;
+	data_object_ = _data_object;
 	is_optional_ = _is_optional;
 	is_used_ = true;
 }
@@ -55,6 +57,7 @@ Makers::Properties::PropertyBase::PropertyBase(
 //@ public Destructor
 Makers::Properties::PropertyBase::~PropertyBase()
 {
+
 	delete data_object_;
 	//delete owner_item_;	// do not delete parent item. memory error.
 

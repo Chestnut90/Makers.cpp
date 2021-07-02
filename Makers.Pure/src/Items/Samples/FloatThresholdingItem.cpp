@@ -8,9 +8,11 @@
 #include "../../../Include/Properties/OutputProperty.h"
 #include "../../../Include/Properties/StaticProperty.h"
 
+#include "../../../Include/Computables/ImagePointer.h"
 #include "../../../Include/Computables/Image.h"
 #include "../../../Include/Computables/Real.h"
 
+//@ constructor
 Makers::Items::Samples::FloatThreshodingItem::FloatThreshodingItem() :
 	ItemBase(
 		SetItemName(),
@@ -19,7 +21,7 @@ Makers::Items::Samples::FloatThreshodingItem::FloatThreshodingItem() :
 		SetStaticProperties(),
 		SetOutputProperties())
 {
-
+	buffer_counts_ = 1;
 }
 
 Makers::Items::Samples::FloatThreshodingItem::~FloatThreshodingItem()
@@ -33,33 +35,40 @@ std::string Makers::Items::Samples::FloatThreshodingItem::SetItemName()
 
 Makers::Items::Compute Makers::Items::Samples::FloatThreshodingItem::SetCompute()
 {
-	return [] (ItemBase& _reference,
-		Properties::PropertyGroup& _inputs, 
-		Properties::PropertyGroup& _statics, 
-		Properties::PropertyGroup& _outputs) -> bool
+	return [] (ItemBase* _reference,
+		Properties::PropertyGroup* _inputs, 
+		Properties::PropertyGroup* _statics, 
+		Properties::PropertyGroup* _outputs) -> bool
 	{
 		// cast to this
-		auto here = dynamic_cast<FloatThreshodingItem*>(&_reference);
+		auto here = dynamic_cast<FloatThreshodingItem*>(_reference);
 
 		// get inputs
-		auto image_property = dynamic_cast<Properties::InputProperty*>(&_inputs[here->kInputFloatImage]);
-		auto com_image = dynamic_cast<Computables::Image<float>*>(image_property->connected_property().data_object());
+		auto image_property = dynamic_cast<Properties::InputProperty*>(
+			_inputs->QueryPropertyName(here->kInputFloatImage));
+		auto com_image = dynamic_cast<Computables::Image<float>*>(
+			image_property->connected_property()->data_object());
 		auto image = com_image->image();
 		auto height = com_image->height();
 		auto width = com_image->width();
 
 		// get statics
-		auto com_treshold = dynamic_cast<Makers::Computables::Real<float>*>
-			((_statics[here->kStaticFloatThreshold].data_object()));
+		auto com_treshold = dynamic_cast<Makers::Computables::Real<float>*>(
+			_statics->QueryPropertyName(here->kStaticFloatThreshold)->data_object());
 		auto threshold = com_treshold->value();
 
-		auto com_is_reversed = dynamic_cast<Makers::Computables::Real<bool>*>
-			(_statics[here->kStaticIsReversed].data_object());
+		auto com_is_reversed = dynamic_cast<Makers::Computables::Real<bool>*>(
+			_statics->QueryPropertyName(here->kStaticIsReversed)->data_object());
 		auto is_reversed = com_is_reversed->value();
 
 		// generate image
-		unsigned char* binary = new unsigned char[width * height];
-
+		// send to output
+		auto com_binary_image = dynamic_cast<Makers::Computables::ImagePointer<unsigned char>*>(
+			_outputs->QueryPropertyName(here->kOutputThresholdedImage)->data_object());
+		com_binary_image->set_point(here->buffers_.at(0), width, height);
+		auto binary = com_binary_image->image();
+		
+		// thresholding
 		unsigned char upper = is_reversed ? 0 : 255;
 		unsigned char lower = is_reversed ? 255 : 0;
 		long zero_count = 0;
@@ -75,13 +84,8 @@ Makers::Items::Compute Makers::Items::Samples::FloatThreshodingItem::SetCompute(
 			}
 		}
 
-		// send to output
-		auto com_binary_image = dynamic_cast<Makers::Computables::Image<unsigned char>*>
-			(_outputs[here->kOutputThresholdedImage].data_object());
-		com_binary_image->set_image(binary, width, height);
-
-		auto com_zero_count = dynamic_cast<Makers::Computables::Real<long>*>
-			(_outputs[here->kOutputZeroCount].data_object());
+		auto com_zero_count = dynamic_cast<Makers::Computables::Real<long>*>(
+			_outputs->QueryPropertyName(here->kOutputZeroCount)->data_object());
 		com_zero_count->set_value(zero_count);
 		return true;
 	};
@@ -93,10 +97,10 @@ Makers::Properties::PropertyGroup * Makers::Items::Samples::FloatThreshodingItem
 
 	// input image property
 	input_properties->AddProperty(
-		*(Makers::Properties::PropertyBase*) new Makers::Properties::InputProperty(
+		(Makers::Properties::PropertyBase*) new Makers::Properties::InputProperty(
 			"input_float_image",
-			*this, 
-			*new Makers::Computables::Image<float>()));
+			this, 
+			new Makers::Computables::Image<float>()));
 
 	return input_properties;
 }
@@ -106,16 +110,16 @@ Makers::Properties::PropertyGroup * Makers::Items::Samples::FloatThreshodingItem
 	Makers::Properties::PropertyGroup* static_properties = new Makers::Properties::PropertyGroup();
 
 	static_properties->AddProperty(
-		*(Makers::Properties::PropertyBase*) new Makers::Properties::StaticProperty(
+		(Makers::Properties::PropertyBase*) new Makers::Properties::StaticProperty(
 			"static_float_threshold",
-			*this,
-			*new Makers::Computables::Real<float>()));
+			this,
+			new Makers::Computables::Real<float>()));
 
 	static_properties->AddProperty(
-		*(Makers::Properties::PropertyBase*) new Makers::Properties::StaticProperty(
+		(Makers::Properties::PropertyBase*) new Makers::Properties::StaticProperty(
 			"static_is_reversed",
-			*this,
-			*new Makers::Computables::Real<bool>()));
+			this,
+			new Makers::Computables::Real<bool>()));
 
 	return static_properties;
 }
@@ -125,16 +129,16 @@ Makers::Properties::PropertyGroup * Makers::Items::Samples::FloatThreshodingItem
 	Makers::Properties::PropertyGroup* output_properties = new Makers::Properties::PropertyGroup();
 
 	output_properties->AddProperty(
-		*(Makers::Properties::PropertyBase*) new Makers::Properties::OutputProperty(
+		(Makers::Properties::PropertyBase*) new Makers::Properties::OutputProperty(
 			"output_thresholded_image",
-			*this,
-			*new Makers::Computables::Image<unsigned char>()));
+			this,
+			new Makers::Computables::ImagePointer<unsigned char>()));
 
 	output_properties->AddProperty(
-		*(Makers::Properties::PropertyBase*) new Makers::Properties::OutputProperty(
+		(Makers::Properties::PropertyBase*) new Makers::Properties::OutputProperty(
 			"output_zero_count",
-			*this,
-			*new Makers::Computables::Real<long>()));
+			this,
+			new Makers::Computables::Real<long>()));
 
 	return output_properties;
 }

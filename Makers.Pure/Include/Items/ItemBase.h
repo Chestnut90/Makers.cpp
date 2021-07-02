@@ -2,6 +2,8 @@
 #ifndef _ITEMBASE_H_
 #define _ITEMBASE_H_
 
+#include <vector>
+
 // #include <memory> // TODO : unique_ptr
 #include "../IMapableData.h"
 #include "../IRunAble.h"
@@ -16,10 +18,10 @@ namespace Makers
 	{
 		//@ computing method
 		__declspec(dllexport) typedef bool(*Compute)(
-			ItemBase& _reference,
-			Properties::PropertyGroup& _input_properties,
-			Properties::PropertyGroup& _static_properties,
-			Properties::PropertyGroup& _output_properties);
+			ItemBase* _reference,
+			Properties::PropertyGroup* _input_properties,
+			Properties::PropertyGroup* _static_properties,
+			Properties::PropertyGroup* _output_properties);
 
 		class __declspec(dllexport) ItemBase :
 			public IMapableData,
@@ -33,13 +35,13 @@ namespace Makers
 
 		private:
 			//@ wait mutex
-			void* wait_mutex;
-
+			void* wait_mutex_;
 			//@ unique id
 			std::string id_;	
 			//@ last computed result
 			bool is_last_computed_result_;	
-
+			//@ document owner
+			Makers::Documents::Document* document_;
 		protected:
 			//@ name of item
 			std::string item_name_;	
@@ -51,6 +53,12 @@ namespace Makers
 			Properties::PropertyGroup* static_properties_;	
 			//@ output properties
 			Properties::PropertyGroup* output_properties_;	
+
+			// TODO : move private
+			//@ buffer handles
+			std::vector<void*> buffers_;
+			//@ buffer counts
+			int buffer_counts_;
 
 		public:
 			//@ user defined name
@@ -66,21 +74,25 @@ namespace Makers
 			std::string custom_name() const;
 			long long last_computed_time() const;
 			bool is_last_computed_result() const;
-			Properties::PropertyGroup& input_properties();
-			Properties::PropertyGroup& static_properties();
-			Properties::PropertyGroup& output_properties();
+			Makers::Documents::Document* document() const;
+			Properties::PropertyGroup* input_properties();
+			Properties::PropertyGroup* static_properties();
+			Properties::PropertyGroup* output_properties();
+			int buffer_count() const;
 
 #pragma endregion
 #pragma region Setters
 		public:
 			void set_custom_name(std::string _name);
+			void set_document(Makers::Documents::Document* _document);
 #pragma endregion
 #pragma region Constructor & Destructors
 
-		protected:
+		private:
 			//@ constructor (default)
 			ItemBase();
-
+		
+		public:
 			//@ contructor with data
 			ItemBase(
 				std::string _item_name,

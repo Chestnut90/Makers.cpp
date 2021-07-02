@@ -53,7 +53,7 @@ namespace Makers
 		public:
 
 			//@ deep copy into
-			virtual void CopyInto(IComputable& _computable) override;
+			//virtual void CopyInto(IComputable& _computable) override;
 
 			std::string ToString() override;
 		};

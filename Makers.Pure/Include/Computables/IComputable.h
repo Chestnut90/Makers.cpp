@@ -19,22 +19,16 @@ namespace Makers
 			void* data_;
 
 		public:
-			inline void* data() const
-			{
-				return data_;
-			}
+			void* data() const;
 
 		public:
 			
 			//@ constructor
-			IComputable() {}
+			IComputable();
 
 			//@ destructor
-			virtual ~IComputable() 
-			{
-				if (data_ != nullptr)
-					delete data_;
-			}
+			virtual ~IComputable();
+			
 
 		// operators
 		public:
@@ -43,7 +37,7 @@ namespace Makers
 
 		public:
 
-			virtual void CopyInto(IComputable& _computable) = 0;
+			//virtual void CopyInto(IComputable& _computable) = 0;
 			//virtual void DeepCopy(IComputable& _computable) = 0;
 
 			//@ To string

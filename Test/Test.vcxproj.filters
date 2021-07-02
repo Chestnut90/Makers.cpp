@@ -25,7 +25,13 @@
     <ClInclude Include="GotoBed.h">
       <Filter>AsyncTest</Filter>
     </ClInclude>
-    <ClInclude Include="SimpleDocTest.h">
+    <ClInclude Include="Test_RandomImageFloat.h">
+      <Filter>Document_Test</Filter>
+    </ClInclude>
+    <ClInclude Include="Test_Thresholdings.h">
+      <Filter>Document_Test</Filter>
+    </ClInclude>
+    <ClInclude Include="Test_Documents.h">
       <Filter>Document_Test</Filter>
     </ClInclude>
   </ItemGroup>

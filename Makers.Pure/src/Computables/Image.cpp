@@ -34,7 +34,9 @@ void Image<_image_type>::set_image(_image_type * _image, long _width, long _heig
 {
 	if (data_ != nullptr)
 	{
-		delete data_;
+		delete (_image_type*)data_;
+
+		//free(data_);
 		data_ = nullptr;
 	}
 
@@ -46,19 +48,22 @@ void Image<_image_type>::set_image(_image_type * _image, long _width, long _heig
 }
 
 template<typename _image_type>
-void Makers::Computables::Image<_image_type>::set_image(Image<_image_type>& _image)
+void Makers::Computables::Image<_image_type>::set_image(Image<_image_type>* _image)
 {
-	set_image(_image.image(), _image.width_, _image.height_);
+	set_image(_image->image(), _image->width_, _image->height_);
 }
 
 #pragma endregion
 
+//@ constructor
 template<typename _image_type>
-Image<_image_type>::Image() : IComputable()
+Image<_image_type>::Image() : 
+	IComputable()
 {
-
+	set_image(nullptr, 0, 0);
 }
 
+//@ destructor
 template<typename _image_type>
 Image<_image_type>::~Image()
 {
@@ -81,22 +86,22 @@ IComputable & Makers::Computables::Image<_image_type>::operator=(IComputable & _
 }
 
 //@ copy into with deepcopy
-template<typename _image_type>
-void Makers::Computables::Image<_image_type>::CopyInto(IComputable & _computable)
-{
-	Image<_image_type>* image = reinterpret_cast<Image<_image_type>*>(&_computable);
-	if (image == nullptr)
-	{
-		throw std::exception("Cannot convert to image type instance.");
-	}
-
-	if (typeid(this) != typeid(image))
-	{
-		throw std::exception("Invalid copy. different objects");
-	}
-
-	set_image(image->image(), image->width(), image->height());
-}
+//template<typename _image_type>
+//void Makers::Computables::Image<_image_type>::CopyInto(IComputable & _computable)
+//{
+//	Image<_image_type>* image = reinterpret_cast<Image<_image_type>*>(&_computable);
+//	if (image == nullptr)
+//	{
+//		throw std::exception("Cannot convert to image type instance.");
+//	}
+//
+//	if (typeid(this) != typeid(image))
+//	{
+//		throw std::exception("Invalid copy. different objects");
+//	}
+//
+//	set_image(image->image(), image->width(), image->height());
+//}
 
 //@ TODO : 
 template<typename _image_type>

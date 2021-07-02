@@ -13,8 +13,8 @@ namespace Makers
 		public:
 			//@ constructor
 			StaticProperty(std::string _name,
-				Items::ItemBase& _owner_item,
-				Computables::IComputable& _data_object,
+				Items::ItemBase* _owner_item,
+				Computables::IComputable* _data_object,
 				bool _is_optional = false);
 			
 			//@ destructor

@@ -20,24 +20,24 @@ Makers::Properties::PropertyGroup::PropertyGroup()
 
 Makers::Properties::PropertyGroup::~PropertyGroup()
 {
-
+	Clear();
 }
 
-Makers::Properties::PropertyBase& Makers::Properties::PropertyGroup::operator[](const std::string _name)
+Makers::Properties::PropertyBase* Makers::Properties::PropertyGroup::operator[](const std::string _name)
 {
-	return *QueryPropertyName(_name);
+	return QueryPropertyName(_name);
 }
 
-void Makers::Properties::PropertyGroup::AddProperty(PropertyBase& _property)
+void Makers::Properties::PropertyGroup::AddProperty(PropertyBase* _property)
 {
 	// no same id and name
-	auto property = QueryPropertyID(_property.id());
+	auto property = QueryPropertyID(_property->id());
 	if (property != nullptr)
 	{
 		throw std::exception("find same named property.");
 	}
 
-	properties_[_property.name()] = &_property;
+	properties_[_property->name()] = _property;
 }
 
 std::map<std::string, Properties::PropertyBase*>::iterator Makers::Properties::PropertyGroup::Begin()

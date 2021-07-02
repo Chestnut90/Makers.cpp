@@ -1,10 +1,17 @@
 #include "pch.h"
 
+#include <future>
+
 #include "../../Include/Documents/ArrayMemoryPool.h"
+
+unsigned long Makers::MemoryPools::ArrayMemoryPool::memory_index() const
+{
+	return memory_index_;
+}
 
 unsigned long Makers::MemoryPools::ArrayMemoryPool::count() const
 {
-	return count_;
+	return memories_.size();
 }
 
 unsigned long Makers::MemoryPools::ArrayMemoryPool::width() const
@@ -17,93 +24,169 @@ unsigned long Makers::MemoryPools::ArrayMemoryPool::height() const
 	return height_;
 }
 
-void * Makers::MemoryPools::ArrayMemoryPool::memory()
+bool Makers::MemoryPools::ArrayMemoryPool::is_allocated() const
 {
-	// mutex for multi threading
-	std::lock_guard<std::mutex> lock(access_mutex_);
-
-	if (memory_deque_.empty()) throw std::exception("Empty memory.");
-
-	// get empty index
-	auto index = memory_deque_.front();
-	memory_deque_.pop_front();
-
-	// TODO : check reused
-	// access memory
-	auto memory = memories_[index];
-
-	// push back to circular
-	memory_deque_.push_back(index);
-	return memory;
+	return is_allocated_;
 }
 
-void Makers::MemoryPools::ArrayMemoryPool::set_count(unsigned long _count)
+void* Makers::MemoryPools::ArrayMemoryPool::memory()
 {
-	if (count_ == _count) return;
-	count_ = _count;
-	AllocateMemory(width_, height_, count_);
+	// mutex for multi threading
+	void* allocated_memory = nullptr;
+	auto access_mutex = (std::mutex*)access_mutex_;
+	std::lock_guard<std::mutex> lock(*access_mutex);
+	{
+		// empty
+		if (count() == 0)
+		{
+			const std::string error = "cannot access to memory.\nempty!.";
+			throw std::exception(error.c_str());
+		}
+
+		allocated_memory = memories_.at(memory_index_);
+		++memory_index_;
+		if (memory_index_ >= count())
+		{
+			memory_index_ = 0;
+		}
+	}
+	return allocated_memory;
 }
 
 void Makers::MemoryPools::ArrayMemoryPool::set_width(unsigned long _width)
 {
-	if (width_ == _width) return;
-	width_ = _width;
-	AllocateMemory(width_, height_, count_);
+	AllocateMemory(_width, height_, count());
 }
 
 void Makers::MemoryPools::ArrayMemoryPool::set_height(unsigned long _height)
 {
-	if (height_ == _height) return;
-	height_ = _height;
-	AllocateMemory(width_, height_, count_);
+	AllocateMemory(width_, _height, count());
+}
+
+void Makers::MemoryPools::ArrayMemoryPool::set_count(unsigned long _count)
+{
+	AllocateMemory(width_, height_, _count);
 }
 
 Makers::MemoryPools::ArrayMemoryPool::ArrayMemoryPool(
-	unsigned long _width, 
-	unsigned long _height, 
+	unsigned long _width,
+	unsigned long _height,
 	unsigned long _count)
 {
-	count_ = _count;
 	width_ = _width;
 	height_ = _height;
-	AllocateMemory(width_, height_, count_);
+
+	// init access mutex
+	auto access_mutex = new std::mutex();
+	access_mutex_ = (void*)access_mutex;
+	// init allocation mutex
+	auto allocation_mutex = new std::mutex();
+	allocation_mutex_ = (void*)allocation_mutex;
+
+	AllocateMemory(width_, height_, _count);
 }
 
 Makers::MemoryPools::ArrayMemoryPool::~ArrayMemoryPool()
 {
+	if (access_mutex_ != nullptr) { delete access_mutex_; }
+	if (allocation_mutex_ != nullptr) { delete allocation_mutex_; }
+
 	Clear();
 }
 
 void Makers::MemoryPools::ArrayMemoryPool::AllocateMemory(
+	unsigned long _width,
+	unsigned long _height,
+	unsigned long _count)
+{
+	auto allocation_mutex = (std::mutex*)allocation_mutex_;
+	std::lock_guard<std::mutex> lock(*allocation_mutex);
+	{
+		// TODO : calculate available capacity of memory
+
+		is_allocated_ = false;
+
+		if (_count == -1) _count = count();
+		auto future = std::async(std::launch::async,
+			&Makers::MemoryPools::ArrayMemoryPool::_AllocateMemory_Async, this, _width, _height, _count);
+		future.get();
+	}
+	is_allocated_ = true;
+}
+
+void Makers::MemoryPools::ArrayMemoryPool::_AllocateMemory_Async(
 	unsigned long _width, 
 	unsigned long _height, 
 	unsigned long _count)
 {
-	Clear();
-	
-	// TODO : calculate available capacity of memory
-	// TODO : async
-
-	memories_ = new void*[_count];
-	long size = width_ * height_ * sizeof(void*);
-	for (int i = 0; i < _count; i++)
+	// same size
+	// just different number
+	if (_width == width_ && _height == height_)
 	{
-		memories_[i] = malloc(size);
-		memory_deque_.push_back(i);
+		auto res = _count >= count() ?
+			_AllocateMemory_High(_width, _height, _count) :
+			_AllocateMemory_Low(_width, _height, _count);
 	}
+	else
+	{
+		Clear();
+		long size = _width * _height * sizeof(void*);
+		for (int i = 0; i < _count; i++)
+		{
+			auto memory = malloc(size);
+			memories_.push_back(memory);
+		}
+	}
+	width_ = _width;
+	height_ = _height;
+}
+
+//@ when resize to less count
+bool Makers::MemoryPools::ArrayMemoryPool::_AllocateMemory_Low(
+	unsigned long _width, 
+	unsigned long _height, 
+	unsigned long _count)
+{
+	auto count = memories_.size();
+	auto diff = count - _count;
+
+	for (int i = 0; i < diff; i++)
+	{
+		auto memory = memories_.at(count - i + 1);
+		delete memory;
+		memory = nullptr;
+	}
+	memories_.resize(_count);
+
+	return true;
+}
+
+//@ when resize to high count
+bool Makers::MemoryPools::ArrayMemoryPool::_AllocateMemory_High(
+	unsigned long _width, 
+	unsigned long _height, 
+	unsigned long _count)
+{
+	auto count = memories_.size();
+	auto diff = _count - count;
+	long size = _width * _height * sizeof(void*);
+	for (int i = 0; i < diff; i++)
+	{
+		auto memory = malloc(size);
+		memories_.push_back(memory);
+	}
+
+	return true;
 }
 
 void Makers::MemoryPools::ArrayMemoryPool::Clear()
 {
-	for (int i = 0; i < count_; i++)
+	for (auto memory : memories_)
 	{
-		delete memories_[i];
-		memories_[i] = nullptr;
+		//free(memory);
+		delete memory;
+		//memory = nullptr;
 	}
-
-	delete memories_;
-	memories_ = nullptr;
-
-	// deque
-	memory_deque_.clear();
+	memories_.resize(0);
+	memory_index_ = 0;
 }

@@ -57,8 +57,8 @@ namespace Makers
 		protected:
 			PropertyBase(
 				std::string _name, 
-				Items::ItemBase& _owner_item, 
-				Computables::IComputable& _data_object, 
+				Items::ItemBase* _owner_item, 
+				Computables::IComputable* _data_object, 
 				bool _is_optional = false);
 			
 		public:
