@@ -56,6 +56,8 @@ int main()
 	//Test::Documents::Test_FreeIComputable();
 	//Test::Documents::Test_FreeImageComputable();
 
+	Test::Items::ItemFactory_Item_List();
+
 	_CrtDumpMemoryLeaks();
 	//_CrtSetBreakAlloc(2239);
 	

@@ -4,37 +4,48 @@
 
 #include "../../Include/Documents/ArrayMemoryPool.h"
 
+#pragma region getters
+
+//@ get current memory index
 unsigned long Makers::MemoryPools::ArrayMemoryPool::memory_index() const
 {
 	return memory_index_;
 }
 
+//@ get capacity of memories
 unsigned long Makers::MemoryPools::ArrayMemoryPool::count() const
 {
 	return memories_.size();
 }
 
+//@ width of each memory
 unsigned long Makers::MemoryPools::ArrayMemoryPool::width() const
 {
 	return width_;
 }
 
+//@ height of each memory
 unsigned long Makers::MemoryPools::ArrayMemoryPool::height() const
 {
 	return height_;
 }
 
+//@ get is allocated 
+//@ all memories were allocated then return true
 bool Makers::MemoryPools::ArrayMemoryPool::is_allocated() const
 {
 	return is_allocated_;
 }
 
+//@ get empty memory
 void* Makers::MemoryPools::ArrayMemoryPool::memory()
 {
 	// mutex for multi threading
 	void* allocated_memory = nullptr;
 	auto access_mutex = (std::mutex*)access_mutex_;
-	std::lock_guard<std::mutex> lock(*access_mutex);
+	
+	// lock guard
+	std::lock_guard<std::mutex> lock(*access_mutex);	
 	{
 		// empty
 		if (count() == 0)
@@ -53,6 +64,9 @@ void* Makers::MemoryPools::ArrayMemoryPool::memory()
 	return allocated_memory;
 }
 
+#pragma endregion
+#pragma region setters
+
 void Makers::MemoryPools::ArrayMemoryPool::set_width(unsigned long _width)
 {
 	AllocateMemory(_width, height_, count());
@@ -68,24 +82,27 @@ void Makers::MemoryPools::ArrayMemoryPool::set_count(unsigned long _count)
 	AllocateMemory(width_, height_, _count);
 }
 
+#pragma endregion
+
+//@ constructor
 Makers::MemoryPools::ArrayMemoryPool::ArrayMemoryPool(
 	unsigned long _width,
 	unsigned long _height,
 	unsigned long _count)
 {
-	width_ = _width;
-	height_ = _height;
-
 	// init access mutex
 	auto access_mutex = new std::mutex();
 	access_mutex_ = (void*)access_mutex;
+	
 	// init allocation mutex
 	auto allocation_mutex = new std::mutex();
 	allocation_mutex_ = (void*)allocation_mutex;
 
-	AllocateMemory(width_, height_, _count);
+	// init memories
+	AllocateMemory(_width, _height, _count);
 }
 
+//@ destructor
 Makers::MemoryPools::ArrayMemoryPool::~ArrayMemoryPool()
 {
 	if (access_mutex_ != nullptr) { delete access_mutex_; }
@@ -94,6 +111,10 @@ Makers::MemoryPools::ArrayMemoryPool::~ArrayMemoryPool()
 	Clear();
 }
 
+//@ allocate memories
+//@ width of image
+//@ height of image
+//@ number of images
 void Makers::MemoryPools::ArrayMemoryPool::AllocateMemory(
 	unsigned long _width,
 	unsigned long _height,
@@ -114,6 +135,7 @@ void Makers::MemoryPools::ArrayMemoryPool::AllocateMemory(
 	is_allocated_ = true;
 }
 
+//@ allocate memories with async
 void Makers::MemoryPools::ArrayMemoryPool::_AllocateMemory_Async(
 	unsigned long _width, 
 	unsigned long _height, 
@@ -179,13 +201,12 @@ bool Makers::MemoryPools::ArrayMemoryPool::_AllocateMemory_High(
 	return true;
 }
 
+//@ clear all memories
 void Makers::MemoryPools::ArrayMemoryPool::Clear()
 {
 	for (auto memory : memories_)
 	{
-		//free(memory);
 		delete memory;
-		//memory = nullptr;
 	}
 	memories_.resize(0);
 	memory_index_ = 0;

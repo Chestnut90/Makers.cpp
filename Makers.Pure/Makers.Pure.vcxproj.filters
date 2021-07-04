@@ -76,6 +76,9 @@
     <Filter Include="Utils">
       <UniqueIdentifier>{4ffdb706-b97a-4932-b83e-aca119ebe3ff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="default_runs">
+      <UniqueIdentifier>{c783898d-01a2-4c82-a664-db6eda00f823}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\Items\Samples\FloatThresholdingItem.h">
@@ -138,13 +141,17 @@
     <ClInclude Include="Utils\UniqueIDs\GUIDGen.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="pch.h" />
-    <ClInclude Include="framework.h" />
     <ClInclude Include="Include\Items\Images\StreamImageItem.h">
       <Filter>Include\Items\Images</Filter>
     </ClInclude>
     <ClInclude Include="Include\Computables\ImagePointer.h">
       <Filter>Include\Computables</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>default_runs</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>default_runs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -196,11 +203,6 @@
     <ClCompile Include="Utils\UniqueIDs\GUIDGen.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="pch.cpp" />
-    <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="src\Items\ItemFactory.ItemDefine.Samples.cpp">
-      <Filter>src\Items</Filter>
-    </ClCompile>
     <ClCompile Include="src\Items\Images\StreamImageItem.cpp">
       <Filter>src\Items\Images</Filter>
     </ClCompile>
@@ -209,6 +211,12 @@
     </ClCompile>
     <ClCompile Include="src\Computables\ImagePointer.cpp">
       <Filter>src\Computables</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>default_runs</Filter>
+    </ClCompile>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>default_runs</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

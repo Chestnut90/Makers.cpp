@@ -1,14 +1,13 @@
 #pragma once
 
 #include "../IMapableData.h"
-
 #include <vector>
 
 namespace Makers
 {
 	namespace Computables { class IComputable; template <typename _image_type>class Image; }
 	namespace MemoryPools { class ArrayMemoryPool; }
-	namespace Items { class ItemBase;}
+	namespace Items { class ItemBase; class ItemFactory; }
 
 	//@ TODO : memory pool access
 	namespace Documents
@@ -16,9 +15,7 @@ namespace Makers
 		class __declspec(dllexport) Document :
 			public IMapableData
 		{
-			// access to stream_image_;
-			friend class Makers::Items::ItemBase;
-
+			friend class Makers::Items::ItemFactory;
 #pragma region members
 		private:
 			//@ memory pool
@@ -56,8 +53,11 @@ namespace Makers
 			unsigned long height() const;
 		// setters
 		public:
+			//@ set title
 			void set_title(std::string _title);
+			//@ set stream image
 			void set_stream_image(Makers::Computables::Image<float>* _stream_image);
+			//@ set stream image
 			void set_stream_image(float* _image, unsigned long _width, unsigned long _height);
 
 #pragma endregion
@@ -110,13 +110,6 @@ namespace Makers
 
 			//@ to data -> IMapableData override 
 			std::map<std::string, std::string> ToData() override;
-
-		private:
-
-			//@ compute additional buffer numbers
-			int _ComputeImageBufferCounts(Makers::Items::ItemBase*);
-			//@ is it image type
-			bool _IsImageType(Makers::Computables::IComputable*);
 		};
 	}
 }

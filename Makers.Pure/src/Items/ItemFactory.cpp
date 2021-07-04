@@ -2,6 +2,7 @@
 #include "../../Include/Items/ItemFactory.h"
 #include "../../Include/Items/ItemBase.h"
 
+#include "../../Include/Documents/Document.h"
 #include "../../Include/Properties/PropertyBase.h"
 
 #pragma region Include Sample Item
@@ -37,6 +38,7 @@ void Makers::Items::ItemFactory::DeleteItem(ItemBase * _item)
 
 void Makers::Items::ItemFactory::InitItems()
 {
+	item_maps_.clear();
 	InitItems_Criterias();
 	InitItems_Images();
 	InitItems_InspInfos();
@@ -50,39 +52,49 @@ void Makers::Items::ItemFactory::InitItems()
 
 void Makers::Items::ItemFactory::InitItems_Criterias()
 {
+	item_criterias_.clear();
 	item_maps_["Criterias"] = item_criterias_;
-
 }
 
 void Makers::Items::ItemFactory::InitItems_Images()
 {
+	item_images_.clear();
 	item_maps_["Images"] = item_images_;
-
 }
 
 void Makers::Items::ItemFactory::InitItems_InspInfos()
 {
+	item_inspinfos_.clear();
 	item_maps_["InspInfos"] = item_inspinfos_;
-
 }
 
 void Makers::Items::ItemFactory::InitItems_Numericals()
 {
+	item_numericals_.clear();
 	item_maps_["Numericals"] = item_numericals_;
-
 }
 
 void Makers::Items::ItemFactory::InitItems_Rois()
 {
+	item_rois_.clear();
 	item_maps_["Rois"] = item_rois_;
-
 }
 
 void Makers::Items::ItemFactory::InitItems_Symbols()
 {
+	item_symbols_.clear();
 	item_maps_["Symbols"] = item_symbols_;
-
 }
+
+void Makers::Items::ItemFactory::InitItems_Samples()
+{
+	item_samples_.clear();
+	//item_samples_["RandomFloatImageItem"] = []() {return static_cast<ItemBase*>(new Makers::Items::Samples::RandomFloatImageItem()); };
+	item_samples_["FloatThresholdingItem"] = []() {return static_cast<ItemBase*>(new Makers::Items::Samples::FloatThreshodingItem()); };
+
+	item_maps_["Samples"] = item_samples_;
+}
+
 #pragma endregion
 
 
@@ -119,6 +131,11 @@ std::map<std::string, std::vector<std::string>> Makers::Items::ItemFactory::Cont
 	}
 
 	return items;
+}
+
+void Makers::Items::ItemFactory::IDHandle(Makers::Documents::Document* _document, std::string _id)
+{
+	_document->id_ = _id;
 }
 
 //@ TODO : other ways -> hidden

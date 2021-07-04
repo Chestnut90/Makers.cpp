@@ -8,6 +8,7 @@
 
 namespace Makers
 {
+	namespace Documents { class Document; }
 	namespace Properties { class PropertyBase; }
 	namespace Items
 	{
@@ -49,6 +50,8 @@ namespace Makers
 			ItemBase* Create(std::string);
 			std::map<std::string, std::vector<std::string>> ContainingItems();
 
+			//@ document id handle when load files
+			static void IDHandle(Makers::Documents::Document*, std::string);
 			//@ item base id handle when load files
 			static void IDHandle(ItemBase&, std::string);
 			//@ property base id handle when load files

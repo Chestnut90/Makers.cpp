@@ -21,6 +21,8 @@
 namespace Documents = Makers::Documents;
 namespace Items = Makers::Items;
 
+#pragma region getters
+
 //@ id getter
 std::string Makers::Documents::Document::id() const
 {
@@ -33,25 +35,32 @@ std::string Makers::Documents::Document::title() const
 	return title_;
 }
 
+//@ get memory pool
 Makers::MemoryPools::ArrayMemoryPool * Makers::Documents::Document::memory_pool() const
 {
 	return memory_pool_;
 }
 
+//@ get stream image
 Makers::Computables::Image<float>* Makers::Documents::Document::stream_image() const
 {
 	return stream_image_;
 }
 
+//@ get width of stream image
 unsigned long Makers::Documents::Document::width() const
 {
 	return stream_image_->width();
 }
 
+//@ get height of stream image
 unsigned long Makers::Documents::Document::height() const
 {
 	return stream_image_->height();
 }
+
+#pragma endregion
+#pragma region setters
 
 //@ title setter
 void Makers::Documents::Document::set_title(std::string _title) 
@@ -72,6 +81,9 @@ void Makers::Documents::Document::set_stream_image(float * _image, unsigned long
 	stream_image_->set_image(_image, _width, _height);
 	memory_pool_->AllocateMemory(_width, _height);
 }
+
+#pragma endregion
+#pragma region ctors
 
 //@ constructor
 Makers::Documents::Document::Document() :
@@ -106,13 +118,14 @@ Makers::Documents::Document::~Document()
 	ClearItems();
 }
 
+#pragma endregion
+
 //@ items count
 int Makers::Documents::Document::Count()
 {
 	return items_.size();
 }
 
-//@ TODO : memory handling 
 //@ add item
 void Makers::Documents::Document::AddItem(Items::ItemBase * _itembase)
 {
@@ -276,34 +289,3 @@ std::map<std::string, std::string> Makers::Documents::Document::ToData()
 
 	return data;
 }
-
-//@ deprecated
-int Makers::Documents::Document::_ComputeImageBufferCounts(Makers::Items::ItemBase * _itembase)
-{
-	auto output_properties = _itembase->output_properties();
-	int count = 0;
-	std::for_each(output_properties->Begin(), output_properties->End(),
-		[this, &count](std::pair<std::string, Makers::Properties::PropertyBase*> pair)
-	{
-		auto property = pair.second;
-
-		if (_IsImageType(property->data_object())) { count++;}
-	});
-	return count;
-}
-
-//@ deprecated
-bool Makers::Documents::Document::_IsImageType(Makers::Computables::IComputable* _computable)
-{
-	if (dynamic_cast<Makers::Computables::Image<char>*>(_computable) != nullptr) return true;
-	if (dynamic_cast<Makers::Computables::Image<unsigned char>*>(_computable) != nullptr) return true;
-	if (dynamic_cast<Makers::Computables::Image<int>*>(_computable) != nullptr) return true;
-	if (dynamic_cast<Makers::Computables::Image<unsigned int>*>(_computable) != nullptr) return true;
-	if (dynamic_cast<Makers::Computables::Image<long>*>(_computable) != nullptr) return true;
-	if (dynamic_cast<Makers::Computables::Image<unsigned long>*>(_computable) != nullptr) return true;
-	if (dynamic_cast<Makers::Computables::Image<float>*>(_computable) != nullptr) return true;
-	if (dynamic_cast<Makers::Computables::Image<double>*>(_computable) != nullptr) return true;
-
-	return false;
-}
-

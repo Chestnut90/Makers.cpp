@@ -12,14 +12,17 @@ namespace Makers
 		//@ using circular queue (deque)
 		class __declspec(dllexport) ArrayMemoryPool
 		{
+#pragma region members
 		private:
 
 			//@ memory access mutex
 			//@ for multi-threading
+			//@ must void pointer to be wrapped clr object
 			void* access_mutex_;
 
 			//@ memory allocation mutext
 			//@ for async allocation
+			//@ must void pointer to be wrapped clr object
 			void* allocation_mutex_;
 
 			//@ vector for memories
@@ -38,6 +41,8 @@ namespace Makers
 			//@ is allocated
 			bool is_allocated_;
 
+#pragma endregion
+#pragma region getters
 		public:
 
 			//@ get current memory index
@@ -52,7 +57,8 @@ namespace Makers
 			bool is_allocated() const;
 			//@ get memory 
 			void* memory();
-
+#pragma endregion
+#pragma region setters
 		public:
 			//@ set width
 			void set_width(unsigned long);
@@ -60,22 +66,43 @@ namespace Makers
 			void set_height(unsigned long);
 			//@ set memory count
 			void set_count(unsigned long);
+
+#pragma endregion
+
 		public:
 			
 			//@ constructor width memory infos
-			ArrayMemoryPool(unsigned long _width = 0, unsigned long _height = 0, unsigned long _count = 0);
+			ArrayMemoryPool(
+				unsigned long _width = 0, 
+				unsigned long _height = 0, 
+				unsigned long _count = 0);
 			
 			//@ desturctor
 			~ArrayMemoryPool();
 		
 		public:
-			//@ allocateMemory
-			void AllocateMemory(unsigned long _width, unsigned long _height, unsigned long _count = -1);
+			//@ allocate memory
+			void AllocateMemory(
+				unsigned long _width, 
+				unsigned long _height, 
+				unsigned long _count = -1);
 		
 		private:
-			void _AllocateMemory_Async(unsigned long _width, unsigned long _height, unsigned long _count);
-			bool _AllocateMemory_Low(unsigned long _width, unsigned long _height, unsigned long _count);
-			bool _AllocateMemory_High(unsigned long _width, unsigned long _height, unsigned long _count);
+			//@ allocate memory with async
+			void _AllocateMemory_Async(
+				unsigned long _width, 
+				unsigned long _height, 
+				unsigned long _count);
+			//@ allocate memory when count is lower than current memory count
+			bool _AllocateMemory_Low(
+				unsigned long _width, 
+				unsigned long _height, 
+				unsigned long _count);
+			//@ allocate memory when count is higher than current memory count
+			bool _AllocateMemory_High(
+				unsigned long _width, 
+				unsigned long _height, 
+				unsigned long _count);
 
 		public:
 			//@ clear memories
