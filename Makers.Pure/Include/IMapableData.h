@@ -12,8 +12,8 @@ namespace Makers
 	class __declspec(dllexport) IMapableData
 	{
 	public:
-		IMapableData() {}
-		virtual ~IMapableData() {}
+		IMapableData();
+		virtual ~IMapableData();
 
 	public:
 		virtual std::map<std::string, std::string> ToData() = 0;

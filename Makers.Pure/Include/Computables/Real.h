@@ -54,7 +54,7 @@ namespace Makers
 
 			//@ deep copy into
 			//virtual void CopyInto(IComputable& _computable) override;
-
+			bool CanAttachable(IComputable* _computable) override;
 			std::string ToString() override;
 		};
 

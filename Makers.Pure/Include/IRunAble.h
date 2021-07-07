@@ -17,8 +17,8 @@ namespace Makers
 	class __declspec(dllexport) IRunAble
 	{
 	public:
-		IRunAble() {}
-		virtual ~IRunAble() {}
+		IRunAble();
+		virtual ~IRunAble();
 	public:
 
 		virtual bool Run(

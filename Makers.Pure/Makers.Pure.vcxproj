@@ -160,14 +160,23 @@
     <ClInclude Include="Include\Computables\IComputable.h" />
     <ClInclude Include="Include\Computables\Image.h" />
     <ClInclude Include="Include\Computables\Real.h" />
+    <ClInclude Include="Include\Computables\ROI.h" />
     <ClInclude Include="Include\Documents\ArrayMemoryPool.h" />
     <ClInclude Include="Include\Documents\Document.h" />
     <ClInclude Include="Include\IMapableData.h" />
     <ClInclude Include="Include\IRunAble.h" />
     <ClInclude Include="Include\Items\FactoryRegister.h" />
+    <ClInclude Include="Include\Items\Images\BinarizationItem.h" />
+    <ClInclude Include="Include\Items\Images\FillImageItem.h" />
+    <ClInclude Include="Include\Items\Images\InvertedImageItem.h" />
+    <ClInclude Include="Include\Items\Images\MorphologyFilterItem.h" />
+    <ClInclude Include="Include\Items\Images\NoiseFilterItem.h" />
     <ClInclude Include="Include\Items\Images\StreamImageItem.h" />
     <ClInclude Include="Include\Items\ItemBase.h" />
     <ClInclude Include="Include\Items\ItemFactory.h" />
+    <ClInclude Include="Include\Items\Numericals\BlobItem.h" />
+    <ClInclude Include="Include\Items\Numericals\EdgeDetectItem.h" />
+    <ClInclude Include="Include\Items\ROIs\RoiItem.h" />
     <ClInclude Include="Include\Items\Samples\FloatThresholdingItem.h" />
     <ClInclude Include="Include\Items\Samples\RandomFloatImageItem.h" />
     <ClInclude Include="Include\Items\Samples\SampleItem0.h" />
@@ -182,30 +191,48 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="Include\Computables\IComputable.cpp" />
+    <ClCompile Include="Include\Computables\Image.cpp" />
+    <ClCompile Include="Include\Computables\ImagePointer.cpp" />
+    <ClCompile Include="Include\Computables\Real.cpp" />
+    <ClCompile Include="Include\Computables\ROI.cpp" />
+    <ClCompile Include="Include\Documents\ArrayMemoryPool.cpp" />
+    <ClCompile Include="Include\Documents\Document.cpp" />
+    <ClCompile Include="Include\IMapableData.cpp" />
+    <ClCompile Include="Include\IRunAble.cpp" />
+    <ClCompile Include="Include\Items\Images\BinarizationItem.cpp" />
+    <ClCompile Include="Include\Items\Images\FillImageItem.cpp" />
+    <ClCompile Include="Include\Items\Images\InvertedImageItem.cpp" />
+    <ClCompile Include="Include\Items\Images\MorphologyFilterItem.cpp" />
+    <ClCompile Include="Include\Items\Images\NoiseFilterItem.cpp" />
+    <ClCompile Include="Include\Items\Images\StreamImageItem.cpp" />
+    <ClCompile Include="Include\Items\ItemBase.cpp" />
+    <ClCompile Include="Include\Items\ItemFactory.cpp" />
+    <ClCompile Include="Include\Items\ItemFactory.Def.Criterias.cpp" />
+    <ClCompile Include="Include\Items\ItemFactory.Def.Images.cpp" />
+    <ClCompile Include="Include\Items\ItemFactory.Def.InspInfos.cpp" />
+    <ClCompile Include="Include\Items\ItemFactory.Def.Numericals.cpp" />
+    <ClCompile Include="Include\Items\ItemFactory.Def.ROIs.cpp" />
+    <ClCompile Include="Include\Items\ItemFactory.Def.Samples.cpp" />
+    <ClCompile Include="Include\Items\ItemFactory.Def.Symbols.cpp" />
+    <ClCompile Include="Include\Items\Numericals\BlobItem.cpp" />
+    <ClCompile Include="Include\Items\Numericals\EdgeDetectItem.cpp" />
+    <ClCompile Include="Include\Items\ROIs\RoiItem.cpp" />
+    <ClCompile Include="Include\Items\Samples\FloatThresholdingItem.cpp" />
+    <ClCompile Include="Include\Items\Samples\RandomFloatImageItem.cpp" />
+    <ClCompile Include="Include\Items\Samples\SampleItem0.cpp" />
     <ClCompile Include="Include\nTest.cpp" />
+    <ClCompile Include="Include\Properties\InputProperty.cpp" />
+    <ClCompile Include="Include\Properties\OutputProperty.cpp" />
+    <ClCompile Include="Include\Properties\PropertyBase.cpp" />
+    <ClCompile Include="Include\Properties\PropertyGroup.cpp" />
+    <ClCompile Include="Include\Properties\StaticProperty.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\Computables\ImagePointer.cpp" />
-    <ClCompile Include="src\Computables\IComputable.cpp" />
-    <ClCompile Include="src\Computables\Image.cpp" />
-    <ClCompile Include="src\Computables\Real.cpp" />
-    <ClCompile Include="src\Documents\ArrayMemoryPool.cpp" />
-    <ClCompile Include="src\Documents\Document.cpp" />
-    <ClCompile Include="src\Items\Images\StreamImageItem.cpp" />
-    <ClCompile Include="src\Items\ItemBase.cpp" />
-    <ClCompile Include="src\Items\ItemFactory.cpp" />
-    <ClCompile Include="src\Items\Samples\FloatThresholdingItem.cpp" />
-    <ClCompile Include="src\Items\Samples\RandomFloatImageItem.cpp" />
-    <ClCompile Include="src\Items\Samples\SampleItem0.cpp" />
-    <ClCompile Include="src\Properties\InputProperty.cpp" />
-    <ClCompile Include="src\Properties\OutputProperty.cpp" />
-    <ClCompile Include="src\Properties\PropertyBase.cpp" />
-    <ClCompile Include="src\Properties\PropertyGroup.cpp" />
-    <ClCompile Include="src\Properties\StaticProperty.cpp" />
     <ClCompile Include="Utils\UniqueIDs\GUIDGen.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

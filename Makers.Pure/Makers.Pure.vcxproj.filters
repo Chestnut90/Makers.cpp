@@ -37,42 +37,6 @@
     <Filter Include="Include\Items\Symbols">
       <UniqueIdentifier>{3cbb8c8c-5fe1-44f2-b6a9-111145df9175}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src">
-      <UniqueIdentifier>{b9b485b2-75cc-4d32-9950-2d4220fd7209}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Computables">
-      <UniqueIdentifier>{6eb028c9-07bd-4a0c-a7ea-b104a1d78b35}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Documents">
-      <UniqueIdentifier>{68fb00f4-395c-4e1a-a471-0597b9a812b1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Items">
-      <UniqueIdentifier>{00d92a1b-af28-45f1-893f-deb5d235abbb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Properties">
-      <UniqueIdentifier>{751a0bde-4309-4725-8a2e-a046f4a783ce}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Items\Symbols">
-      <UniqueIdentifier>{f5c1ba13-5a19-44c9-a44f-686688d5d029}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Items\Samples">
-      <UniqueIdentifier>{26a31879-c901-4b56-8517-0dcf53704c80}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Items\Numericals">
-      <UniqueIdentifier>{5608c436-e497-4021-8585-44b141a54087}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Items\ROIs">
-      <UniqueIdentifier>{d76d48db-c942-4961-be3a-3d253e3bbe80}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Items\InspInfos">
-      <UniqueIdentifier>{59bf0b90-2f90-401c-8d3c-183ef8751a84}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Items\Images">
-      <UniqueIdentifier>{7d97c002-77f6-45a5-8667-9647caa66b88}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Items\Criterias">
-      <UniqueIdentifier>{81bb7f57-117e-48a8-85f7-1a453954f3fd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Utils">
       <UniqueIdentifier>{4ffdb706-b97a-4932-b83e-aca119ebe3ff}</UniqueIdentifier>
     </Filter>
@@ -153,70 +117,151 @@
     <ClInclude Include="framework.h">
       <Filter>default_runs</Filter>
     </ClInclude>
+    <ClInclude Include="Include\Computables\ROI.h">
+      <Filter>Include\Computables</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Items\Images\NoiseFilterItem.h">
+      <Filter>Include\Items\Images</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Items\Images\BinarizationItem.h">
+      <Filter>Include\Items\Images</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Items\Images\FillImageItem.h">
+      <Filter>Include\Items\Images</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Items\Images\MorphologyFilterItem.h">
+      <Filter>Include\Items\Images</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Items\Numericals\BlobItem.h">
+      <Filter>Include\Items\Numericals</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Items\Numericals\EdgeDetectItem.h">
+      <Filter>Include\Items\Numericals</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Items\Images\InvertedImageItem.h">
+      <Filter>Include\Items\Images</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Items\ROIs\RoiItem.h">
+      <Filter>Include\Items\ROIs</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Include\nTest.cpp">
       <Filter>Include</Filter>
     </ClCompile>
-    <ClCompile Include="src\Items\Samples\FloatThresholdingItem.cpp">
-      <Filter>src\Items\Samples</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Items\Samples\RandomFloatImageItem.cpp">
-      <Filter>src\Items\Samples</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Items\Samples\SampleItem0.cpp">
-      <Filter>src\Items\Samples</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Items\ItemBase.cpp">
-      <Filter>src\Items</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Items\ItemFactory.cpp">
-      <Filter>src\Items</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Computables\Image.cpp">
-      <Filter>src\Computables</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Computables\Real.cpp">
-      <Filter>src\Computables</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Documents\ArrayMemoryPool.cpp">
-      <Filter>src\Documents</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Documents\Document.cpp">
-      <Filter>src\Documents</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Properties\InputProperty.cpp">
-      <Filter>src\Properties</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Properties\OutputProperty.cpp">
-      <Filter>src\Properties</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Properties\PropertyBase.cpp">
-      <Filter>src\Properties</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Properties\PropertyGroup.cpp">
-      <Filter>src\Properties</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Properties\StaticProperty.cpp">
-      <Filter>src\Properties</Filter>
-    </ClCompile>
     <ClCompile Include="Utils\UniqueIDs\GUIDGen.cpp">
       <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Items\Images\StreamImageItem.cpp">
-      <Filter>src\Items\Images</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Computables\IComputable.cpp">
-      <Filter>src\Computables</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Computables\ImagePointer.cpp">
-      <Filter>src\Computables</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>default_runs</Filter>
     </ClCompile>
     <ClCompile Include="dllmain.cpp">
       <Filter>default_runs</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Computables\IComputable.cpp">
+      <Filter>Include\Computables</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Computables\Image.cpp">
+      <Filter>Include\Computables</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Computables\ImagePointer.cpp">
+      <Filter>Include\Computables</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Computables\Real.cpp">
+      <Filter>Include\Computables</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Computables\ROI.cpp">
+      <Filter>Include\Computables</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Documents\ArrayMemoryPool.cpp">
+      <Filter>Include\Documents</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Documents\Document.cpp">
+      <Filter>Include\Documents</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\Images\BinarizationItem.cpp">
+      <Filter>Include\Items\Images</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\Images\FillImageItem.cpp">
+      <Filter>Include\Items\Images</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\Images\InvertedImageItem.cpp">
+      <Filter>Include\Items\Images</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\Images\MorphologyFilterItem.cpp">
+      <Filter>Include\Items\Images</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\Images\NoiseFilterItem.cpp">
+      <Filter>Include\Items\Images</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\Images\StreamImageItem.cpp">
+      <Filter>Include\Items\Images</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\Numericals\BlobItem.cpp">
+      <Filter>Include\Items\Numericals</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\Numericals\EdgeDetectItem.cpp">
+      <Filter>Include\Items\Numericals</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\Samples\FloatThresholdingItem.cpp">
+      <Filter>Include\Items\Samples</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\Samples\RandomFloatImageItem.cpp">
+      <Filter>Include\Items\Samples</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\Samples\SampleItem0.cpp">
+      <Filter>Include\Items\Samples</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\ItemBase.cpp">
+      <Filter>Include\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\ItemFactory.cpp">
+      <Filter>Include\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\ItemFactory.Def.Criterias.cpp">
+      <Filter>Include\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\ItemFactory.Def.Images.cpp">
+      <Filter>Include\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\ItemFactory.Def.InspInfos.cpp">
+      <Filter>Include\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\ItemFactory.Def.Numericals.cpp">
+      <Filter>Include\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\ItemFactory.Def.ROIs.cpp">
+      <Filter>Include\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\ItemFactory.Def.Samples.cpp">
+      <Filter>Include\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\ItemFactory.Def.Symbols.cpp">
+      <Filter>Include\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Properties\InputProperty.cpp">
+      <Filter>Include\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Properties\OutputProperty.cpp">
+      <Filter>Include\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Properties\PropertyBase.cpp">
+      <Filter>Include\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Properties\PropertyGroup.cpp">
+      <Filter>Include\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Properties\StaticProperty.cpp">
+      <Filter>Include\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\IRunAble.cpp">
+      <Filter>Include</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\IMapableData.cpp">
+      <Filter>Include</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\ROIs\RoiItem.cpp">
+      <Filter>Include\Items\ROIs</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

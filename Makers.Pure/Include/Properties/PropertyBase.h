@@ -7,16 +7,15 @@
 namespace Makers
 {
 	namespace Computables { class IComputable; }
-	namespace Items 
-	{
-		class ItemFactory;
-		class ItemBase;
-	}
+	namespace Items { class ItemFactory; class ItemBase; }
 	namespace Properties
 	{
-		class __declspec(dllexport) PropertyBase : public IMapableData
+		class PropertyGroup;
+		class __declspec(dllexport) PropertyBase : 
+			public IMapableData
 		{
 			friend class Makers::Items::ItemFactory;
+			friend class Makers::Properties::PropertyGroup;
 
 		private:
 			//@ id
@@ -44,10 +43,13 @@ namespace Makers
 			std::string name() const;
 			//@ get owner item
 			Items::ItemBase* owner_item() const;	
-			//@ get is optional
-			bool is_optional() const;
 			//@ get data object
 			Computables::IComputable* data_object() const;
+			//@ get is optional
+			bool is_optional() const;
+			//@ get is used
+			bool is_used() const;
+			
 
 		// setters
 		public:
@@ -55,6 +57,7 @@ namespace Makers
 			void set_is_used(bool _is_used);
 
 		protected:
+			//@ constructor
 			PropertyBase(
 				std::string _name, 
 				Items::ItemBase* _owner_item, 
@@ -62,6 +65,7 @@ namespace Makers
 				bool _is_optional = false);
 			
 		public:
+			//@ destructor
 			virtual ~PropertyBase();
 		
 		public:

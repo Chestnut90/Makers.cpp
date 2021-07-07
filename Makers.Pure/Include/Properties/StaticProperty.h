@@ -8,8 +8,10 @@ namespace Makers
 {
 	namespace Properties
 	{
-		class __declspec(dllexport) StaticProperty : public PropertyBase
+		class __declspec(dllexport) StaticProperty 
+			: public PropertyBase
 		{
+
 		public:
 			//@ constructor
 			StaticProperty(std::string _name,

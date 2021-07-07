@@ -16,6 +16,7 @@ namespace Makers
 
 	namespace Items
 	{
+		//@ TODO : lambda with self reference
 		//@ computing method
 		__declspec(dllexport) typedef bool(*Compute)(
 			ItemBase* _reference,
@@ -54,7 +55,6 @@ namespace Makers
 			//@ output properties
 			Properties::PropertyGroup* output_properties_;	
 
-			// TODO : move private
 			//@ buffer handles
 			std::vector<void*> buffers_;
 			//@ buffer counts
@@ -75,9 +75,9 @@ namespace Makers
 			long long last_computed_time() const;
 			bool is_last_computed_result() const;
 			Makers::Documents::Document* document() const;
-			Properties::PropertyGroup* input_properties();
-			Properties::PropertyGroup* static_properties();
-			Properties::PropertyGroup* output_properties();
+			Properties::PropertyGroup* input_properties() const;
+			Properties::PropertyGroup* static_properties() const;
+			Properties::PropertyGroup* output_properties() const;
 			int buffer_count() const;
 
 #pragma endregion

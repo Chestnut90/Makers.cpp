@@ -20,11 +20,6 @@ namespace Makers
 			//@ must void pointer to be wrapped clr object
 			void* access_mutex_;
 
-			//@ memory allocation mutext
-			//@ for async allocation
-			//@ must void pointer to be wrapped clr object
-			void* allocation_mutex_;
-
 			//@ vector for memories
 			//@ void pointer initialize with 8byte each data.
 			std::vector<void*> memories_;
@@ -37,9 +32,6 @@ namespace Makers
 			
 			//@ array height
 			unsigned long height_;
-
-			//@ is allocated
-			bool is_allocated_;
 
 #pragma endregion
 #pragma region getters

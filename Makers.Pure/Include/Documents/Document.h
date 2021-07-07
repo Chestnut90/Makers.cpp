@@ -5,26 +5,34 @@
 
 namespace Makers
 {
-	namespace Computables { class IComputable; template <typename _image_type>class Image; }
+	namespace Computables { template <typename _image_type>class Image; }
 	namespace MemoryPools { class ArrayMemoryPool; }
 	namespace Items { class ItemBase; class ItemFactory; }
 
-	//@ TODO : memory pool access
 	namespace Documents
 	{
 		class __declspec(dllexport) Document :
 			public IMapableData
 		{
 			friend class Makers::Items::ItemFactory;
+
+			// TODO : input images
+			
+			
+			//@ stream image red
+			//Makers::Computables::Image<unsigned char>* stream_image_red_;
+			//@ stream image green
+			//Makers::Computables::Image<unsigned char>* stream_image_green_;
+			//@ stream image blue
+			//Makers::Computables::Image<unsigned char>* stream_image_blue_;
+
 #pragma region members
 		private:
 			//@ memory pool
 			MemoryPools::ArrayMemoryPool* memory_pool_;
-
-			//@ stream image
+			//@ stream image float
 			Makers::Computables::Image<float>* stream_image_;
-
-		private:
+			
 			//@ unique id 
 			std::string id_;
 			//@ item collection
@@ -35,9 +43,8 @@ namespace Makers
 			std::string title_;
 
 #pragma endregion
-#pragma region Getters & Setters
+#pragma region Getters
 
-		// getters
 		public:
 			//@ get id
 			std::string id() const;
@@ -51,7 +58,10 @@ namespace Makers
 			unsigned long width() const;
 			//@ stream image height
 			unsigned long height() const;
-		// setters
+#pragma endregion
+
+#pragma region Setters
+
 		public:
 			//@ set title
 			void set_title(std::string _title);
@@ -99,6 +109,11 @@ namespace Makers
 			void ClearItems();
 
 #pragma endregion
+
+		public:
+			//@ initialize memory pool
+			//@ 
+			void InitMemoryPool();
 
 		public:
 

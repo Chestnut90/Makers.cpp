@@ -162,6 +162,7 @@
     <ClInclude Include="GotoBed.h" />
     <ClInclude Include="Itemfactory_test.h" />
     <ClInclude Include="Test_Documents.h" />
+    <ClInclude Include="Test_Instances.h" />
     <ClInclude Include="Test_RandomImageFloat.h" />
     <ClInclude Include="Test_Thresholdings.h" />
   </ItemGroup>

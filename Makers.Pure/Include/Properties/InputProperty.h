@@ -12,7 +12,8 @@ namespace Makers
 		class PropertyBase;
 
 		class __declspec(dllexport) InputProperty : 
-			public PropertyBase, public IRunAble
+			public PropertyBase,
+			public IRunAble
 		{
 		public:
 			//@ connected property

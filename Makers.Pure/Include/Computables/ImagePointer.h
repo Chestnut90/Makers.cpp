@@ -34,6 +34,7 @@ namespace Makers
 
 		public:
 			
+			bool CanAttachable(IComputable* _computable) override;
 			virtual std::string ToString() override;
 		};
 

@@ -14,6 +14,9 @@
     <Filter Include="Document_Test">
       <UniqueIdentifier>{1532a875-e4e4-445d-8d16-e8d74d0d66ae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="InstanceTest">
+      <UniqueIdentifier>{d4837954-4a60-484f-a93d-7f0eab32f749}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -33,6 +36,9 @@
     </ClInclude>
     <ClInclude Include="Test_Documents.h">
       <Filter>Document_Test</Filter>
+    </ClInclude>
+    <ClInclude Include="Test_Instances.h">
+      <Filter>InstanceTest</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
