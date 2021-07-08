@@ -47,11 +47,11 @@ Makers::Items::Compute Makers::Items::Samples::RandomFloatImageItem::SetCompute(
 		// get inputs
 
 		// get statics
-		auto com_width = dynamic_cast<Makers::Computables::Real<unsigned long>*>
+		auto com_width = dynamic_cast<Makers::Computables::Real<long>*>
 			(_statics->QueryPropertyName(here->kStaticImageWidth)->data_object());
 		auto width = com_width->value();
 
-		auto com_height = dynamic_cast<Makers::Computables::Real<unsigned long>*>
+		auto com_height = dynamic_cast<Makers::Computables::Real<long>*>
 			(_statics->QueryPropertyName(here->kStaticImageHeight)->data_object());
 		auto height = com_height->value();
 
@@ -92,13 +92,13 @@ Makers::Properties::PropertyGroup * Makers::Items::Samples::RandomFloatImageItem
 		(Makers::Properties::PropertyBase*) new Makers::Properties::StaticProperty(
 			"static_image_width",
 			this,
-			new Makers::Computables::Real<unsigned long>()));
+			new Makers::Computables::Real<long>()));
 
 	static_properties->AddProperty(
 		(Makers::Properties::PropertyBase*) new Makers::Properties::StaticProperty(
 			"static_image_height",
 			this,
-			new Makers::Computables::Real<unsigned long>()));
+			new Makers::Computables::Real<long>()));
 
 	return static_properties;
 }

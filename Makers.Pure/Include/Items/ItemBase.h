@@ -10,10 +10,8 @@
 
 namespace Makers
 {
-	// forward declaration
 	namespace Documents { class Document; }
 	namespace Properties { class PropertyGroup; }
-
 	namespace Items
 	{
 		//@ TODO : lambda with self reference
@@ -24,11 +22,12 @@ namespace Makers
 			Properties::PropertyGroup* _static_properties,
 			Properties::PropertyGroup* _output_properties);
 
+		//@ item base class -> abstract
 		class __declspec(dllexport) ItemBase :
 			public IMapableData,
 			public IRunAble
 		{
-			//@ access all of ItemBase
+			friend class Makers::Documents::Document;
 			friend class ItemFactory;
 		public:
 			
@@ -36,11 +35,10 @@ namespace Makers
 
 		private:
 			//@ wait mutex
+			//@ void pointer for c++/clr exception
 			void* wait_mutex_;
 			//@ unique id
 			std::string id_;	
-			//@ last computed result
-			bool is_last_computed_result_;	
 			//@ document owner
 			Makers::Documents::Document* document_;
 		protected:
@@ -63,28 +61,34 @@ namespace Makers
 		public:
 			//@ user defined name
 			std::string custom_name_;	
-			//@ time for query.
-			long long last_computed_time_;
 
 #pragma endregion
 #pragma region Getters 
 		public:
+			//@ get id
 			std::string id() const;
+			//@ get item name
 			std::string item_name() const;
+			//@ get custom name
 			std::string custom_name() const;
-			long long last_computed_time() const;
-			bool is_last_computed_result() const;
+			//@ get owner document
 			Makers::Documents::Document* document() const;
+			//@ get input property group
 			Properties::PropertyGroup* input_properties() const;
+			//@ get static property group
 			Properties::PropertyGroup* static_properties() const;
+			//@ get ouput property group
 			Properties::PropertyGroup* output_properties() const;
+			//@ get buffer count
 			int buffer_count() const;
 
 #pragma endregion
 #pragma region Setters
 		public:
+			//@ set custom name
 			void set_custom_name(std::string _name);
-			void set_document(Makers::Documents::Document* _document);
+			//@ set document
+			void set_document(Makers::Documents::Document* _document);	// TODO : private
 #pragma endregion
 #pragma region Constructor & Destructors
 
@@ -106,10 +110,6 @@ namespace Makers
 
 #pragma endregion
 
-		// implemented in inherited item
-		private:
-			//virtual ItemBase* CreateItem() = 0;
-
 		protected:
 			virtual std::string SetItemName() = 0;
 			virtual Compute SetCompute() = 0;
@@ -119,6 +119,7 @@ namespace Makers
 #pragma region Runable
 
 		public:
+
 			//@ run
 			virtual bool Run(
 				Documents::Document* _document, 
@@ -140,6 +141,7 @@ namespace Makers
 			//@ to string
 			virtual std::string ToString();
 		};
+
 	}
 }
 

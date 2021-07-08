@@ -77,8 +77,13 @@ Makers::Properties::PropertyBase::PropertyBase(
 //@ public Destructor
 Makers::Properties::PropertyBase::~PropertyBase()
 {
+	// release data object
 	delete data_object_;
+	data_object_ = nullptr;
+
+	// release onwer item
 	//delete owner_item_;	// do not delete parent item. memory error.
+	owner_item_ = nullptr;
 }
 
 //@ To Data

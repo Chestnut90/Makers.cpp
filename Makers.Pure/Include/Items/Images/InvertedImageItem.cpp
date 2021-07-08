@@ -61,7 +61,7 @@ Makers::Items::Compute Makers::Items::Images::InvertedImageItem::SetCompute()
 		// send to output
 		auto com_inverted_image = dynamic_cast<Makers::Computables::ImagePointer<float>*>(
 			_outputs->QueryPropertyName(here->KOutputInvertedImage)->data_object());
-		com_inverted_image->set_point(here->buffers_.at(0), width, height);
+		com_inverted_image->set_buffer(here->buffers_.at(0), width, height);
 		auto inverted_image = com_inverted_image->image();
 
 		float max_value(0.f);
@@ -76,12 +76,9 @@ Makers::Properties::PropertyGroup * Makers::Items::Images::InvertedImageItem::Se
 	auto properties = new Makers::Properties::PropertyGroup();
 
 	// add input float image
-	properties->AddProperty(
-		(Makers::Properties::PropertyBase*) new Makers::Properties::InputProperty(
-			"input_float_image",
-			this,
-			new Makers::Computables::Image<float>()));
-
+	properties->AddProperty("Input_Image", new Makers::Computables::Image<float>(), false, Properties::eInputProperty);
+	// add input as roi
+	//properties->AddProperty("ROI", new Makers::Computables::ROI(), true, Properties::eInputProperty);
 	return properties;
 }
 
@@ -96,11 +93,7 @@ Makers::Properties::PropertyGroup * Makers::Items::Images::InvertedImageItem::Se
 	auto output_properties = new Makers::Properties::PropertyGroup();
 
 	// output filled image
-	output_properties->AddProperty(
-		(Makers::Properties::PropertyBase*) new Makers::Properties::OutputProperty(
-			"output_inverted_image",
-			this,
-			new Makers::Computables::ImagePointer<float>()));
+	output_properties->AddProperty("Inverted_Image", new Makers::Computables::ImagePointer<float>(), false, Properties::eOutputProperty);
 
 	return output_properties;
 }

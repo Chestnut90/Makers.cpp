@@ -37,6 +37,8 @@ namespace Makers
 			std::string id_;
 			//@ item collection
 			std::vector<Items::ItemBase*> items_;
+			//@ last computed time
+			long long last_computed_time_;
 
 		public:
 			//@ title
@@ -58,6 +60,8 @@ namespace Makers
 			unsigned long width() const;
 			//@ stream image height
 			unsigned long height() const;
+			//@ last computed time
+			long long last_computed_time() const;
 #pragma endregion
 
 #pragma region Setters
@@ -111,6 +115,7 @@ namespace Makers
 #pragma endregion
 
 		public:
+
 			//@ initialize memory pool
 			//@ 
 			void InitMemoryPool();

@@ -43,6 +43,9 @@
     <Filter Include="default_runs">
       <UniqueIdentifier>{c783898d-01a2-4c82-a664-db6eda00f823}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Utils\Rects">
+      <UniqueIdentifier>{e12d9b1f-fab6-4496-ade4-f28588648dfc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\Items\Samples\FloatThresholdingItem.h">
@@ -141,8 +144,20 @@
     <ClInclude Include="Include\Items\Images\InvertedImageItem.h">
       <Filter>Include\Items\Images</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Items\ROIs\RoiItem.h">
+    <ClInclude Include="Utils\Rects\Rectangle.h">
+      <Filter>Utils\Rects</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Rects\RectangleF.h">
+      <Filter>Utils\Rects</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Computables\Combo.h">
+      <Filter>Include\Computables</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Items\ROIs\ROIItem.h">
       <Filter>Include\Items\ROIs</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Items\Images\ZmapItem.h">
+      <Filter>Include\Items\Images</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -260,8 +275,20 @@
     <ClCompile Include="Include\IMapableData.cpp">
       <Filter>Include</Filter>
     </ClCompile>
-    <ClCompile Include="Include\Items\ROIs\RoiItem.cpp">
+    <ClCompile Include="Utils\Rects\Rectangle.cpp">
+      <Filter>Utils\Rects</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\Rects\RectangleF.cpp">
+      <Filter>Utils\Rects</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Computables\Combo.cpp">
+      <Filter>Include\Computables</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\ROIs\ROIItem.cpp">
       <Filter>Include\Items\ROIs</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\Images\ZmapItem.cpp">
+      <Filter>Include\Items\Images</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

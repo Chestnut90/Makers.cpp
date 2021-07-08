@@ -19,25 +19,25 @@ namespace Makers
 
 				//@ input property name (first)
 				//@ float image
-				const std::string kInputFloatImage = "input_float_image";
+				const std::string kInputFloatImage = "Input_Image";
 
 				//@ input property name (second)
 				//@ roi
-				const std::string kInputRoi = "input_roi";
+				const std::string kInputRoi = "ROI";
 
 				//@ static property names
 			public:
 
 				//@ static property name (second)
 				//@ fill value
-				const std::string kStaticFillValue = "static_fill_value";
+				const std::string kStaticFillValue = "Filled_Value";
 
 				//@ output property names
 			public:
 
 				//@ output property name (first)
 				//@ output filled image
-				const std::string kOutputFloatImage = "output_filled_image";
+				const std::string kOutputFloatImage = "Filled_Image";
 
 			public:
 				FillImageItem();

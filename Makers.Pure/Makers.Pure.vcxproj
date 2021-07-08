@@ -156,6 +156,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Include\Computables\Combo.h" />
     <ClInclude Include="Include\Computables\ImagePointer.h" />
     <ClInclude Include="Include\Computables\IComputable.h" />
     <ClInclude Include="Include\Computables\Image.h" />
@@ -171,12 +172,13 @@
     <ClInclude Include="Include\Items\Images\InvertedImageItem.h" />
     <ClInclude Include="Include\Items\Images\MorphologyFilterItem.h" />
     <ClInclude Include="Include\Items\Images\NoiseFilterItem.h" />
+    <ClInclude Include="Include\Items\Images\ZmapItem.h" />
     <ClInclude Include="Include\Items\Images\StreamImageItem.h" />
     <ClInclude Include="Include\Items\ItemBase.h" />
     <ClInclude Include="Include\Items\ItemFactory.h" />
     <ClInclude Include="Include\Items\Numericals\BlobItem.h" />
     <ClInclude Include="Include\Items\Numericals\EdgeDetectItem.h" />
-    <ClInclude Include="Include\Items\ROIs\RoiItem.h" />
+    <ClInclude Include="Include\Items\ROIs\ROIItem.h" />
     <ClInclude Include="Include\Items\Samples\FloatThresholdingItem.h" />
     <ClInclude Include="Include\Items\Samples\RandomFloatImageItem.h" />
     <ClInclude Include="Include\Items\Samples\SampleItem0.h" />
@@ -187,10 +189,13 @@
     <ClInclude Include="Include\Properties\PropertyGroup.h" />
     <ClInclude Include="Include\Properties\StaticProperty.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Utils\Rects\Rectangle.h" />
+    <ClInclude Include="Utils\Rects\RectangleF.h" />
     <ClInclude Include="Utils\UniqueIDs\GUIDGen.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="Include\Computables\Combo.cpp" />
     <ClCompile Include="Include\Computables\IComputable.cpp" />
     <ClCompile Include="Include\Computables\Image.cpp" />
     <ClCompile Include="Include\Computables\ImagePointer.cpp" />
@@ -205,6 +210,7 @@
     <ClCompile Include="Include\Items\Images\InvertedImageItem.cpp" />
     <ClCompile Include="Include\Items\Images\MorphologyFilterItem.cpp" />
     <ClCompile Include="Include\Items\Images\NoiseFilterItem.cpp" />
+    <ClCompile Include="Include\Items\Images\ZmapItem.cpp" />
     <ClCompile Include="Include\Items\Images\StreamImageItem.cpp" />
     <ClCompile Include="Include\Items\ItemBase.cpp" />
     <ClCompile Include="Include\Items\ItemFactory.cpp" />
@@ -217,7 +223,7 @@
     <ClCompile Include="Include\Items\ItemFactory.Def.Symbols.cpp" />
     <ClCompile Include="Include\Items\Numericals\BlobItem.cpp" />
     <ClCompile Include="Include\Items\Numericals\EdgeDetectItem.cpp" />
-    <ClCompile Include="Include\Items\ROIs\RoiItem.cpp" />
+    <ClCompile Include="Include\Items\ROIs\ROIItem.cpp" />
     <ClCompile Include="Include\Items\Samples\FloatThresholdingItem.cpp" />
     <ClCompile Include="Include\Items\Samples\RandomFloatImageItem.cpp" />
     <ClCompile Include="Include\Items\Samples\SampleItem0.cpp" />
@@ -233,6 +239,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Utils\Rects\Rectangle.cpp" />
+    <ClCompile Include="Utils\Rects\RectangleF.cpp" />
     <ClCompile Include="Utils\UniqueIDs\GUIDGen.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

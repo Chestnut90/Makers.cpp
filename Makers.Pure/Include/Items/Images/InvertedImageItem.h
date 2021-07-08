@@ -10,7 +10,8 @@ namespace Makers
 	{
 		namespace Images
 		{
-			// TODO : define it
+			// TODO : roi
+			//@ class inverted image item
 			class __declspec(dllexport) InvertedImageItem :
 				public ItemBase
 			{
@@ -19,7 +20,11 @@ namespace Makers
 
 				//@ input property name (first)
 				//@ float image
-				const std::string kInputFloatImage = "input_float_image";
+				const std::string kInputFloatImage = "Input_Image";
+
+				//@ input property name (second)
+				//@ roi
+				//const std::string kInputROI = "ROI";
 
 				//@ static property names
 			public:
@@ -29,7 +34,7 @@ namespace Makers
 
 				//@ output property name (first)
 				//@ output inverted image
-				const std::string KOutputInvertedImage = "output_inverted_image";
+				const std::string KOutputInvertedImage = "Inverted_Image";
 
 			public:
 				InvertedImageItem();

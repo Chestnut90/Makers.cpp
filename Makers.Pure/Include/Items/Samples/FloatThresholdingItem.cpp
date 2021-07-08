@@ -65,7 +65,7 @@ Makers::Items::Compute Makers::Items::Samples::FloatThreshodingItem::SetCompute(
 		// send to output
 		auto com_binary_image = dynamic_cast<Makers::Computables::ImagePointer<unsigned char>*>(
 			_outputs->QueryPropertyName(here->kOutputThresholdedImage)->data_object());
-		com_binary_image->set_point(here->buffers_.at(0), width, height);
+		com_binary_image->set_buffer(here->buffers_.at(0), width, height);
 		auto binary = com_binary_image->image();
 		
 		// thresholding

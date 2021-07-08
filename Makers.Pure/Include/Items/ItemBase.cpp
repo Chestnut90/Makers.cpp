@@ -36,18 +36,6 @@ std::string Makers::Items::ItemBase::custom_name() const
 	return custom_name_;
 }
 
-//@ get last computed time 
-long long Makers::Items::ItemBase::last_computed_time() const
-{
-	return last_computed_time_;
-}
-
-//@ get last computed result
-bool Makers::Items::ItemBase::is_last_computed_result() const
-{
-	return is_last_computed_result_;
-}
-
 //@ get owner document
 Makers::Documents::Document* Makers::Items::ItemBase::document() const
 {
@@ -103,27 +91,21 @@ Makers::Items::ItemBase::ItemBase() :
 	item_name_ = ""; // TODO : sub class set.
 	custom_name_ = "";	// user defined
 	compute_ = nullptr;	// sub class
-	last_computed_time_ = 0.0; 
-	is_last_computed_result_ = false;
 	document_ = nullptr; // user defined
-	
+
 	// mutex and lock
 	std::mutex* mutex = new std::mutex();
 	wait_mutex_ = (void*)mutex;
-	
+
 	buffer_counts_ = 0;
-	// properties
-	// input_properties_ = new Properties::PropertyGroup();
-	// static_properties_ = new Properties::PropertyGroup();
-	// output_properties_ = new Properties::PropertyGroup();
 }
 
 //@ constructor with setters
 Makers::Items::ItemBase::ItemBase(
-	std::string _item_name, 
-	Compute _compute, 
-	Properties::PropertyGroup * _input_properties, 
-	Properties::PropertyGroup * _static_properties, 
+	std::string _item_name,
+	Compute _compute,
+	Properties::PropertyGroup * _input_properties,
+	Properties::PropertyGroup * _static_properties,
 	Properties::PropertyGroup * _output_properties) :
 	ItemBase()
 {
@@ -137,25 +119,38 @@ Makers::Items::ItemBase::ItemBase(
 	output_properties_->owner_item_ = this;
 }
 
-//@ TODO :?
-//@ protected or public destructor
+//@ public destructor
 Makers::Items::ItemBase::~ItemBase()
 {
 	compute_ = nullptr;
+	// release input properties
 	delete input_properties_;
+	input_properties_ = nullptr;
+
+	// release static properties
 	delete static_properties_;
+	static_properties_ = nullptr;
+
+	// release output properties
 	delete output_properties_;
+	output_properties_ = nullptr;
+
+	// release mutex
 	if (wait_mutex_ != nullptr)
 	{
 		delete wait_mutex_;
+		wait_mutex_ = nullptr;
 	}
+
+	// release owner document
 	// delete document_; // not delete
+	document_ = nullptr;
 }
 
 //@ item run
 bool Makers::Items::ItemBase::Run(
-	Documents::Document * _document, 
-	ItemBase * _caller, 
+	Documents::Document * _document,
+	ItemBase * _caller,
 	long long _timestamp)
 {
 	auto wait_mutex = std::move((std::mutex*)wait_mutex_);
@@ -172,10 +167,10 @@ bool Makers::Items::ItemBase::Run(
 		// not computed yet
 		if (last_computed_time_ < _timestamp)
 		{
-			is_last_computed_result_ = false;
+			ResetState();	// reset error state
+			compute_state_ = eComputeState::Running;	// set current state to running
 
-			// collect inputs
-			if (CollectInputs(_document, _caller, _timestamp))
+			if (CollectInputs(_document, _caller, _timestamp))	// collect inputs
 			{
 				// set buffer
 				buffers_.clear();
@@ -185,34 +180,30 @@ bool Makers::Items::ItemBase::Run(
 				}
 
 				// compute
-				if (compute_ == nullptr) { throw std::exception("compute nullptr error"); }
-				is_last_computed_result_ = compute_(this, input_properties_, static_properties_, output_properties_);
+				compute_state_ = compute_(this, input_properties_, static_properties_, output_properties_)
+					? eComputeState::Completed : eComputeState::Fail;
 			}
 			// set current time
 			last_computed_time_ = std::chrono::high_resolution_clock::now().time_since_epoch().count();
 		}
 	}	// lock released automatically
-	return is_last_computed_result_;
+	return compute_state_ == eComputeState::Completed;
 }
 
 //@ collect data from input properties
 bool Makers::Items::ItemBase::CollectInputs(
-	Documents::Document * _document, 
-	ItemBase * _caller, 
+	Documents::Document * _document,
+	ItemBase * _caller,
 	long long _timestamp)
 {
 	// create futures
 	std::vector<std::future<bool>> futures;
 	std::for_each(input_properties_->Begin(), input_properties_->End(),
-		[&futures, &_document, &_caller, &_timestamp](std::pair<std::string, Properties::PropertyBase*> pair)
+		[&futures, &_document, &_caller, &_timestamp](Properties::PropertyBase* property)
 	{
 		// cast to input property
-		auto input_property = dynamic_cast<Properties::InputProperty*>(pair.second);
-		if (input_property == nullptr)
-		{
-			return false;
-		}
-
+		auto input_property = dynamic_cast<Properties::InputProperty*>(property);	// not nullptr
+		
 		// launch task with async
 		auto future = std::async(std::launch::async,
 			&Properties::InputProperty::Run, input_property, // call func and instance
@@ -221,27 +212,31 @@ bool Makers::Items::ItemBase::CollectInputs(
 	});
 
 	// wait all
-	std::vector<bool> input_result_collection;
+	std::vector<bool> future_results;
 	for (auto &future : futures)
 	{
-		input_result_collection.push_back(future.get());
+		try
+		{
+			future_results.push_back(future.get());
+		}
+		catch (const std::exception& e)
+		{
+			// set error string
+			error_ += e.what();
+			error_ += "\n";
+			future_results.push_back(false);
+		}
 	}
 
-	// check all results
-	bool total_result = true;
-	for (auto result : input_result_collection)
-	{
-		total_result &= result;
-	}
-
-	return total_result;
+	// check all of result
+	return std::all_of(future_results.begin(), future_results.end(), [](bool res) { return res; });
 }
 
 //@ to data
 std::map<std::string, std::string> Makers::Items::ItemBase::ToData()
 {
 	std::map<std::string, std::string> data;
-	
+
 	data["ID"] = id_;
 	data["ItemName"] = item_name_;
 	data["CustomName"] = custom_name_;
@@ -252,6 +247,7 @@ std::map<std::string, std::string> Makers::Items::ItemBase::ToData()
 	return data;
 }
 
+//@ to string
 std::string Makers::Items::ItemBase::ToString()
 {
 	std::string result;

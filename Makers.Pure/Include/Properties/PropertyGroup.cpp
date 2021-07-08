@@ -32,9 +32,11 @@ Makers::Properties::PropertyGroup::PropertyGroup()
 //@ destructor
 Makers::Properties::PropertyGroup::~PropertyGroup()
 {
-	// not delete onwer item
-	//delete owner_item_;
+	// release onwer item
+	// delete owner_item_;
+	owner_item_ = nullptr;
 
+	// relase properties
 	Clear();
 }
 
@@ -54,7 +56,7 @@ void  Makers::Properties::PropertyGroup::AddProperty(PropertyBase* _property)
 		throw std::exception("find same named property.");
 	}
 
-	properties_[_property->name()] = _property;
+	properties_.push_back(_property);
 }
 
 //@ TODO : 
@@ -63,20 +65,21 @@ Properties::PropertyBase* Makers::Properties::PropertyGroup::AddProperty(
 	std::string _name,
 	Computables::IComputable * _computable,
 	bool _is_optional,
-	PropertyType _property_type)
+	ePropertyType _property_type)
 {
 	throw std::exception("not implemented");
 
 	PropertyBase* property_base = nullptr;
 	switch (_property_type)
 	{
-	case Makers::Properties::ePropertyBase:
-		break;
 	case Makers::Properties::eInputProperty:
+		property_base = new InputProperty(_name, owner_item_, _computable, _is_optional);
 		break;
 	case Makers::Properties::eStaticProperty:
+		property_base = new StaticProperty(_name, owner_item_, _computable, _is_optional);
 		break;
 	case Makers::Properties::eOutputProperty:
+		property_base = new OutputProperty(_name, owner_item_, _computable, _is_optional);
 		break;
 	default:
 		break;
@@ -86,13 +89,13 @@ Properties::PropertyBase* Makers::Properties::PropertyGroup::AddProperty(
 }
 
 //@ properties iterator begin
-std::map<std::string, Properties::PropertyBase*>::iterator Makers::Properties::PropertyGroup::Begin()
+std::vector<Properties::PropertyBase*>::iterator Makers::Properties::PropertyGroup::Begin()
 {
 	return properties_.begin();
 }
 
 //@ properties iterator end
-std::map<std::string, Properties::PropertyBase*>::iterator Makers::Properties::PropertyGroup::End()
+std::vector<Properties::PropertyBase*>::iterator Makers::Properties::PropertyGroup::End()
 {
 	return properties_.end();
 }
@@ -100,11 +103,11 @@ std::map<std::string, Properties::PropertyBase*>::iterator Makers::Properties::P
 //@ query property with id
 Properties::PropertyBase* Makers::Properties::PropertyGroup::QueryPropertyID(std::string _id)
 {
-	for (auto pair : properties_)
+	for (auto property : properties_)
 	{
-		if (pair.second->id() == _id)
+		if (property->id() == _id)
 		{
-			return pair.second;
+			return property;
 		}
 	}
 	return nullptr;
@@ -113,16 +116,22 @@ Properties::PropertyBase* Makers::Properties::PropertyGroup::QueryPropertyID(std
 //@ query property with name
 Properties::PropertyBase* Makers::Properties::PropertyGroup::QueryPropertyName(std::string _name)
 {
-	Properties::PropertyBase* property = properties_.count(_name) == 0 ? nullptr : properties_[_name];
-	return property;
+	for (auto property : properties_)
+	{
+		if (property->name() == _name)
+		{
+			return property;
+		}
+	}
+
+	return nullptr;
 }
 
 //@ clear all properties
 void Makers::Properties::PropertyGroup::Clear()
 {
-	for (auto pair : properties_)
+	for (auto property : properties_)
 	{
-		auto property = pair.second;
 		delete property;
 		property = nullptr;
 	}

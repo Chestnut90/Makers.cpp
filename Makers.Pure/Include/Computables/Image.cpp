@@ -4,7 +4,6 @@
 
 #include "Image.h"
 
-using namespace Makers::Computables;
 #pragma region getters and setters
 
 //@ get width
@@ -23,29 +22,38 @@ long Makers::Computables::Image<_image_type>::height() const
 
 //@ get image
 template<typename _image_type>
-_image_type * Image<_image_type>::image() const
+_image_type * Makers::Computables::Image<_image_type>::image() const
 {
-	return static_cast<_image_type*>(data_);
+	return image_;
 }
 
+//@ set image
 template<typename _image_type>
-void Image<_image_type>::set_image(_image_type * _image, long _width, long _height)
+void Makers::Computables::Image<_image_type>::set_image(_image_type * _image, long _width, long _height)
 {
-	if (data_ != nullptr)
+	// empty size
+	if (image_ != nullptr)
 	{
-		delete (_image_type*)data_;
-
-		//free(data_);
-		data_ = nullptr;
+		delete image_;
+		image_ = nullptr;
 	}
 
+	// check size difference
+	if (width_ != _width || height_ != _height)
+	{
+		image_ = new _image_type[_width * _height];
+	}
+
+	// copy image
+	memcpy(image_, (void*)_image, _width * _height * sizeof(_image_type));
+
+	// set width and height
 	width_ = _width;
 	height_ = _height;
-
-	data_ = new _image_type[width_ * height_];
-	memcpy(data_, (void*)_image, width_ * height_ * sizeof(_image_type));
 }
 
+//@ set image
+//@ copy function
 template<typename _image_type>
 void Makers::Computables::Image<_image_type>::set_image(Image<_image_type>* _image)
 {
@@ -56,48 +64,58 @@ void Makers::Computables::Image<_image_type>::set_image(Image<_image_type>* _ima
 
 //@ constructor
 template<typename _image_type>
-Image<_image_type>::Image() : 
+Makers::Computables::Image<_image_type>::Image() :
 	IComputable()
 {
-	_SetComputableType();
-	set_image(nullptr, 0, 0);
+	instance_type_ = eInstanceType::Image;	// set data type
+	_SetDataType();							// set literal type
+	set_image(nullptr, 0, 0);				// init image
 }
 
 //@ destructor
 template<typename _image_type>
-Image<_image_type>::~Image()
+Makers::Computables::Image<_image_type>::~Image()
 {
+	delete image_;
+	image_ = nullptr;
 }
 
+//@ set data type
 template<typename _image_type>
-void Makers::Computables::Image<_image_type>::_SetComputableType()
+void Makers::Computables::Image<_image_type>::_SetDataType()
 {
-	if (typeid(unsigned char) == typeid(_image_type))
+	if (typeid(unsigned char) == typeid(_image_type))	// check byte
 	{
-		computable_type_ = eComputableType::Image_Byte;
+		data_type_ = eDataType::Byte;
 		return;
 	}
-	if (typeid(float) == typeid(_image_type))
+	if (typeid(float) == typeid(_image_type))			// check float
 	{
-		computable_type_ = eComputableType::Image_Float;
+		data_type_ = eDataType::Float;
 		return;
 	}
-	if (typeid(double) == typeid(_image_type))
+	if (typeid(double) == typeid(_image_type))			// check dobule
 	{
-		computable_type_ = eComputableType::Image_Double;
+		data_type_ = eDataType::Double;
 		return;
 	}
 }
 
+//@ Can attach input to this
 template<typename _image_type>
-bool Makers::Computables::Image<_image_type>::CanAttachable(IComputable * computable)
+bool Makers::Computables::Image<_image_type>::CanAttachInto(IComputable * _computable)
 {
-	computable->computable_type();
+	if (data_type_ != _computable->data_type()) return false;
+
+	auto data_type = _computable->instance_type();
+	// image or image pointer are able to be connected
+	if (data_type == eInstanceType::Image || data_type == eInstanceType::ImagePointer) return true;
 	return false;
 }
 
+//@ to string
 template<typename _image_type>
-std::string Image<_image_type>::ToString()
+std::string Makers::Computables::Image<_image_type>::ToString()
 {
-	return "float image " + std::to_string(width_) + " x " + std::to_string(height_);
+	return "<class Image<" + DataType() + ">> " + std::to_string(width_) + ", " + std::to_string(height_);
 }

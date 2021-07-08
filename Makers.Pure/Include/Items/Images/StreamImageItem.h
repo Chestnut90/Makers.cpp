@@ -10,22 +10,16 @@ namespace Makers
 	{
 		namespace Images
 		{
-
+			//@ class stream image item
 			class __declspec(dllexport) StreamImageItem :
 				public ItemBase
 			{
 			//@ property names
 			public:
 
-				//@ static property name (first)
-				//@ image width
-				const std::string kStaticImageWidth = "static_image_width";
-				//@ static property name (second)
-				//@ image height)
-				const std::string kStaticImageHeight= "static_image_height";
-				//@ output property name (first)
-				//@ number of zero in binary image
-				const std::string kOutputStreaImage = "output_stream_image";
+				//@ output property name
+				//@ stream image
+				const std::string kOutputStreaImage = "Stream_Image";
 
 			public:
 				StreamImageItem();

@@ -8,12 +8,9 @@ namespace Makers
 {
 	namespace Items
 	{
-		// TODO : enum or other
-
-
 		namespace Images
 		{
-			// TODO : define it
+			//@ class morphology filter item
 			class __declspec(dllexport) MorphologyFilterItem :
 				public ItemBase
 			{
@@ -22,29 +19,29 @@ namespace Makers
 
 				//@ input property name (first)
 				//@ float image
-				const std::string kInputFloatImage = "input_float_image";
+				const std::string kInputFloatImage = "Input_Image";
 
 				//@ input property name (second)
 				//@ roi
-				const std::string kInputRoi = "input_roi";
+				const std::string kInputRoi = "ROI";
 
 				//@ static property names
 			public:
 
 				//@ static property name (first)
 				//@ morphology type
-				const std::string KStaticMorphologyType = "static_morphology_type";
+				const std::string KStaticMorphologyType = "Morphology_Type";
 
 				//@ static property name (second)
 				//@ filter size
-				const std::string KStaticFilterSize = "static_filter_size";
+				const std::string KStaticFilterSize = "Filter_Size";
 
 				//@ output property names
 			public:
 
 				//@ output property name (first)
 				//@ output filtered image
-				const std::string kOutputFilteredImage = "output_filtered_image";
+				const std::string kOutputFilteredImage = "Filtered_image";
 
 			public:
 				MorphologyFilterItem();

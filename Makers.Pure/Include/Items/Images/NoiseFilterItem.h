@@ -23,29 +23,29 @@ namespace Makers
 
 				//@ input property name (first)
 				//@ float image
-				const std::string kInputFloatImage = "input_float_image";
+				const std::string kInputFloatImage = "Input_Image";
 
 				//@ input property name (second)
 				//@ roi
-				const std::string kInputRoi = "input_roi";
+				const std::string kInputRoi = "ROI";
 
 				//@ static property names
 			public:
 
 				//@ static property name (first)
 				//@ noise filter type
-				const std::string KStaticNoiseFilterType = "static_noise_filter_type";
+				const std::string KStaticNoiseFilterType = "Filter_Type";
 
 				//@ static property name (second)
 				//@ filter size
-				const std::string KStaticFilterSize = "static_filter_size";
+				const std::string KStaticFilterSize = "Filter_Size";
 
 				//@ output property names
 			public:
 
 				//@ output property name (first)
 				//@ output filtered image
-				const std::string kOutputFilteredImage = "output_filtered_image";
+				const std::string kOutputFilteredImage = "Filtered_Image";
 
 			public:
 				NoiseFilterItem();

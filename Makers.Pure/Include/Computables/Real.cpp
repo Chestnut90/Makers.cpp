@@ -10,45 +10,30 @@ using namespace Makers::Computables;
 template<typename _real_type>
 _real_type Makers::Computables::Real<_real_type>::value() const
 {
-	_real_type value = *static_cast<_real_type*>(data_);
-	return value;
-	//return static_cast<_real_type*>(data_);
+	return value_;
 }
 
+//@ set value
 template<typename _real_type>
-void Makers::Computables::Real<_real_type>::set_value(_real_type value)
+void Makers::Computables::Real<_real_type>::set_value(_real_type _value)
 {
-	if (data_ != nullptr)
-	{
-		delete data_;
-	}
-	data_ = new _real_type(value);
-}
-
-template<typename _real_type>
-RealType Makers::Computables::Real<_real_type>::real_type() const
-{
-	return real_type_;
+	value_ = _value;
 }
 
 //@ constructor
 template<typename _real_type>
 Real<_real_type>::Real()
 {
-	data_ = new _real_type;
-
-	/*if (std::is_same_v(_real_type, char))
-	{
-		real_type_ = RealType::CHAR;
-	}
-*/
+	instance_type_ = eInstanceType::Real;	// set data type
+	_SetDataType();				// set literal type
+	value_ = 0;
 }
 
 //@ constructor
 template<typename _real_type>
-Makers::Computables::Real<_real_type>::Real(_real_type value) : Real()
+Makers::Computables::Real<_real_type>::Real(_real_type _value) : Real()
 {
-	set_value(value);
+	set_value(_value);
 }
 
 //@ destructor
@@ -57,51 +42,53 @@ Makers::Computables::Real<_real_type>::~Real()
 {
 }
 
-//@ TODO :
-//@ deprecated
+//@ set data type
 template<typename _real_type>
-IComputable & Makers::Computables::Real<_real_type>::operator=(IComputable & _computable)
+void Makers::Computables::Real<_real_type>::_SetDataType()
 {
-	// cast
-	Real<_real_type>* real = reinterpret_cast<Real<_real_type>*>(&_computable);
-	if (real == nullptr)
+	if (typeid(_real_type) == typeid(bool))				// check bool
 	{
-		throw std::exception("cannot convert to real type instance.");
+		data_type_ = eDataType::Bool;
+		return;
 	}
-
-	memcpy(data_, real->data_, sizeof(_real_type));
-	return *this;
-	// TODO: 여기에 반환 구문을 삽입합니다.
+	if (typeid(_real_type) == typeid(unsigned char))	// check byte
+	{
+		data_type_ = eDataType::Byte;
+		return;
+	}
+	if (typeid(_real_type) == typeid(int))				// check int
+	{
+		data_type_ = eDataType::Int;
+		return;
+	}
+	if (typeid(_real_type) == typeid(long))				// check long
+	{
+		data_type_ = eDataType::Long;
+		return;
+	}
+	if (typeid(_real_type) == typeid(float))			// check float
+	{
+		data_type_ = eDataType::Float;
+		return;
+	}
+	if (typeid(_real_type) == typeid(double))			// check double
+	{
+		data_type_ = eDataType::Double;
+		return;
+	}
 }
-
-//@ deep copy into
-//template<typename _real_type>
-//void Makers::Computables::Real<_real_type>::CopyInto(IComputable & _computable)
-//{
-//	Real<_real_type>* real = reinterpret_cast<Real<_real_type>*>(&_computable);
-//	if (real == nullptr)
-//	{
-//		throw std::exception("Cannnot convert to real type instance.");
-//	}
-//
-//	if (typeid(this) != typeid(real))
-//	{
-//		throw std::exception("Invalid copy. different objects");
-//	}
-//	set_value(real->value());
-//}
 
 template<typename _real_type>
-bool Makers::Computables::Real<_real_type>::CanAttachable(IComputable * _computable)
+bool Makers::Computables::Real<_real_type>::CanAttachInto(IComputable * _computable)
 {
-	return false;
+	if (instance_type() != _computable->instance_type()) return false;
+	// only same data type
+	return data_type() == _computable->data_type();
 }
 
-//@ TODO :
 //@ to string 
 template<typename _real_type>
 std::string Makers::Computables::Real<_real_type>::ToString()
 {
-	//std::string to_string = std::to_string(this) + " " + std::to_string(GetValue());
-	return "";
+	return "<class Real<" + DataType() + ">> " + std::to_string(value_);
 }

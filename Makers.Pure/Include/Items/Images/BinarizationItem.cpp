@@ -24,7 +24,6 @@ Makers::Items::Images::BinarizationItem::BinarizationItem() :
 		SetStaticProperties(),
 		SetOutputProperties())
 {
-
 	buffer_counts_ = 1;
 }
 
@@ -83,7 +82,7 @@ Makers::Items::Compute Makers::Items::Images::BinarizationItem::SetCompute()
 		// send to output
 		auto com_binary_image = dynamic_cast<Makers::Computables::ImagePointer<unsigned char>*>(
 			_outputs->QueryPropertyName(here->kOutputBinarizedImage)->data_object());
-		com_binary_image->set_point(here->buffers_.at(0), width, height);
+		com_binary_image->set_buffer(here->buffers_.at(0), width, height);
 		auto binary = com_binary_image->image();
 		
 		return retStatus::success == NXSIP::Binarization(image, width, height, roi, threshold, is_reversed, binary);
@@ -93,20 +92,10 @@ Makers::Items::Compute Makers::Items::Images::BinarizationItem::SetCompute()
 Makers::Properties::PropertyGroup * Makers::Items::Images::BinarizationItem::SetInputProperties()
 {
 	auto properties = new Makers::Properties::PropertyGroup();
-
 	// add input float image
-	properties->AddProperty(
-		(Makers::Properties::PropertyBase*) new Makers::Properties::InputProperty(
-			"input_float_image",
-			this,
-			new Makers::Computables::Image<float>()));
-
+	properties->AddProperty("Input_Image", new Makers::Computables::Image<float>(), false, Properties::eInputProperty);
 	// add input roi
-	properties->AddProperty(
-		(Makers::Properties::PropertyBase*) new Makers::Properties::InputProperty(
-			"input_roi",
-			this,
-			new Makers::Computables::ROI(), true));
+	properties->AddProperty("ROI", new Makers::Computables::ROI(), false, Properties::eInputProperty);
 
 	return properties;
 }
@@ -114,22 +103,10 @@ Makers::Properties::PropertyGroup * Makers::Items::Images::BinarizationItem::Set
 Makers::Properties::PropertyGroup * Makers::Items::Images::BinarizationItem::SetStaticProperties()
 {
 	auto properties = new Makers::Properties::PropertyGroup();
-
-	// add static threshold value
-	// init with 0.f
-	properties->AddProperty(
-		(Makers::Properties::PropertyBase*) new Makers::Properties::StaticProperty(
-			"static_threshold_value",
-			this,
-			new Makers::Computables::Real<float>(0.f)));
-
-	// add static is reversed
-	// init with false
-	properties->AddProperty(
-		(Makers::Properties::PropertyBase*) new Makers::Properties::StaticProperty(
-			"static_is_reversed",
-			this,
-			new Makers::Computables::Real<bool>(false)));
+	// add static threshold value, init with 0.f
+	properties->AddProperty("Threshold_Value", new Makers::Computables::Real<float>(0.f), false, Properties::eStaticProperty);
+	// add static is reversed, init with false
+	properties->AddProperty("Is_Reversed", new Makers::Computables::Real<bool>(false), false, Properties::eStaticProperty);
 
 	return properties;
 }
@@ -139,11 +116,7 @@ Makers::Properties::PropertyGroup * Makers::Items::Images::BinarizationItem::Set
 	auto output_properties = new Makers::Properties::PropertyGroup();
 
 	// add output binarized image
-	output_properties->AddProperty(
-		(Makers::Properties::PropertyBase*) new Makers::Properties::OutputProperty(
-			"output_binarized_image",
-			this,
-			new Makers::Computables::ImagePointer<unsigned char>()));
+	output_properties->AddProperty("Binarized_Image", new Makers::Computables::ImagePointer<unsigned char>(), false, Properties::eOutputProperty);
 
 	return output_properties;
 }

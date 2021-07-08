@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "RoiItem.h"
+#include "ROIItem.h"
 
 #include "../../Documents/Document.h"
 
@@ -27,7 +27,7 @@ Makers::Items::ROIs::RoiItem::~RoiItem()
 
 std::string Makers::Items::ROIs::RoiItem::SetItemName()
 {
-	return "RoiItem";
+	return "ROIItem";
 }
 
 Makers::Items::Compute Makers::Items::ROIs::RoiItem::SetCompute()
@@ -42,23 +42,23 @@ Makers::Items::Compute Makers::Items::ROIs::RoiItem::SetCompute()
 		auto here = dynamic_cast<RoiItem*>(_reference);
 
 		// get roi left
-		auto com_left = dynamic_cast<Computables::Real<unsigned int>*>(
-			_statics->QueryPropertyName(here->kStaticRoiLeft)->data_object());
+		auto com_left = dynamic_cast<Computables::Real<long>*>(
+			_statics->QueryPropertyName(here->kStaticLeft)->data_object());
 		auto left = com_left->value();
 
 		// get roi top
-		auto com_top = dynamic_cast<Computables::Real<unsigned int>*>(
-			_statics->QueryPropertyName(here->kStaticRoiTop)->data_object());
+		auto com_top = dynamic_cast<Computables::Real<long>*>(
+			_statics->QueryPropertyName(here->kStaticTop)->data_object());
 		auto top = com_top->value();
 
 		// get roi right
-		auto com_right = dynamic_cast<Computables::Real<unsigned int>*>(
-			_statics->QueryPropertyName(here->kStaticRoiRight)->data_object());
+		auto com_right = dynamic_cast<Computables::Real<long>*>(
+			_statics->QueryPropertyName(here->kStaticRight)->data_object());
 		auto right = com_right->value();
 
 		// get roi bottom
-		auto com_bottom = dynamic_cast<Computables::Real<unsigned int>*>(
-			_statics->QueryPropertyName(here->kStaticRoiBottom)->data_object());
+		auto com_bottom = dynamic_cast<Computables::Real<long>*>(
+			_statics->QueryPropertyName(here->kStaticBottom)->data_object());
 		auto bottom = com_bottom->value();
 
 		// set output
@@ -79,48 +79,18 @@ Makers::Properties::PropertyGroup * Makers::Items::ROIs::RoiItem::SetInputProper
 Makers::Properties::PropertyGroup * Makers::Items::ROIs::RoiItem::SetStaticProperties()
 {
 	auto properties = new Makers::Properties::PropertyGroup();
-
-	// add static roi left
-	// init with 0
-	properties->AddProperty(
-		(Makers::Properties::PropertyBase*) new Makers::Properties::StaticProperty(
-			"static_roi_left",
-			this,
-			new Makers::Computables::Real<unsigned int>(0)));
-	// add static roi top
-	// init with 0
-	properties->AddProperty(
-		(Makers::Properties::PropertyBase*) new Makers::Properties::StaticProperty(
-			"static_roi_top",
-			this,
-			new Makers::Computables::Real<unsigned int>(0)));
-	// add static roi right
-	// init with 0
-	properties->AddProperty(
-		(Makers::Properties::PropertyBase*) new Makers::Properties::StaticProperty(
-			"static_roi_right",
-			this,
-			new Makers::Computables::Real<unsigned int>(0)));
-	// add static roi bottom
-	// init with 0
-	properties->AddProperty(
-		(Makers::Properties::PropertyBase*) new Makers::Properties::StaticProperty(
-			"static_roi_bottom",
-			this,
-			new Makers::Computables::Real<unsigned int>(0)));
+	properties->AddProperty("Left", new Makers::Computables::Real<long>(0), false, Properties::eStaticProperty);
+	properties->AddProperty("Right", new Makers::Computables::Real<long>(0), false, Properties::eStaticProperty);
+	properties->AddProperty("Top", new Makers::Computables::Real<long>(0), false, Properties::eStaticProperty);
+	properties->AddProperty("Bottom", new Makers::Computables::Real<long>(0), false, Properties::eStaticProperty);
 
 	return properties;
 }
 
 Makers::Properties::PropertyGroup * Makers::Items::ROIs::RoiItem::SetOutputProperties()
 {
-	auto output_properties = new Makers::Properties::PropertyGroup();
+	auto properties = new Makers::Properties::PropertyGroup();
+	properties->AddProperty("Out_ROI", new Makers::Computables::ROI(), false, Properties::eOutputProperty);
 
-	output_properties->AddProperty(
-		(Makers::Properties::PropertyBase*) new Makers::Properties::OutputProperty(
-			"output_roi",
-			this,
-			new Makers::Computables::ROI()));
-
-	return output_properties;
+	return properties;
 }

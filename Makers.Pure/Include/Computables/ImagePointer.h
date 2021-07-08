@@ -17,37 +17,52 @@ namespace Makers
 			void* array_pool_pointer_;
 
 		protected:
+			//@ width
 			long width_;
+			//@ height
 			long height_;
 
 		public:
+			//@ get width
 			long width() const;
+			//@ get height
 			long height() const;
-
-		public:
+			//@ get image
 			_image_type* image() const;
-			void set_point(void* _buffer, unsigned long _width, unsigned long _height);
+			
+		public:
+			//@ set buffer
+			void set_buffer(void* _buffer, unsigned long _width, unsigned long _height);
 
 		public:
+			//@ constructor
 			ImagePointer();
+			//@ destructor
 			virtual ~ImagePointer();
+
+		private:
+
+			//@ set data type
+			void _SetDataType();
 
 		public:
 			
-			bool CanAttachable(IComputable* _computable) override;
+			//@ Can attach input to this
+			bool CanAttachInto(IComputable* _computable) override;
+			//@ To String
 			virtual std::string ToString() override;
 		};
 
 		// template classes for dll exports
 
-		template class ImagePointer<char>;
+		//template class ImagePointer<char>;
 		template class ImagePointer<unsigned char>;
 		
-		template class ImagePointer<int>;
-		template class ImagePointer<unsigned int>;
+		//template class ImagePointer<int>;
+		//template class ImagePointer<unsigned int>;
 
-		template class ImagePointer<long>;
-		template class ImagePointer<unsigned long>;
+		//template class ImagePointer<long>;
+		//template class ImagePointer<unsigned long>;
 
 		template class ImagePointer<float>;
 		template class ImagePointer<double>;

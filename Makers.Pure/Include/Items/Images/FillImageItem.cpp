@@ -78,7 +78,7 @@ Makers::Items::Compute Makers::Items::Images::FillImageItem::SetCompute()
 		// send to output
 		auto com_filled_image = dynamic_cast<Makers::Computables::ImagePointer<float>*>(
 			_outputs->QueryPropertyName(here->kOutputFloatImage)->data_object());
-		com_filled_image->set_point(here->buffers_.at(0), width, height);
+		com_filled_image->set_buffer(here->buffers_.at(0), width, height);
 		auto filled_image = com_filled_image->image();
 
 		return retStatus::success == NXSIP::ImageFill(roi, width, height, filled, filled_image);
@@ -90,18 +90,9 @@ Makers::Properties::PropertyGroup * Makers::Items::Images::FillImageItem::SetInp
 	auto properties = new Makers::Properties::PropertyGroup();
 
 	// add input float image
-	properties->AddProperty(
-		(Makers::Properties::PropertyBase*) new Makers::Properties::InputProperty(
-			"input_float_image",
-			this,
-			new Makers::Computables::Image<float>()));
-
+	properties->AddProperty("Input_Image", new Makers::Computables::Image<float>(), false, Properties::eInputProperty);
 	// add input roi
-	properties->AddProperty(
-		(Makers::Properties::PropertyBase*) new Makers::Properties::InputProperty(
-			"input_roi",
-			this,
-			new Makers::Computables::ROI(), true));
+	properties->AddProperty("ROI", new Makers::Computables::ROI(), false, Properties::eInputProperty);
 
 	return properties;
 }
@@ -110,12 +101,8 @@ Makers::Properties::PropertyGroup * Makers::Items::Images::FillImageItem::SetSta
 {
 	auto properties = new Makers::Properties::PropertyGroup();
 
-	// add static filled value
-	properties->AddProperty(
-		(Makers::Properties::PropertyBase*) new Makers::Properties::StaticProperty(
-			"static_fill_value",
-			this,
-			new Makers::Computables::Real<float>(0.f)));
+	// add static filled value, init with 0.f
+	properties->AddProperty("Filled_Value", new Makers::Computables::Real<float>(0.f), false, Properties::eStaticProperty);
 
 	return properties;
 }
@@ -125,11 +112,7 @@ Makers::Properties::PropertyGroup * Makers::Items::Images::FillImageItem::SetOut
 	auto output_properties = new Makers::Properties::PropertyGroup();
 
 	// add output filled image
-	output_properties->AddProperty(
-		(Makers::Properties::PropertyBase*) new Makers::Properties::OutputProperty(
-			"output_filled_image",
-			this,
-			new Makers::Computables::ImagePointer<float>()));
+	output_properties->AddProperty("Filled_Image", new Makers::Computables::ImagePointer<float>(), false, Properties::eOutputProperty);
 
 	return output_properties;
 }

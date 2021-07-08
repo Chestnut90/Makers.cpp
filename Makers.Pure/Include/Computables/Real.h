@@ -8,71 +8,54 @@ namespace Makers
 {
 	namespace Computables
 	{
-		enum RealType
-		{
-			CHAR,
-			UCHAR,
-			INT,
-			UINT,
-			LONG,
-			ULONG,
-			FLOAT,
-			DOUBLE,
-			BOOL,
-
-		};
-
-		// TODO : prevent different template type.
+		//@ real value template class
 		template <typename _real_type>
 		class __declspec(dllexport) Real :
 			public IComputable
 		{
-
 		private:
-			RealType real_type_;
+			//@ value
+			_real_type value_;
 
 		public:
-
+			//@ get value
 			_real_type value() const;
-			void set_value(_real_type value);
-			RealType real_type() const;
+			//@ set value
+			void set_value(_real_type _value);
 
 		public:
+			//@ Constructor
 			Real();
-			Real(_real_type value);
+			//@ Constructor with value
+			Real(_real_type _value);
+			//@ destructor
 			virtual ~Real();
-		
+
 		private:
-			void Check();
-
-		//@ implement
-		public:
-
-			virtual IComputable& operator=(IComputable& _computable);
+			//@ set data type
+			void _SetDataType();
 
 		public:
-
-			//@ deep copy into
-			//virtual void CopyInto(IComputable& _computable) override;
-			bool CanAttachable(IComputable* _computable) override;
+			//@ Can attach input to this
+			bool CanAttachInto(IComputable* _computable) override;
+			//@ To string
 			std::string ToString() override;
 		};
 
-		template class Real<char>;
-		//template IComputable& Real<char>::operator=(IComputable& _computable);
+		template class Real<bool>;
 
+		//template class Real<char>;
 		template class Real<unsigned char>;
 
 		template class Real<int>;
-		template class Real<unsigned int>;
+		//template class Real<unsigned int>;
 
 		template class Real<long>;
-		template class Real<unsigned long>;
+		//template class Real<unsigned long>;
 
 		template class Real<float>;
 		template class Real<double>;
 
-		template class Real<bool>;
 		
 	}
 }

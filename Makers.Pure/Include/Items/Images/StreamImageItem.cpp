@@ -7,6 +7,7 @@
 #include "../../Properties/StaticProperty.h"
 #include "../../Properties/OutputProperty.h"
 
+#include "../../Computables/ImagePointer.h"
 #include "../../Computables/Image.h"
 
 Makers::Items::Images::StreamImageItem::StreamImageItem() :
@@ -39,10 +40,14 @@ Makers::Items::Compute Makers::Items::Images::StreamImageItem::SetCompute()
 		auto here = dynamic_cast<StreamImageItem*>(_reference);
 
 		auto stream_image = here->document()->stream_image();
-		
-		auto com_stream_image = dynamic_cast<Makers::Computables::Image<float>*>(
+		auto image = stream_image->image();
+		auto width = stream_image->width();
+		auto height = stream_image->height();
+		if (stream_image == nullptr) return false;
+
+		auto com_stream_image = dynamic_cast<Makers::Computables::ImagePointer<float>*>(
 			_outputs->QueryPropertyName(here->kOutputStreaImage)->data_object());
-		com_stream_image->set_image(stream_image);
+		com_stream_image->set_buffer(image, width, height);
 		return true;
 	};
 }
@@ -63,11 +68,7 @@ Makers::Properties::PropertyGroup * Makers::Items::Images::StreamImageItem::SetO
 {
 	auto output_properties = new Makers::Properties::PropertyGroup();
 
-	output_properties->AddProperty(
-		(Makers::Properties::PropertyBase*) new Makers::Properties::OutputProperty(
-			"output_stream_image",
-			this,
-			new Makers::Computables::Image<float>()));
+	output_properties->AddProperty("Stream_Image", new Makers::Computables::ImagePointer<float>(), false, Properties::eOutputProperty);
 
 	return output_properties;
 }

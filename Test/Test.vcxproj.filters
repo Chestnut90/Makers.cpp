@@ -40,5 +40,8 @@
     <ClInclude Include="Test_Instances.h">
       <Filter>InstanceTest</Filter>
     </ClInclude>
+    <ClInclude Include="Future_exception.h">
+      <Filter>AsyncTest</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -11,38 +11,45 @@ namespace Makers
 		class __declspec(dllexport) ROI :
 			public IComputable
 		{
+		private:
+			//@ left
+			long left_;
+			//@ top
+			long top_;
+			//@ right
+			long right_;
+			//@ bottom
+			long bottom_;
 
 		public:
-
-			unsigned int left() const;
-			unsigned int top() const;
-			unsigned int right() const;
-			unsigned int bottom() const;
-
-		public:
-			void set_left(unsigned int);
-			void set_top(unsigned int);
-			void set_right(unsigned int);
-			void set_bottom(unsigned int);
-
-			void set_roi(
-				unsigned int,
-				unsigned int,
-				unsigned int,
-				unsigned int);
+			//@ get left
+			long left() const;
+			//@ get top
+			long top() const;
+			//@ get right
+			long right() const;
+			//@ get bottom
+			long bottom() const;
 
 		public:
-			ROI(
-				unsigned int = 0,
-				unsigned int = 0,
-				unsigned int = 0,
-				unsigned int = 0);
+			//@ set roi
+			void set_roi(long, long, long, long);
+
+		public:
+			//@ constructor with 0
+			ROI();
+			//@ constructor
+			//@ left - top - right - bottom
+			ROI(long, long, long, long);
+			//@ destructor
 			virtual ~ROI();
 		
 		public:
 
-			bool CanAttachable(IComputable* _computable) override;
+			//@ Can attach input to this
+			bool CanAttachInto(IComputable* _computable) override;
 
+			//@ To String
 			std::string ToString() override;
 		};
 	}

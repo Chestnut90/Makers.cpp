@@ -8,6 +8,9 @@ namespace Makers
 {
 	namespace Computables
 	{
+		//@ used in input property
+		//@ Image class with template
+		//@ exported with data type
 		template <typename _image_type>
 		class __declspec(dllexport) Image :
 			public IComputable
@@ -17,6 +20,9 @@ namespace Makers
 			long width_;
 			//@ height
 			long height_;
+			//@ image data
+			//@ void for type casting
+			_image_type* image_;
 
 		public:
 			//@ get width
@@ -38,13 +44,13 @@ namespace Makers
 			virtual ~Image();
 
 		private:
-
-			void _SetComputableType();
+			//@ set data type
+			void _SetDataType();
 
 		public:
 
-			//@ Can attachable into 
-			virtual bool CanAttachable(IComputable* computable) override;
+			//@ Can attach input to this
+			virtual bool CanAttachInto(IComputable* _computable) override;
 
 			//@ To string
 			virtual std::string ToString() override;

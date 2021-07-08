@@ -56,6 +56,11 @@ unsigned long Makers::Documents::Document::height() const
 	return stream_image_->height();
 }
 
+long long Makers::Documents::Document::last_computed_time() const
+{
+	return last_computed_time_;
+}
+
 #pragma endregion
 #pragma region setters
 
@@ -216,9 +221,9 @@ std::vector<Makers::Items::ItemBase*> Makers::Documents::Document::FindRootItems
 	{
 		auto input_properties = item->input_properties();
 		std::for_each(input_properties->Begin(), input_properties->End(),
-			[&id_set](std::pair<std::string, Properties::PropertyBase*> pair)
+			[&id_set](Properties::PropertyBase* property)
 		{
-			auto input_property = dynamic_cast<Properties::InputProperty*>(pair.second);
+			auto input_property = dynamic_cast<Properties::InputProperty*>(property);
 
 			// check connected null
 			auto connected_property = input_property->connected_property();
@@ -252,6 +257,7 @@ void Makers::Documents::Document::ClearItems()
 	items_.resize(0);
 }
 
+//@ Init memory pool
 void Makers::Documents::Document::InitMemoryPool()
 {
 	if (memory_pool_ == nullptr)
@@ -276,6 +282,9 @@ bool Makers::Documents::Document::RunAsync(
 	std::vector<Items::ItemBase*> _items, 
 	Makers::Computables::Image<float>* _stream)
 {
+	// set last computed time
+	last_computed_time_ = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+
 	// init memory pool
 	if (memory_pool_ == nullptr) { InitMemoryPool(); }	
 

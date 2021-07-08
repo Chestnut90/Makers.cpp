@@ -8,6 +8,7 @@
 #include "Images/MorphologyFilterItem.h"
 #include "Images/NoiseFilterItem.h"
 #include "Images/StreamImageItem.h"
+#include "Images/ZmapItem.h"
 #pragma endregion
 
 void Makers::Items::ItemFactory::InitItems_Images()
@@ -30,6 +31,9 @@ void Makers::Items::ItemFactory::InitItems_Images()
 	
 	item_images_["StreamImageItem"] = []()
 	{return static_cast<ItemBase*>(new Makers::Items::Images::StreamImageItem()); };
+
+	item_images_["ZmapItem"] = []()
+	{return static_cast<ItemBase*>(new Makers::Items::Images::ZmapItem()); };
 
 	item_maps_["Images"] = item_images_;
 }

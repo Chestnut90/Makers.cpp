@@ -17,7 +17,6 @@ namespace Makers
 			class __declspec(dllexport) RoiItem :
 				public ItemBase
 			{
-
 				//@ input property 
 			public:
 
@@ -26,29 +25,31 @@ namespace Makers
 
 				//@ static property name (first)
 				//@ roi left
-				const std::string kStaticRoiLeft = "static_roi_left";
+				const std::string kStaticLeft = "Left";
 
-				//@ static property name (second)
+				//@ static property name 
 				//@ roi top
-				const std::string kStaticRoiTop = "static_roi_top";
+				const std::string kStaticTop = "Top";
 
-				//@ static property name (third)
+				//@ static property name
 				//@ roi right
-				const std::string kStaticRoiRight = "static_roi_right";
+				const std::string kStaticRight = "Right";
 
-				//@ static property name (fourth)
+				//@ static property name
 				//@ roi bottom
-				const std::string kStaticRoiBottom = "static_roi_bottom";
+				const std::string kStaticBottom = "Bottom";
 
 				//@ output property names
 			public:
 
 				//@ output property name (first)
 				//@ output roi
-				const std::string kOutputRoi = "output_roi";
+				const std::string kOutputRoi = "ROI";
 
 			public:
+				//@ constructor
 				RoiItem();
+				//@ destructor
 				~RoiItem();
 
 			protected:

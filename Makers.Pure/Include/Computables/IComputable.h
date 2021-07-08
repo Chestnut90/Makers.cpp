@@ -8,30 +8,29 @@ namespace Makers
 {
 	namespace Computables
 	{
-		enum class eComputableType : int
+		enum class eInstanceType : int
 		{
-			IComputable = -1,
+			None = -1,
 
-			// Image Type
-			Image_Byte = 0,
-			Image_Float = 1,
-			Image_Double = 2,
+			Image = 0,
+			ImagePointer = 1,
+			Real = 2,
+			ROI = 3,
+			Combo = 4,
+		};
 
-			// Image Pointer Type
-			Image_Pointer_Byte = 3,
-			Image_Pointer_Float = 4,
-			Image_Pointer_Double = 5,
+		enum class eDataType :int
+		{
+			None = -1,
 
-			// Real
-			Real_Bool = 6,
-			Real_Byte = 7,
-			Real_Int = 8,
-			Real_Float = 9,
-			Real_Long = 10,
-			Real_Double = 11,
-			
-			// ROI
-			ROI = 12,
+			Void = 0,
+			Bool = 1,
+			Byte = 2,
+			Int = 3,
+			Long = 4,
+			Float = 5,
+			Double = 6,
+			String = 7,
 		};
 
 		//@ interface of data
@@ -39,19 +38,19 @@ namespace Makers
 		{
 		protected:
 			
-			//@ computable type
-			eComputableType computable_type_;
+			//@ intance type of IComputable
+			eInstanceType instance_type_;
 			
-			//@ rootable data object pointer
-			void* data_;
+			//@ data type 
+			eDataType data_type_;
 
 		public:
 			
 			//@ get computable type
-			eComputableType computable_type() const;
+			eInstanceType instance_type() const;
 
-			//@ get data
-			void* data() const;
+			//@ get data literal
+			eDataType data_type() const;
 
 		public:
 			
@@ -62,9 +61,15 @@ namespace Makers
 			virtual ~IComputable();
 
 		public:
+			//@ instance type to string
+			std::string InstanceType() const;
+			//@ data type to string
+			std::string DataType() const;
 
-			//@ compare types
-			virtual bool CanAttachable(IComputable* _computable) = 0;
+		public:
+
+			//@ Can attach input to this
+			virtual bool CanAttachInto(IComputable* _computable) = 0;
 
 			//@ To string
 			virtual std::string ToString() = 0;

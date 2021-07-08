@@ -7,6 +7,7 @@
 #include <crtdbg.h>
 //#include <stdio.h>
 
+#include <future>
 #include <iostream>
 #include <chrono>
 #include <string>
@@ -17,6 +18,7 @@
 
 //@ async and mutex
 #include "GotoBed.h"
+#include "Future_exception.h"
 
 #include "Test_RandomImageFloat.h"	//@ create random image
 #include "Test_Thresholdings.h"		//@ serial test
@@ -112,7 +114,7 @@ int main()
 	//Test::Items::ItemFactory_Item_List();
 
 	//Test::Instances::Test_FreeItemsInDocument();
-
+	AsyncException::GoToBedAsync_Exception();
 
 	_CrtDumpMemoryLeaks();
 	//_CrtSetBreakAlloc(2239);

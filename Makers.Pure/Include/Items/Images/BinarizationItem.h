@@ -18,32 +18,34 @@ namespace Makers
 
 				//@ input property name (first)
 				//@ float image
-				const std::string kInputFloatImage = "input_float_image";
+				const std::string kInputFloatImage = "Input_Image";
 
 				//@ input property name (second)
 				//@ roi
-				const std::string kInputRoi = "input_roi";
+				const std::string kInputRoi = "ROI";
 
 				//@ static property names
 			public:
 				
 				//@ static property name (second)
 				//@ threshold value
-				const std::string kStaticThresholdValue = "static_threshold_value";
+				const std::string kStaticThresholdValue = "Threshold_Value";
 
 				//@ static property name (third)
 				//@ is reseverd
-				const std::string kStaticIsReversed = "static_is_reversed";
+				const std::string kStaticIsReversed = "Is_Reversed";
 
 				//@ output property names
 			public:
 
 				//@ output property name (first)
 				//@ binarized image
-				const std::string kOutputBinarizedImage = "output_binarized_image";
+				const std::string kOutputBinarizedImage = "Binarized_Image";
 
 			public:
+				//@ constructor
 				BinarizationItem();
+				//@ destructor
 				~BinarizationItem();
 
 			protected:

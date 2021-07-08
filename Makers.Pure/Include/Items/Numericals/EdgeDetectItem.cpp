@@ -81,7 +81,7 @@ Makers::Properties::PropertyGroup * Makers::Items::Numericals::EdgeDetectItem::S
 		(Makers::Properties::PropertyBase*) new Makers::Properties::StaticProperty(
 			"static_noise_filter_type",
 			this,
-			new Makers::Computables::Real<unsigned int>(0)));
+			new Makers::Computables::Real<int>(0)));
 
 
 	// add static filter size
@@ -90,7 +90,7 @@ Makers::Properties::PropertyGroup * Makers::Items::Numericals::EdgeDetectItem::S
 		(Makers::Properties::PropertyBase*) new Makers::Properties::StaticProperty(
 			"static_filter_size",
 			this,
-			new Makers::Computables::Real<unsigned int>(3)));
+			new Makers::Computables::Real<int>(3)));
 
 	return properties;
 }
