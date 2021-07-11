@@ -184,6 +184,7 @@
     <ClInclude Include="Include\Items\Samples\SampleItem0.h" />
     <ClInclude Include="Include\nTest.h" />
     <ClInclude Include="Include\Properties\InputProperty.h" />
+    <ClInclude Include="Include\Properties\IQueryAbleProperty.h" />
     <ClInclude Include="Include\Properties\OutputProperty.h" />
     <ClInclude Include="Include\Properties\PropertyBase.h" />
     <ClInclude Include="Include\Properties\PropertyGroup.h" />
@@ -229,6 +230,7 @@
     <ClCompile Include="Include\Items\Samples\SampleItem0.cpp" />
     <ClCompile Include="Include\nTest.cpp" />
     <ClCompile Include="Include\Properties\InputProperty.cpp" />
+    <ClCompile Include="Include\Properties\IQueryAbleProperty.cpp" />
     <ClCompile Include="Include\Properties\OutputProperty.cpp" />
     <ClCompile Include="Include\Properties\PropertyBase.cpp" />
     <ClCompile Include="Include\Properties\PropertyGroup.cpp" />

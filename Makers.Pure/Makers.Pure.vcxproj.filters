@@ -159,6 +159,9 @@
     <ClInclude Include="Include\Items\Images\ZmapItem.h">
       <Filter>Include\Items\Images</Filter>
     </ClInclude>
+    <ClInclude Include="Include\Properties\IQueryAbleProperty.h">
+      <Filter>Include\Properties</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Include\nTest.cpp">
@@ -289,6 +292,9 @@
     </ClCompile>
     <ClCompile Include="Include\Items\Images\ZmapItem.cpp">
       <Filter>Include\Items\Images</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Properties\IQueryAbleProperty.cpp">
+      <Filter>Include\Properties</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
