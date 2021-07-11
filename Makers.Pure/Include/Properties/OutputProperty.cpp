@@ -9,7 +9,7 @@ Makers::Properties::OutputProperty::OutputProperty(
 	Computables::IComputable* _data_object,
 	bool _is_optional) : 
 	PropertyBase(_name, _owner_item, _data_object, _is_optional), 
-	IRunAble()
+	IQueryAbleProperty()
 {
 }
 
@@ -18,15 +18,30 @@ Makers::Properties::OutputProperty::~OutputProperty()
 {
 }
 
-//@ Query value in owner item
-bool Makers::Properties::OutputProperty::Run(
-	Documents::Document * _document, 
-	Items::ItemBase * _sender, 
-	long long _timestamp)
+//@ Query value with async
+bool Makers::Properties::OutputProperty::QueryProperty_Async(Documents::Document* document, Items::ItemBase* sender, long long timestamp)
 {
 	// TODO : log
-	if (owner_item() == nullptr) { return false; }
-	return owner_item()->Run(_document, _sender, _timestamp);
+	if (owner_item() == nullptr)
+	{
+		std::string error = "exception error in output property base.\n";
+		error += name() + "(" + id() + ")" + " no owner item\n";
+		throw std::exception(error.c_str());
+	}
+	return owner_item()->Run(document, sender, timestamp);
+}
+
+//@ Query value
+bool Makers::Properties::OutputProperty::QueryProperty(Documents::Document* document, Items::ItemBase* sender, long long timestamp)
+{
+	// TODO : log
+	if (owner_item() == nullptr)
+	{
+		std::string error = "exception error in output property base.\n";
+		error += name() + "(" + id() + ")" + " no owner item\n";
+		throw std::exception(error.c_str());
+	}
+	return owner_item()->Run(document, sender, timestamp);
 }
 
 //@ to data

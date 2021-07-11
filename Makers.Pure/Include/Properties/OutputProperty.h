@@ -3,7 +3,7 @@
 #define _OUTPUTPROPERTY_H_
 
 #include "PropertyBase.h"
-#include "../IRunAble.h"
+#include "IQueryAbleProperty.h"
 
 namespace Makers
 {
@@ -11,7 +11,7 @@ namespace Makers
 	{
 		class __declspec(dllexport) OutputProperty : 
 			public PropertyBase, 
-			public IRunAble
+			public IQueryAbleProperty
 		{
 		public:
 			//@ constructor
@@ -26,11 +26,17 @@ namespace Makers
 
 		public:
 
+			//@ query value async
+			bool QueryProperty_Async(
+				Documents::Document* document, 
+				Items::ItemBase* sender = nullptr, 
+				long long timestamp = 0) override;
+
 			//@ query value
-			bool Run(
-				Documents::Document* _document, 
-				Items::ItemBase* _sender = nullptr, 
-				long long _timestamp = 0) override;
+			bool QueryProperty(
+				Documents::Document* document,
+				Items::ItemBase* sender = nullptr,
+				long long timestamp = 0) override;
 
 			//@ to data
 			std::map<std::string, std::string> ToData() override;

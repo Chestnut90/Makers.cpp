@@ -22,7 +22,8 @@ namespace Makers
 			Properties::PropertyGroup* _static_properties,
 			Properties::PropertyGroup* _output_properties);
 
-		//@ item base class -> abstract
+		//@ abstract class
+		//@ class <ItemBase>
 		class __declspec(dllexport) ItemBase :
 			public IMapableData,
 			public IRunAble
@@ -52,7 +53,6 @@ namespace Makers
 			Properties::PropertyGroup* static_properties_;	
 			//@ output properties
 			Properties::PropertyGroup* output_properties_;	
-
 			//@ buffer handles
 			std::vector<void*> buffers_;
 			//@ buffer counts
@@ -110,6 +110,7 @@ namespace Makers
 
 #pragma endregion
 
+			// TODO : inherited setters
 		protected:
 			virtual std::string SetItemName() = 0;
 			virtual Compute SetCompute() = 0;

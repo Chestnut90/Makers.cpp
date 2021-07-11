@@ -22,7 +22,7 @@ Makers::Properties::InputProperty::InputProperty(
 	Computables::IComputable* _data_object, 
 	bool _is_optional) :
 	PropertyBase(_name, _owner_item, _data_object, _is_optional),
-	IRunAble()
+	IQueryAbleProperty()
 {
 	connected_property_ = nullptr;
 }
@@ -34,19 +34,50 @@ Makers::Properties::InputProperty::~InputProperty()
 	//delete connected_property_; // not delete connected property
 }
 
-//@ query value
-bool Makers::Properties::InputProperty::Run(
-	Documents::Document * _document, 
-	Items::ItemBase * _sender, 
-	long long _timestamp)
+//@ query value with async
+bool Makers::Properties::InputProperty::QueryProperty_Async(Documents::Document* document, Items::ItemBase* sender, long long timestamp)
 {
+	std::string error = "exception error input property.\n";
+	error += name() + "(" + id() + ")\n";
+
 	// TODO : log
-	if (connected_property_ == nullptr) return false;
+	if (connected_property_ == nullptr)
+	{
+		error += "no connected property.\n";
+		throw std::exception(error.c_str());
+	}
+
+	auto queryable_property = dynamic_cast<IQueryAbleProperty*>(connected_property_);
+	if (queryable_property == nullptr)
+	{
+		error += "critical error occured no cast to IRunAble object. please to ask manager.";
+		throw std::exception(error.c_str());
+	}
+
+	return queryable_property->QueryProperty(document, sender, timestamp);
+}
+
+//@ query value 
+bool Makers::Properties::InputProperty::QueryProperty(Documents::Document* document, Items::ItemBase* sender, long long timestamp)
+{
+	std::string error = "exception error input property.\n";
+	error += name() + "(" + id() + ")\n";
+
+	// TODO : log
+	if (connected_property_ == nullptr)
+	{
+		error += "no connected property.\n";
+		throw std::exception(error.c_str());
+	}
 
 	auto runable_property = dynamic_cast<IRunAble*>(connected_property_);
-	if (runable_property == nullptr) return false;
+	if (runable_property == nullptr)
+	{
+		error += "critical error occured no cast to IRunAble object. please to ask manager.";
+		throw std::exception(error.c_str());
+	}
 
-	return runable_property->Run(_document, _sender, _timestamp);
+	return runable_property->Run(document, sender, timestamp);
 }
 
 //@ to data -> overrided

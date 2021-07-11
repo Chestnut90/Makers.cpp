@@ -172,6 +172,7 @@ bool Makers::Items::ItemBase::Run(
 
 			if (CollectInputs(_document, _caller, _timestamp))	// collect inputs
 			{
+				// TODO : more efficiently
 				// set buffer
 				buffers_.clear();
 				for (int i = 0; i < buffer_counts_; i++)
