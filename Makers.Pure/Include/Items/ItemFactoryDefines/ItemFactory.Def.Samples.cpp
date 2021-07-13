@@ -1,10 +1,10 @@
 #include "pch.h"
-#include "ItemFactory.h"
+#include "../ItemFactory.h"
 
 #pragma region Include Sample Item
-#include "Samples/FloatThresholdingItem.h"
-#include "Samples/RandomFloatImageItem.h"
-#include "Samples/SampleItem0.h"
+#include "../Samples/FloatThresholdingItem.h"
+#include "../Samples/RandomFloatImageItem.h"
+#include "../Samples/SampleItem0.h"
 #pragma endregion
 
 void Makers::Items::ItemFactory::InitItems_Samples()

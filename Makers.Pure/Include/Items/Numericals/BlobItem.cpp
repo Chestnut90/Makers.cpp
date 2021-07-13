@@ -48,18 +48,18 @@ Makers::Items::Compute Makers::Items::Numericals::BlobItem::SetCompute()
 Makers::Properties::PropertyGroup * Makers::Items::Numericals::BlobItem::SetInputProperties()
 {
 	// non - inputs
-	return new Makers::Properties::PropertyGroup();
+	return new Makers::Properties::PropertyGroup(this);
 }
 
 Makers::Properties::PropertyGroup * Makers::Items::Numericals::BlobItem::SetStaticProperties()
 {
 	// non - statics
-	return new Makers::Properties::PropertyGroup();
+	return new Makers::Properties::PropertyGroup(this);
 }
 
 Makers::Properties::PropertyGroup * Makers::Items::Numericals::BlobItem::SetOutputProperties()
 {
-	auto output_properties = new Makers::Properties::PropertyGroup();
+	auto output_properties = new Makers::Properties::PropertyGroup(this);
 
 	output_properties->AddProperty(
 		(Makers::Properties::PropertyBase*) new Makers::Properties::OutputProperty(

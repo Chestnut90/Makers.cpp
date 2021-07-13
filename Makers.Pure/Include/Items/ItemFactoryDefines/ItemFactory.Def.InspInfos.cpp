@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "ItemFactory.h"
+#include "../ItemFactory.h"
 
 #pragma region Include InspInfos Item
 #pragma endregion

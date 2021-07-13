@@ -81,12 +81,12 @@ Makers::Items::Compute Makers::Items::Samples::RandomFloatImageItem::SetCompute(
 
 Makers::Properties::PropertyGroup * Makers::Items::Samples::RandomFloatImageItem::SetInputProperties()
 {
-	return new Makers::Properties::PropertyGroup();
+	return new Makers::Properties::PropertyGroup(this);
 }
 
 Makers::Properties::PropertyGroup * Makers::Items::Samples::RandomFloatImageItem::SetStaticProperties()
 {
-	Makers::Properties::PropertyGroup* static_properties = new Makers::Properties::PropertyGroup();
+	Makers::Properties::PropertyGroup* static_properties = new Makers::Properties::PropertyGroup(this);
 
 	static_properties->AddProperty(
 		(Makers::Properties::PropertyBase*) new Makers::Properties::StaticProperty(
@@ -105,7 +105,7 @@ Makers::Properties::PropertyGroup * Makers::Items::Samples::RandomFloatImageItem
 
 Makers::Properties::PropertyGroup * Makers::Items::Samples::RandomFloatImageItem::SetOutputProperties()
 {
-	Makers::Properties::PropertyGroup* output_properties = new Makers::Properties::PropertyGroup();
+	Makers::Properties::PropertyGroup* output_properties = new Makers::Properties::PropertyGroup(this);
 
 	output_properties->AddProperty(
 		(Makers::Properties::PropertyBase*) new Makers::Properties::OutputProperty(

@@ -11,6 +11,10 @@ namespace Makers
 	namespace Properties
 	{
 		class PropertyGroup;
+
+		//@ Class <PropertyBase>
+		//@ Base class of property in itembase
+		//@ Inherit <IMapableData>
 		class __declspec(dllexport) PropertyBase : 
 			public IMapableData
 		{
@@ -30,6 +34,7 @@ namespace Makers
 			Computables::IComputable* data_object_;
 			//@ optional
 			bool is_optional_;
+
 		public:
 			//@ used
 			bool is_used_;
@@ -54,15 +59,15 @@ namespace Makers
 		// setters
 		public:
 			//@ set is used
-			void set_is_used(bool _is_used);
+			void set_is_used(bool is_used);
 
 		protected:
 			//@ constructor
 			PropertyBase(
-				std::string _name, 
-				Items::ItemBase* _owner_item, 
-				Computables::IComputable* _data_object, 
-				bool _is_optional = false);
+				std::string name, 
+				Items::ItemBase* owner_item, 
+				Computables::IComputable* data_object, 
+				bool is_optional = false);
 			
 		public:
 			//@ destructor

@@ -65,23 +65,24 @@ long long Makers::Documents::Document::last_computed_time() const
 #pragma region setters
 
 //@ title setter
-void Makers::Documents::Document::set_title(std::string _title) 
+void Makers::Documents::Document::set_title(std::string title) 
 {
-	title_ = _title;
+	title_ = title;
 }
 
 //@ set stream image
-void Makers::Documents::Document::set_stream_image(Makers::Computables::Image<float>* _stream_image)
+void Makers::Documents::Document::set_stream_image(Makers::Computables::Image<float>* stream_image)
 {
-	stream_image_->set_image(_stream_image);
-	memory_pool_->AllocateMemory(_stream_image->width(), _stream_image->height());
+	stream_image_->set_image(stream_image);
+	memory_pool_->AllocateMemory(stream_image->width(), stream_image->height());
 }
 
 //@ set stream image
-void Makers::Documents::Document::set_stream_image(float * _image, unsigned long _width, unsigned long _height)
+void Makers::Documents::Document::set_stream_image(float* image, unsigned long width, unsigned long height)
 {
-	stream_image_->set_image(_image, _width, _height);
-	memory_pool_->AllocateMemory(_width, _height);
+	stream_image_->set_image(image, width, height);
+	InitMemoryPool();
+	//memory_pool_->AllocateMemory(width, height);
 }
 
 #pragma endregion
@@ -99,22 +100,22 @@ Makers::Documents::Document::Document() :
 
 //@ !deprecated
 //@ constructor with id
-Makers::Documents::Document::Document(std::string _id) : 
+Makers::Documents::Document::Document(std::string id) : 
 	Document()
 {
-	id_ = _id;
+	id_ = id;
 }
 
 //@ !deprecated
 //@ constructor with id and items
 Makers::Documents::Document::Document(
-	std::string _id, 
-	std::vector<Items::ItemBase*> _items) : 
-	Document(_id)
+	std::string id, 
+	std::vector<Items::ItemBase*> items) : 
+	Document(id)
 {
-	for (auto item : _items)
+	for (auto item : items)
 	{
-		AddItem(item);
+		AddItem(*item);
 	}
 }
 
@@ -135,69 +136,68 @@ int Makers::Documents::Document::Count()
 }
 
 //@ add item
-void Makers::Documents::Document::AddItem(Items::ItemBase * _itembase)
+void Makers::Documents::Document::AddItem(Items::ItemBase& itembase)
 {
-	if (SearchItem(_itembase->id()) != nullptr)
+	if (SearchItem(itembase.id()) != nullptr)
 	{
 		throw std::exception("an existing item");
 	}
 
 	// set owner document into item base
-	_itembase->set_document(this);
-	items_.push_back(_itembase);
+	itembase.set_document(this);
+	items_.push_back(&itembase);
 }
 
 //@ remove item with item reference
-void Makers::Documents::Document::RemoveItem(Items::ItemBase * _itembase)
+void Makers::Documents::Document::RemoveItem(Items::ItemBase& itembase)
 {
-	if (_itembase == nullptr) { return; }
-	RemoveItem(_itembase->id());
+	RemoveItem(itembase.id());
 }
 
 //@ remove item with item id
-void Makers::Documents::Document::RemoveItem(std::string _id)
+void Makers::Documents::Document::RemoveItem(std::string id)
 {
-	int index = SearchItemIndex(_id);
+	int index = SearchItemIndex(id);
 	if (index == -1) return;
 
 	auto item = items_.at(index);
 	if (item == nullptr) { return; }
 	
 	// delete
-	Makers::Items::ItemFactory().DeleteItem(item);
+	Makers::Items::ItemFactory().DestroyItem(item);
 	
 	// erase from vector
 	items_.erase(items_.begin() + index);
 }
 
 //@ search item with item id
-Makers::Items::ItemBase * Makers::Documents::Document::SearchItem(std::string _id)
+Makers::Items::ItemBase * Makers::Documents::Document::SearchItem(std::string id)
 {
-	int index = SearchItemIndex(_id);
+	int index = SearchItemIndex(id);
 	if (index == -1) return nullptr;
 	return items_[index];
 }
 
 //@ search item with index
-Makers::Items::ItemBase * Makers::Documents::Document::SearchItem(int _index)
+Makers::Items::ItemBase * Makers::Documents::Document::SearchItem(int index)
 {
-	return items_[_index];
+	return items_[index];
 }
 
 //@ search index of item with item reference
-int Makers::Documents::Document::SearchItemIndex(Items::ItemBase * _itembase)
+int Makers::Documents::Document::SearchItemIndex(Items::ItemBase* itembase)
 {
-	return SearchItemIndex(_itembase->id());
+	return SearchItemIndex(itembase->id());
 }
 
 //@ search index of item with item id
-int Makers::Documents::Document::SearchItemIndex(std::string _id)
+int Makers::Documents::Document::SearchItemIndex(std::string id)
 {
 	int index = 0;
 
 	for (auto item : items_)
 	{
-		if (item->id() == _id) break;
+		if (item->id() == id) break;
 		++index;
 	}
 
@@ -251,7 +251,7 @@ void Makers::Documents::Document::ClearItems()
 {
 	std::for_each(items_.begin(), items_.end(), [](Items::ItemBase* item)
 	{
-		Makers::Items::ItemFactory().DeleteItem(item);
+		Makers::Items::ItemFactory().DestroyItem(item);
 	});
 	items_.clear();
 	items_.resize(0);
@@ -279,24 +279,24 @@ void Makers::Documents::Document::InitMemoryPool()
 
 //@ runable
 bool Makers::Documents::Document::RunAsync(
-	std::vector<Items::ItemBase*> _items, 
-	Makers::Computables::Image<float>* _stream)
+	std::vector<Items::ItemBase*> items, 
+	Makers::Computables::Image<float>* stream)
 {
 	// set last computed time
 	last_computed_time_ = std::chrono::high_resolution_clock::now().time_since_epoch().count();
-
+	
+	// copy stream into document
+	if (stream != nullptr) { stream_image_->set_image(stream); }
+	
 	// init memory pool
 	if (memory_pool_ == nullptr) { InitMemoryPool(); }	
 
 	// find end items
-	if (_items.size() == 0) { _items = FindRootItems(); }			
-
-	// copy stream into document
-	if (_stream != nullptr) { stream_image_->set_image(_stream); }	
+	if (items.size() == 0) { items = FindRootItems(); }			
 
 	std::vector<std::future<bool>> futures;
-	std::for_each(_items.begin(), _items.end(),
-		[this, &futures, _stream](Items::ItemBase* item)
+	std::for_each(items.begin(), items.end(),
+		[this, &futures, stream](Items::ItemBase* item)
 	{
 		auto future = std::async(std::launch::async, 
 			&Items::ItemBase::Run, item,	// func and instance

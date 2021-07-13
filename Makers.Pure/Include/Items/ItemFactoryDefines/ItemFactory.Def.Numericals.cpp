@@ -1,9 +1,9 @@
 #include "pch.h"
-#include "ItemFactory.h"
+#include "../ItemFactory.h"
 
 #pragma region Include Numericals Item
-#include "Numericals/BlobItem.h"
-#include "Numericals/EdgeDetectItem.h"
+#include "../Numericals/BlobItem.h"
+#include "../Numericals/EdgeDetectItem.h"
 #pragma endregion
 
 void Makers::Items::ItemFactory::InitItems_Numericals()

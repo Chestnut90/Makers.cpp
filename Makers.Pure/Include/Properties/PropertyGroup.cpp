@@ -11,11 +11,6 @@
 
 namespace Properties = Makers::Properties;
 
-//@ get properties count
-int Makers::Properties::PropertyGroup::Count()
-{
-	return properties_.size();
-}
 
 //@ get owner item
 Makers::Items::ItemBase * Makers::Properties::PropertyGroup::owner_item() const
@@ -24,9 +19,9 @@ Makers::Items::ItemBase * Makers::Properties::PropertyGroup::owner_item() const
 }
 
 //@ constructor
-Makers::Properties::PropertyGroup::PropertyGroup()
+Makers::Properties::PropertyGroup::PropertyGroup(Items::ItemBase* owner_item)
 {
-	owner_item_ = nullptr;
+	owner_item_ = owner_item;
 }
 
 //@ destructor
@@ -41,48 +36,54 @@ Makers::Properties::PropertyGroup::~PropertyGroup()
 }
 
 //@ operator
-Makers::Properties::PropertyBase* Makers::Properties::PropertyGroup::operator[](const std::string _name)
+Makers::Properties::PropertyBase* Makers::Properties::PropertyGroup::operator[](const std::string name)
 {
-	return QueryPropertyName(_name);
+	return QueryPropertyName(name);
+}
+
+//@ get properties count
+int Makers::Properties::PropertyGroup::Count()
+{
+	return properties_.size();
 }
 
 //@ add property
-void  Makers::Properties::PropertyGroup::AddProperty(PropertyBase* _property)
+void  Makers::Properties::PropertyGroup::AddProperty(PropertyBase* property)
 {
 	// no same id and name
-	auto property = QueryPropertyID(_property->id());
-	if (property != nullptr)
+	auto query_property = QueryPropertyID(property->id());
+	if (query_property != nullptr)
 	{
 		throw std::exception("find same named property.");
 	}
 
-	properties_.push_back(_property);
+	// insert arg
+	properties_.push_back(property);
 }
 
-//@ TODO : 
-//@ add property
+//@ add property with property data
 Properties::PropertyBase* Makers::Properties::PropertyGroup::AddProperty(
-	std::string _name,
-	Computables::IComputable * _computable,
-	bool _is_optional,
-	ePropertyType _property_type)
+	std::string name,
+	Computables::IComputable* computable,
+	bool is_optional,
+	ePropertyType property_type)
 {
-	throw std::exception("not implemented");
-
 	PropertyBase* property_base = nullptr;
-	switch (_property_type)
+	switch (property_type)
 	{
 	case Makers::Properties::eInputProperty:
-		property_base = new InputProperty(_name, owner_item_, _computable, _is_optional);
+		property_base = new InputProperty(name, owner_item_, computable, is_optional);
 		break;
 	case Makers::Properties::eStaticProperty:
-		property_base = new StaticProperty(_name, owner_item_, _computable, _is_optional);
+		property_base = new StaticProperty(name, owner_item_, computable, is_optional);
 		break;
 	case Makers::Properties::eOutputProperty:
-		property_base = new OutputProperty(_name, owner_item_, _computable, _is_optional);
+		property_base = new OutputProperty(name, owner_item_, computable, is_optional);
 		break;
 	default:
-		break;
+		std::string error = "Error occured in PropertyGroup.\n";
+		error += "not handled property type.\n";
+		throw std::exception(error.c_str());
 	}
 	AddProperty(property_base);
 	return property_base;
@@ -101,11 +102,11 @@ std::vector<Properties::PropertyBase*>::iterator Makers::Properties::PropertyGro
 }
 
 //@ query property with id
-Properties::PropertyBase* Makers::Properties::PropertyGroup::QueryPropertyID(std::string _id)
+Properties::PropertyBase* Makers::Properties::PropertyGroup::QueryPropertyID(std::string id)
 {
 	for (auto property : properties_)
 	{
-		if (property->id() == _id)
+		if (property->id() == id)
 		{
 			return property;
 		}
@@ -114,11 +115,11 @@ Properties::PropertyBase* Makers::Properties::PropertyGroup::QueryPropertyID(std
 }
 
 //@ query property with name
-Properties::PropertyBase* Makers::Properties::PropertyGroup::QueryPropertyName(std::string _name)
+Properties::PropertyBase* Makers::Properties::PropertyGroup::QueryPropertyName(std::string name)
 {
 	for (auto property : properties_)
 	{
-		if (property->name() == _name)
+		if (property->name() == name)
 		{
 			return property;
 		}

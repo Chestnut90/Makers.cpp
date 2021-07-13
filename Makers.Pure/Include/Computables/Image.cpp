@@ -29,35 +29,45 @@ _image_type * Makers::Computables::Image<_image_type>::image() const
 
 //@ set image
 template<typename _image_type>
-void Makers::Computables::Image<_image_type>::set_image(_image_type * _image, long _width, long _height)
+void Makers::Computables::Image<_image_type>::set_image(
+	_image_type* image,
+	long width,
+	long height)
 {
-	// empty size
-	if (image_ != nullptr)
+	if (is_buffer_)
 	{
-		delete image_;
-		image_ = nullptr;
+		image_ = image;
 	}
-
-	// check size difference
-	if (width_ != _width || height_ != _height)
+	else
 	{
-		image_ = new _image_type[_width * _height];
-	}
+		// empty size
+		if (image_ != nullptr)
+		{
+			delete image_;
+			image_ = nullptr;
+		}
 
-	// copy image
-	memcpy(image_, (void*)_image, _width * _height * sizeof(_image_type));
+		// check size difference
+		if (width_ != width || height_ != height)
+		{
+			image_ = new _image_type[width * height];
+		}
+
+		// copy image
+		memcpy(image_, (void*)image, width * height * sizeof(_image_type));
+	}
 
 	// set width and height
-	width_ = _width;
-	height_ = _height;
+	width_ = width;
+	height_ = height;
 }
 
 //@ set image
 //@ copy function
 template<typename _image_type>
-void Makers::Computables::Image<_image_type>::set_image(Image<_image_type>* _image)
+void Makers::Computables::Image<_image_type>::set_image(Image<_image_type>* image)
 {
-	set_image(_image->image(), _image->width_, _image->height_);
+	set_image(image->image(), image->width_, image->height_);
 }
 
 #pragma endregion
@@ -70,14 +80,25 @@ Makers::Computables::Image<_image_type>::Image() :
 	instance_type_ = eInstanceType::Image;	// set data type
 	_SetDataType();							// set literal type
 	set_image(nullptr, 0, 0);				// init image
+	is_buffer_ = false;
+}
+
+template<typename _image_type>
+Makers::Computables::Image<_image_type>::Image(bool is_buffer) :
+	Image()
+{
+	is_buffer_ = is_buffer;
 }
 
 //@ destructor
 template<typename _image_type>
 Makers::Computables::Image<_image_type>::~Image()
 {
-	delete image_;
-	image_ = nullptr;
+	if (!is_buffer_)
+	{
+		delete image_;
+		image_ = nullptr;
+	}
 }
 
 //@ set data type
@@ -103,14 +124,12 @@ void Makers::Computables::Image<_image_type>::_SetDataType()
 
 //@ Can attach input to this
 template<typename _image_type>
-bool Makers::Computables::Image<_image_type>::CanAttachInto(IComputable * _computable)
+bool Makers::Computables::Image<_image_type>::CanAttachInto(IComputable * computable)
 {
-	if (data_type_ != _computable->data_type()) return false;
+	if (instance_type_ != computable->instance_type()) return false;
 
-	auto data_type = _computable->instance_type();
-	// image or image pointer are able to be connected
-	if (data_type == eInstanceType::Image || data_type == eInstanceType::ImagePointer) return true;
-	return false;
+	// if it is buffer then only output.
+	return !is_buffer_;
 }
 
 //@ to string

@@ -1,14 +1,14 @@
 #include "pch.h"
-#include "ItemFactory.h"
+#include "../ItemFactory.h"
 
 #pragma region Include Images Items
-#include "Images/BinarizationItem.h"
-#include "Images/FillImageItem.h"
-#include "Images/InvertedImageItem.h"
-#include "Images/MorphologyFilterItem.h"
-#include "Images/NoiseFilterItem.h"
-#include "Images/StreamImageItem.h"
-#include "Images/ZmapItem.h"
+#include "../Images/BinarizationItem.h"
+#include "../Images/FillImageItem.h"
+#include "../Images/InvertedImageItem.h"
+#include "../Images/MorphologyFilterItem.h"
+#include "../Images/NoiseFilterItem.h"
+#include "../Images/StreamImageItem.h"
+#include "../Images/ZmapItem.h"
 #pragma endregion
 
 void Makers::Items::ItemFactory::InitItems_Images()

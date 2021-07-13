@@ -13,10 +13,9 @@ namespace Makers
 			None = -1,
 
 			Image = 0,
-			ImagePointer = 1,
-			Real = 2,
-			ROI = 3,
-			Combo = 4,
+			Real = 1,
+			ROI = 2,
+			Enum = 3,
 		};
 
 		enum class eDataType :int
@@ -37,26 +36,20 @@ namespace Makers
 		class __declspec(dllexport) IComputable
 		{
 		protected:
-			
 			//@ intance type of IComputable
 			eInstanceType instance_type_;
-			
 			//@ data type 
 			eDataType data_type_;
 
 		public:
-			
 			//@ get computable type
 			eInstanceType instance_type() const;
-
 			//@ get data literal
 			eDataType data_type() const;
 
 		public:
-			
 			//@ constructor
 			IComputable();
-
 			//@ destructor
 			virtual ~IComputable();
 
@@ -67,14 +60,10 @@ namespace Makers
 			std::string DataType() const;
 
 		public:
-
 			//@ Can attach input to this
 			virtual bool CanAttachInto(IComputable* _computable) = 0;
-
 			//@ To string
 			virtual std::string ToString() = 0;
-
-		
 		};
 	}
 }

@@ -72,13 +72,13 @@ Makers::Items::Compute Makers::Items::ROIs::RoiItem::SetCompute()
 
 Makers::Properties::PropertyGroup * Makers::Items::ROIs::RoiItem::SetInputProperties()
 {
-	auto properties = new Makers::Properties::PropertyGroup();
+	auto properties = new Makers::Properties::PropertyGroup(this);
 	return properties;
 }
 
 Makers::Properties::PropertyGroup * Makers::Items::ROIs::RoiItem::SetStaticProperties()
 {
-	auto properties = new Makers::Properties::PropertyGroup();
+	auto properties = new Makers::Properties::PropertyGroup(this);
 	properties->AddProperty("Left", new Makers::Computables::Real<long>(0), false, Properties::eStaticProperty);
 	properties->AddProperty("Right", new Makers::Computables::Real<long>(0), false, Properties::eStaticProperty);
 	properties->AddProperty("Top", new Makers::Computables::Real<long>(0), false, Properties::eStaticProperty);
@@ -89,7 +89,7 @@ Makers::Properties::PropertyGroup * Makers::Items::ROIs::RoiItem::SetStaticPrope
 
 Makers::Properties::PropertyGroup * Makers::Items::ROIs::RoiItem::SetOutputProperties()
 {
-	auto properties = new Makers::Properties::PropertyGroup();
+	auto properties = new Makers::Properties::PropertyGroup(this);
 	properties->AddProperty("Out_ROI", new Makers::Computables::ROI(), false, Properties::eOutputProperty);
 
 	return properties;

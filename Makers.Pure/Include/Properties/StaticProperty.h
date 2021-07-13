@@ -8,16 +8,19 @@ namespace Makers
 {
 	namespace Properties
 	{
+		//@ Class <StaticProperty>
+		//@ Static property of item base
+		//@ Inherit <PropertyBase>
 		class __declspec(dllexport) StaticProperty 
 			: public PropertyBase
 		{
 
 		public:
 			//@ constructor
-			StaticProperty(std::string _name,
-				Items::ItemBase* _owner_item,
-				Computables::IComputable* _data_object,
-				bool _is_optional = false);
+			StaticProperty(std::string name,
+				Items::ItemBase* owner_item,
+				Computables::IComputable* data_object,
+				bool is_optional = false);
 			
 			//@ destructor
 			~StaticProperty();

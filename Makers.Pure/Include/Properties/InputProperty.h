@@ -11,6 +11,9 @@ namespace Makers
 	{
 		class PropertyBase;
 
+		//@ class <InputProperty>
+		//@ inherit <PropertyBase>
+		//@ inherit <IQueryAbleProperty>
 		class __declspec(dllexport) InputProperty : 
 			public PropertyBase,
 			public IQueryAbleProperty
@@ -26,15 +29,15 @@ namespace Makers
 
 		public:
 			//@ set connected property
-			void set_connected_property(PropertyBase* _connected_property);
+			void set_connected_property(PropertyBase* connected_property);
 
 		public:
 			//@ default contructor
 			InputProperty(
-				std::string _name, 
-				Items::ItemBase* _owner_item,
-				Computables::IComputable* _data_object, 
-				bool _is_optional = false);
+				std::string name, 
+				Items::ItemBase* owner_item,
+				Computables::IComputable* data_object, 
+				bool is_optional = false);
 
 			//@ default destructor
 			~InputProperty();

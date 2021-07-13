@@ -7,7 +7,6 @@
 #include "../../Properties/StaticProperty.h"
 #include "../../Properties/OutputProperty.h"
 
-#include "../../Computables/ImagePointer.h"
 #include "../../Computables/Image.h"
 
 Makers::Items::Images::ZmapItem::ZmapItem() :
@@ -65,21 +64,21 @@ Makers::Items::Compute Makers::Items::Images::ZmapItem::SetCompute()
 
 		// set to output
 		// zmap
-		auto com_output_zmap = dynamic_cast<Makers::Computables::ImagePointer<float>*>(
+		auto com_output_zmap = dynamic_cast<Makers::Computables::Image<float>*>(
 			_outputs->QueryPropertyName(here->kOutputZmapImage)->data_object());
-		com_output_zmap->set_buffer(zmap, width, height);
+		com_output_zmap->set_image(zmap, width, height);
 		// red
-		auto com_output_red = dynamic_cast<Makers::Computables::ImagePointer<unsigned char>*>(
+		auto com_output_red = dynamic_cast<Makers::Computables::Image<unsigned char>*>(
 			_outputs->QueryPropertyName(here->kOutputRedImage)->data_object());
-		com_output_red->set_buffer(red, width, height);
+		com_output_red->set_image(red, width, height);
 		// green
-		auto com_output_green = dynamic_cast<Makers::Computables::ImagePointer<unsigned char>*>(
+		auto com_output_green = dynamic_cast<Makers::Computables::Image<unsigned char>*>(
 			_outputs->QueryPropertyName(here->kOutputGreenImage)->data_object());
-		com_output_green->set_buffer(green, width, height);
+		com_output_green->set_image(green, width, height);
 		// blue
-		auto com_output_blue = dynamic_cast<Makers::Computables::ImagePointer<unsigned char>*>(
+		auto com_output_blue = dynamic_cast<Makers::Computables::Image<unsigned char>*>(
 			_outputs->QueryPropertyName(here->kOutputBlueImage)->data_object());
-		com_output_blue->set_buffer(blue, width, height);
+		com_output_blue->set_image(blue, width, height);
 
 		return true;
 	};
@@ -88,35 +87,35 @@ Makers::Items::Compute Makers::Items::Images::ZmapItem::SetCompute()
 Makers::Properties::PropertyGroup * Makers::Items::Images::ZmapItem::SetInputProperties()
 {
 	// non - inputs
-	return new Makers::Properties::PropertyGroup();
+	return new Makers::Properties::PropertyGroup(this);
 }
 
 Makers::Properties::PropertyGroup * Makers::Items::Images::ZmapItem::SetStaticProperties()
 {
-	auto properties = new Makers::Properties::PropertyGroup();
+	auto properties = new Makers::Properties::PropertyGroup(this);
 	// add static zmap
-	properties->AddProperty("Zmap", new Makers::Computables::ImagePointer<float>(), false, Properties::eStaticProperty);
+	properties->AddProperty("Zmap", new Makers::Computables::Image<float>(), false, Properties::eStaticProperty);
 	// add static red
-	properties->AddProperty("Red", new Makers::Computables::ImagePointer<unsigned char>(), false, Properties::eStaticProperty);
+	properties->AddProperty("Red", new Makers::Computables::Image<unsigned char>(), false, Properties::eStaticProperty);
 	// add static green
-	properties->AddProperty("Green", new Makers::Computables::ImagePointer<unsigned char>(), false, Properties::eStaticProperty);
+	properties->AddProperty("Green", new Makers::Computables::Image<unsigned char>(), false, Properties::eStaticProperty);
 	// add static blue
-	properties->AddProperty("Blue", new Makers::Computables::ImagePointer<unsigned char>(), false, Properties::eStaticProperty);
+	properties->AddProperty("Blue", new Makers::Computables::Image<unsigned char>(), false, Properties::eStaticProperty);
 
 	return properties;
 }
 
 Makers::Properties::PropertyGroup * Makers::Items::Images::ZmapItem::SetOutputProperties()
 {
-	auto properties = new Makers::Properties::PropertyGroup();
+	auto properties = new Makers::Properties::PropertyGroup(this);
 	// add output zmap
-	properties->AddProperty("Out_Zmap_Image", new Makers::Computables::ImagePointer<float>(), false, Properties::eOutputProperty);
+	properties->AddProperty("Out_Zmap_Image", new Makers::Computables::Image<float>(), false, Properties::eOutputProperty);
 	// add output red
-	properties->AddProperty("Out_Red_Image", new Makers::Computables::ImagePointer<unsigned char>(), false, Properties::eOutputProperty);
+	properties->AddProperty("Out_Red_Image", new Makers::Computables::Image<unsigned char>(), false, Properties::eOutputProperty);
 	// add output green
-	properties->AddProperty("Out_Green_Image", new Makers::Computables::ImagePointer<unsigned char>(), false, Properties::eOutputProperty);
+	properties->AddProperty("Out_Green_Image", new Makers::Computables::Image<unsigned char>(), false, Properties::eOutputProperty);
 	// add output blue
-	properties->AddProperty("Out_Blue_Image", new Makers::Computables::ImagePointer<unsigned char>(), false, Properties::eOutputProperty);
+	properties->AddProperty("Out_Blue_Image", new Makers::Computables::Image<unsigned char>(), false, Properties::eOutputProperty);
 
 	return properties;
 }

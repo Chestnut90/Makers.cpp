@@ -11,7 +11,6 @@
 #include "../../Computables/Image.h"
 #include "../../Computables/Real.h"
 #include "../../Computables/ROI.h"
-#include "../../Computables/ImagePointer.h"
 
 // nexensor
 #include "C:\Program Files\Nexensor\NEXENSORSDK\include\Algorithm\ImageProcessing.h"
@@ -80,9 +79,9 @@ Makers::Items::Compute Makers::Items::Images::BinarizationItem::SetCompute()
 		auto is_reversed = com_is_reversed->value();
 		
 		// send to output
-		auto com_binary_image = dynamic_cast<Makers::Computables::ImagePointer<unsigned char>*>(
+		auto com_binary_image = dynamic_cast<Makers::Computables::Image<unsigned char>*>(
 			_outputs->QueryPropertyName(here->kOutputBinarizedImage)->data_object());
-		com_binary_image->set_buffer(here->buffers_.at(0), width, height);
+		com_binary_image->set_image((unsigned char*)here->buffers_.at(0), width, height);
 		auto binary = com_binary_image->image();
 		
 		return retStatus::success == NXSIP::Binarization(image, width, height, roi, threshold, is_reversed, binary);
@@ -91,7 +90,7 @@ Makers::Items::Compute Makers::Items::Images::BinarizationItem::SetCompute()
 
 Makers::Properties::PropertyGroup * Makers::Items::Images::BinarizationItem::SetInputProperties()
 {
-	auto properties = new Makers::Properties::PropertyGroup();
+	auto properties = new Makers::Properties::PropertyGroup(this);
 	// add input float image
 	properties->AddProperty("Input_Image", new Makers::Computables::Image<float>(), false, Properties::eInputProperty);
 	// add input roi
@@ -102,7 +101,7 @@ Makers::Properties::PropertyGroup * Makers::Items::Images::BinarizationItem::Set
 
 Makers::Properties::PropertyGroup * Makers::Items::Images::BinarizationItem::SetStaticProperties()
 {
-	auto properties = new Makers::Properties::PropertyGroup();
+	auto properties = new Makers::Properties::PropertyGroup(this);
 	// add static threshold value, init with 0.f
 	properties->AddProperty("Threshold_Value", new Makers::Computables::Real<float>(0.f), false, Properties::eStaticProperty);
 	// add static is reversed, init with false
@@ -113,10 +112,10 @@ Makers::Properties::PropertyGroup * Makers::Items::Images::BinarizationItem::Set
 
 Makers::Properties::PropertyGroup * Makers::Items::Images::BinarizationItem::SetOutputProperties()
 {
-	auto output_properties = new Makers::Properties::PropertyGroup();
+	auto output_properties = new Makers::Properties::PropertyGroup(this);
 
 	// add output binarized image
-	output_properties->AddProperty("Binarized_Image", new Makers::Computables::ImagePointer<unsigned char>(), false, Properties::eOutputProperty);
+	output_properties->AddProperty("Binarized_Image", new Makers::Computables::Image<unsigned char>(true), false, Properties::eOutputProperty);
 
 	return output_properties;
 }

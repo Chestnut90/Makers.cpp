@@ -22,15 +22,14 @@ namespace Makers
 			Properties::PropertyGroup* _static_properties,
 			Properties::PropertyGroup* _output_properties);
 
-		//@ abstract class
-		//@ class <ItemBase>
+		//@ Abstract Class <ItemBase>
+		//@ base class of item
 		class __declspec(dllexport) ItemBase :
 			public IMapableData,
 			public IRunAble
 		{
 			friend class Makers::Documents::Document;
 			friend class ItemFactory;
-		public:
 			
 #pragma region members
 
@@ -42,6 +41,7 @@ namespace Makers
 			std::string id_;	
 			//@ document owner
 			Makers::Documents::Document* document_;
+
 		protected:
 			//@ name of item
 			std::string item_name_;	
@@ -86,9 +86,9 @@ namespace Makers
 #pragma region Setters
 		public:
 			//@ set custom name
-			void set_custom_name(std::string _name);
+			void set_custom_name(std::string name);
 			//@ set document
-			void set_document(Makers::Documents::Document* _document);	// TODO : private
+			void set_document(Makers::Documents::Document* document);	// TODO : private
 #pragma endregion
 #pragma region Constructor & Destructors
 
@@ -99,11 +99,11 @@ namespace Makers
 		public:
 			//@ contructor with data
 			ItemBase(
-				std::string _item_name,
-				Compute _compute,
-				Properties::PropertyGroup* _input_properties,
-				Properties::PropertyGroup* _static_properties,
-				Properties::PropertyGroup* _output_properties);
+				std::string item_name,
+				Compute compute,
+				Properties::PropertyGroup* input_properties,
+				Properties::PropertyGroup* static_properties,
+				Properties::PropertyGroup* output_properties);
 
 			//@ destructor (default)
 			virtual ~ItemBase();
@@ -123,16 +123,16 @@ namespace Makers
 
 			//@ run
 			virtual bool Run(
-				Documents::Document* _document, 
-				Items::ItemBase* _sender = nullptr, 
-				long long _timestamp = 0) override;
+				Documents::Document* document, 
+				Items::ItemBase* sender = nullptr, 
+				long long timestamp = 0) override;
 
 		private:
 			//@ collect inputs
 			bool CollectInputs(
-				Documents::Document* _document, 
-				ItemBase* _caller, 
-				long long _timestamp);
+				Documents::Document* document, 
+				ItemBase* caller, 
+				long long timestamp);
 
 #pragma endregion
 

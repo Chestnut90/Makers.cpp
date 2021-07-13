@@ -1,10 +1,7 @@
 #include "pch.h"
 
 #include <typeinfo>
-
 #include "Real.h"
-
-using namespace Makers::Computables;
 
 //@ get value
 template<typename _real_type>
@@ -15,14 +12,15 @@ _real_type Makers::Computables::Real<_real_type>::value() const
 
 //@ set value
 template<typename _real_type>
-void Makers::Computables::Real<_real_type>::set_value(_real_type _value)
+void Makers::Computables::Real<_real_type>::set_value(_real_type value)
 {
-	value_ = _value;
+	value_ = value;
 }
 
 //@ constructor
 template<typename _real_type>
-Real<_real_type>::Real()
+Makers::Computables::Real<_real_type>::Real() :
+	IComputable()
 {
 	instance_type_ = eInstanceType::Real;	// set data type
 	_SetDataType();				// set literal type
@@ -31,9 +29,10 @@ Real<_real_type>::Real()
 
 //@ constructor
 template<typename _real_type>
-Makers::Computables::Real<_real_type>::Real(_real_type _value) : Real()
+Makers::Computables::Real<_real_type>::Real(_real_type value) : 
+	Real()
 {
-	set_value(_value);
+	set_value(value);
 }
 
 //@ destructor
@@ -79,11 +78,11 @@ void Makers::Computables::Real<_real_type>::_SetDataType()
 }
 
 template<typename _real_type>
-bool Makers::Computables::Real<_real_type>::CanAttachInto(IComputable * _computable)
+bool Makers::Computables::Real<_real_type>::CanAttachInto(IComputable * computable)
 {
-	if (instance_type() != _computable->instance_type()) return false;
+	if (instance_type() != computable->instance_type()) return false;
 	// only same data type
-	return data_type() == _computable->data_type();
+	return data_type() == computable->data_type();
 }
 
 //@ to string 

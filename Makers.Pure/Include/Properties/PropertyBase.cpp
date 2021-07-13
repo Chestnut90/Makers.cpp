@@ -49,28 +49,28 @@ Makers::Computables::IComputable* Makers::Properties::PropertyBase::data_object(
 #pragma region setters
 
 //@ set is used
-void Makers::Properties::PropertyBase::set_is_used(bool _is_used)
+void Makers::Properties::PropertyBase::set_is_used(bool is_used)
 {
 	if (!is_optional_) return;
 
-	is_used_ = _is_used;
+	is_used_ = is_used;
 }
 
 #pragma endregion
 
 //@ protected Constructor (default)
 Makers::Properties::PropertyBase::PropertyBase(
-	std::string _name,
-	Items::ItemBase* _owner_item,
-	Computables::IComputable* _data_object,
-	bool _is_optional) :
+	std::string name,
+	Items::ItemBase* owner_item,
+	Computables::IComputable* data_object,
+	bool is_optional) :
 	IMapableData()
 {
 	id_ = Utils::IDGenerators::GUIDGen().Generate(); 
-	name_ = _name;
-	owner_item_ = _owner_item;
-	data_object_ = _data_object;
-	is_optional_ = _is_optional;
+	name_ = name;
+	owner_item_ = owner_item;
+	data_object_ = data_object;
+	is_optional_ = is_optional;
 	is_used_ = true;
 }
 
@@ -82,7 +82,7 @@ Makers::Properties::PropertyBase::~PropertyBase()
 	data_object_ = nullptr;
 
 	// release onwer item
-	//delete owner_item_;	// do not delete parent item. memory error.
+	// do not delete parent item. memory error.
 	owner_item_ = nullptr;
 }
 

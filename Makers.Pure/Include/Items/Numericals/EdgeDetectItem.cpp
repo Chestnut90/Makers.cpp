@@ -9,7 +9,6 @@
 #include "../../Properties/OutputProperty.h"
 
 #include "../../Computables/Image.h"
-#include "../../Computables/ImagePointer.h"
 #include "../../Computables/Real.h"
 #include "../../Computables/ROI.h"
 
@@ -52,7 +51,7 @@ Makers::Items::Compute Makers::Items::Numericals::EdgeDetectItem::SetCompute()
 
 Makers::Properties::PropertyGroup * Makers::Items::Numericals::EdgeDetectItem::SetInputProperties()
 {
-	auto properties = new Makers::Properties::PropertyGroup();
+	auto properties = new Makers::Properties::PropertyGroup(this);
 
 	// add input float image
 	properties->AddProperty(
@@ -73,7 +72,7 @@ Makers::Properties::PropertyGroup * Makers::Items::Numericals::EdgeDetectItem::S
 
 Makers::Properties::PropertyGroup * Makers::Items::Numericals::EdgeDetectItem::SetStaticProperties()
 {
-	auto properties = new Makers::Properties::PropertyGroup();
+	auto properties = new Makers::Properties::PropertyGroup(this);
 
 	// add static morphology type
 	// init with 0 -> median
@@ -97,13 +96,13 @@ Makers::Properties::PropertyGroup * Makers::Items::Numericals::EdgeDetectItem::S
 
 Makers::Properties::PropertyGroup * Makers::Items::Numericals::EdgeDetectItem::SetOutputProperties()
 {
-	auto output_properties = new Makers::Properties::PropertyGroup();
+	auto output_properties = new Makers::Properties::PropertyGroup(this);
 
 	output_properties->AddProperty(
 		(Makers::Properties::PropertyBase*) new Makers::Properties::OutputProperty(
 			"output_filtered_image",
 			this,
-			new Makers::Computables::ImagePointer<float>()));
+			new Makers::Computables::Image<float>(true)));
 
 	return output_properties;
 }

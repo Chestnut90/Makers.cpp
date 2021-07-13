@@ -34,13 +34,11 @@ std::string Makers::Computables::IComputable::InstanceType() const
 		return "None";
 	case eInstanceType::Image:
 		return "Image";
-	case eInstanceType::ImagePointer:
-		return "ImagePointer";
 	case eInstanceType::Real:
 		return "Real";
 	case eInstanceType::ROI:
 		return "ROI";
-	case eInstanceType::Combo:
+	case eInstanceType::Enum:
 		return "Combo";
 	}
 	throw std::exception("not defined instance type");

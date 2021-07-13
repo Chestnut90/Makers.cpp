@@ -9,6 +9,10 @@ namespace Makers
 {
 	namespace Properties
 	{
+		//@ Class <OutputProperty>
+		//@ output property of item
+		//@ Inherit <PropertyBase>
+		//@ Inherit <IQueryAbleProperty>
 		class __declspec(dllexport) OutputProperty : 
 			public PropertyBase, 
 			public IQueryAbleProperty
@@ -16,10 +20,10 @@ namespace Makers
 		public:
 			//@ constructor
 			OutputProperty(
-				std::string _name, 
-				Items::ItemBase* _owner_item, 
-				Computables::IComputable* _data_object, 
-				bool _is_optional = false);
+				std::string name, 
+				Items::ItemBase* owner_item, 
+				Computables::IComputable* data_object, 
+				bool is_optional = false);
 			
 			//@ destructor
 			~OutputProperty();

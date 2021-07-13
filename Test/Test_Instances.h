@@ -26,7 +26,7 @@ namespace Test
 		{
 			Document_* doc = new Document_();
 
-			doc->AddItem(new Makers::Items::Samples::SampleItem0());
+			doc->AddItem(*new Makers::Items::Samples::SampleItem0());
 
 			delete doc;
 		}
@@ -43,7 +43,7 @@ namespace Test
 
 		static void Test_FreePropertyGroup()
 		{
-			auto property_group = new Makers::Properties::PropertyGroup();
+			auto property_group = new Makers::Properties::PropertyGroup(nullptr);
 			auto property = new Makers::Properties::InputProperty("null", nullptr, new Real<int>());
 			property_group->AddProperty(property);
 
@@ -95,12 +95,12 @@ namespace Test
 			Document_* doc = new Document_();
 
 			FloatThreshodingItem* item = new FloatThreshodingItem();
-			doc->AddItem(item);
+			doc->AddItem(*item);
 
 			// run
 			doc->RunAsync();
 
-			doc->RemoveItem(item);
+			doc->RemoveItem(*item);
 
 			delete doc;
 		}

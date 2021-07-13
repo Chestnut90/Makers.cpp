@@ -8,7 +8,6 @@
 #include "../../Properties/OutputProperty.h"
 #include "../../Properties/StaticProperty.h"
 
-#include "../../Computables/ImagePointer.h"
 #include "../../Computables/Image.h"
 #include "../../Computables/Real.h"
 
@@ -63,9 +62,9 @@ Makers::Items::Compute Makers::Items::Samples::FloatThreshodingItem::SetCompute(
 
 		// generate image
 		// send to output
-		auto com_binary_image = dynamic_cast<Makers::Computables::ImagePointer<unsigned char>*>(
+		auto com_binary_image = dynamic_cast<Makers::Computables::Image<unsigned char>*>(
 			_outputs->QueryPropertyName(here->kOutputThresholdedImage)->data_object());
-		com_binary_image->set_buffer(here->buffers_.at(0), width, height);
+		com_binary_image->set_image((unsigned char*)here->buffers_.at(0), width, height);
 		auto binary = com_binary_image->image();
 		
 		// thresholding
@@ -93,7 +92,7 @@ Makers::Items::Compute Makers::Items::Samples::FloatThreshodingItem::SetCompute(
 
 Makers::Properties::PropertyGroup * Makers::Items::Samples::FloatThreshodingItem::SetInputProperties()
 {
-	Makers::Properties::PropertyGroup* input_properties = new Makers::Properties::PropertyGroup();
+	Makers::Properties::PropertyGroup* input_properties = new Makers::Properties::PropertyGroup(this);
 
 	// input image property
 	input_properties->AddProperty(
@@ -107,7 +106,7 @@ Makers::Properties::PropertyGroup * Makers::Items::Samples::FloatThreshodingItem
 
 Makers::Properties::PropertyGroup * Makers::Items::Samples::FloatThreshodingItem::SetStaticProperties()
 {
-	Makers::Properties::PropertyGroup* static_properties = new Makers::Properties::PropertyGroup();
+	Makers::Properties::PropertyGroup* static_properties = new Makers::Properties::PropertyGroup(this);
 
 	static_properties->AddProperty(
 		(Makers::Properties::PropertyBase*) new Makers::Properties::StaticProperty(
@@ -126,13 +125,13 @@ Makers::Properties::PropertyGroup * Makers::Items::Samples::FloatThreshodingItem
 
 Makers::Properties::PropertyGroup * Makers::Items::Samples::FloatThreshodingItem::SetOutputProperties()
 {
-	Makers::Properties::PropertyGroup* output_properties = new Makers::Properties::PropertyGroup();
+	Makers::Properties::PropertyGroup* output_properties = new Makers::Properties::PropertyGroup(this);
 
 	output_properties->AddProperty(
 		(Makers::Properties::PropertyBase*) new Makers::Properties::OutputProperty(
 			"output_thresholded_image",
 			this,
-			new Makers::Computables::ImagePointer<unsigned char>()));
+			new Makers::Computables::Image<unsigned char>(true)));
 
 	output_properties->AddProperty(
 		(Makers::Properties::PropertyBase*) new Makers::Properties::OutputProperty(

@@ -9,8 +9,7 @@
 #include "../../Properties/OutputProperty.h"
 
 #include "../../Computables/Image.h"
-#include "../../Computables/ImagePointer.h"
-#include "../../Computables/Combo.h"
+#include "../../Computables/Enum.h"
 #include "../../Computables/Real.h"
 #include "../../Computables/ROI.h"
 
@@ -71,7 +70,7 @@ Makers::Items::Compute Makers::Items::Images::MorphologyFilterItem::SetCompute()
 		}
 
 		// get morphology type from static
-		auto com_morphology_type = dynamic_cast<Makers::Computables::Combo*>(
+		auto com_morphology_type = dynamic_cast<Makers::Computables::Enum*>(
 			_statics->QueryPropertyName(here->KStaticMorphologyType)->data_object());
 		auto morphology_type = com_morphology_type->selected_index();
 
@@ -87,9 +86,9 @@ Makers::Items::Compute Makers::Items::Images::MorphologyFilterItem::SetCompute()
 		}
 
 		// send to output
-		auto com_filtered_image = dynamic_cast<Makers::Computables::ImagePointer<float>*>(
+		auto com_filtered_image = dynamic_cast<Makers::Computables::Image<float>*>(
 			_outputs->QueryPropertyName(here->kOutputFilteredImage)->data_object());
-		com_filtered_image->set_buffer(here->buffers_.at(0), width, height);
+		com_filtered_image->set_image((float*)here->buffers_.at(0), width, height);
 		auto filtered_image = com_filtered_image->image();
 
 		retStatus res = retStatus::errorAacAdtsSyncWordErr;	// default
@@ -120,7 +119,7 @@ Makers::Items::Compute Makers::Items::Images::MorphologyFilterItem::SetCompute()
 
 Makers::Properties::PropertyGroup * Makers::Items::Images::MorphologyFilterItem::SetInputProperties()
 {
-	auto properties = new Makers::Properties::PropertyGroup();
+	auto properties = new Makers::Properties::PropertyGroup(this);
 
 	// add input float image
 	properties->AddProperty("Input_Image", new Makers::Computables::Image<float>(), false, Properties::eInputProperty);
@@ -133,12 +132,12 @@ Makers::Properties::PropertyGroup * Makers::Items::Images::MorphologyFilterItem:
 
 Makers::Properties::PropertyGroup * Makers::Items::Images::MorphologyFilterItem::SetStaticProperties()
 {
-	auto properties = new Makers::Properties::PropertyGroup();
+	auto properties = new Makers::Properties::PropertyGroup(this);
 
 	// add static morphology type
 	std::vector<std::string> morphologyTypes({"Dilate", "Erode", "Opening", "Closing", "TopHat", "BlackHat"});
 	properties->AddProperty("Morphology_Type", 
-		new Makers::Computables::Combo("Morphology Type", morphologyTypes), false, Properties::eStaticProperty);
+		new Makers::Computables::Enum("Morphology Type", morphologyTypes), false, Properties::eStaticProperty);
 
 	// add static filter size, init with 3
 	properties->AddProperty("Filter_Size", new Makers::Computables::Real<int>(3), false, Properties::eStaticProperty);
@@ -148,10 +147,10 @@ Makers::Properties::PropertyGroup * Makers::Items::Images::MorphologyFilterItem:
 
 Makers::Properties::PropertyGroup * Makers::Items::Images::MorphologyFilterItem::SetOutputProperties()
 {
-	auto output_properties = new Makers::Properties::PropertyGroup();
+	auto output_properties = new Makers::Properties::PropertyGroup(this);
 
 	// add output filtered image
-	output_properties->AddProperty("Filtered_image", new Makers::Computables::ImagePointer<float>(), false, Properties::eOutputProperty);
+	output_properties->AddProperty("Filtered_image", new Makers::Computables::Image<float>(true), false, Properties::eOutputProperty);
 
 	return output_properties;
 }

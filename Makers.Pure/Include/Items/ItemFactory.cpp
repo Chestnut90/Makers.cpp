@@ -5,11 +5,13 @@
 #include "../Documents/Document.h"
 #include "../Properties/PropertyBase.h"
 
+//@ Constructor
 Makers::Items::ItemFactory::ItemFactory()
 {
 	InitItems();
 }
 
+//@ Destructor
 Makers::Items::ItemFactory::~ItemFactory()
 {
 	// remove maps
@@ -23,13 +25,30 @@ Makers::Items::ItemFactory::~ItemFactory()
 	}
 }
 
-void Makers::Items::ItemFactory::DeleteItem(ItemBase * _item)
+//@ Destroy item
+void Makers::Items::ItemFactory::DestroyItem(ItemBase* item)
 {
-	// TODO : properties handling
-	delete _item;
-	_item = nullptr;
+	delete item;
+	item = nullptr;
 }
 
+//@ Create item
+Makers::Items::ItemBase * Makers::Items::ItemFactory::Create(std::string item_name)
+{
+	for (auto item_group : item_maps_)
+	{
+		auto group = item_group.second;
+
+		if (group.count(item_name) == 1)
+		{
+			return group[item_name]();
+		}
+	}
+	const std::string error = "not matched item : " + item_name;
+	throw std::exception(error.c_str());
+}
+
+//@ Init Items
 void Makers::Items::ItemFactory::InitItems()
 {
 	item_maps_.clear();
@@ -40,21 +59,6 @@ void Makers::Items::ItemFactory::InitItems()
 	InitItems_Rois();
 	InitItems_Symbols();
 	InitItems_Samples();
-}
-
-Makers::Items::ItemBase * Makers::Items::ItemFactory::Create(std::string _item_name)
-{
-	for (auto item_group : item_maps_)
-	{
-		auto group = item_group.second;
-
-		if (group.count(_item_name) == 1)
-		{
-			return group[_item_name]();
-		}
-	}
-	const std::string error = "not matched item : " + _item_name;
-	throw std::exception(error.c_str());
 }
 
 std::map<std::string, std::vector<std::string>> Makers::Items::ItemFactory::ContainingItems()
@@ -77,20 +81,20 @@ std::map<std::string, std::vector<std::string>> Makers::Items::ItemFactory::Cont
 	return items;
 }
 
-void Makers::Items::ItemFactory::IDHandle(Makers::Documents::Document* _document, std::string _id)
+void Makers::Items::ItemFactory::IDHandle(Makers::Documents::Document& document, std::string id)
 {
-	_document->id_ = _id;
+	document.id_ = id;
 }
 
 //@ TODO : other ways -> hidden
-void Makers::Items::ItemFactory::IDHandle(ItemBase& _item_base, std::string _id)
+void Makers::Items::ItemFactory::IDHandle(ItemBase& item_base, std::string id)
 {
-	_item_base.id_ = _id;
+	item_base.id_ = id;
 }
 
 //@ TODO : other ways
-void Makers::Items::ItemFactory::IDHandle(Makers::Properties::PropertyBase& _property_base, std::string _id)
+void Makers::Items::ItemFactory::IDHandle(Makers::Properties::PropertyBase& property_base, std::string id)
 {
-	_property_base.id_ = _id;
+	property_base.id_ = id;
 }
 

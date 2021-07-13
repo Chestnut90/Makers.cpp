@@ -8,6 +8,9 @@ namespace Makers
 {
 	namespace Computables
 	{
+		//@ Class <ROI>
+		//@ Computable roi
+		//@ Inherit <IComputable>
 		class __declspec(dllexport) ROI :
 			public IComputable
 		{
@@ -45,10 +48,8 @@ namespace Makers
 			virtual ~ROI();
 		
 		public:
-
 			//@ Can attach input to this
-			bool CanAttachInto(IComputable* _computable) override;
-
+			bool CanAttachInto(IComputable* computable) override;
 			//@ To String
 			std::string ToString() override;
 		};

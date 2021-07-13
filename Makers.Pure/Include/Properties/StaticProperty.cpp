@@ -3,11 +3,11 @@
 
 //@ constructor
 Makers::Properties::StaticProperty::StaticProperty(
-	std::string _name,
-	Items::ItemBase* _owner_item,
-	Computables::IComputable* _data_object,
-	bool _is_optional) : 
-	PropertyBase(_name, _owner_item, _data_object, _is_optional)
+	std::string name,
+	Items::ItemBase* owner_item,
+	Computables::IComputable* data_object,
+	bool is_optional) : 
+	PropertyBase(name, owner_item, data_object, is_optional)
 {
 }
 

@@ -8,7 +8,9 @@ namespace Makers
 {
 	namespace Computables
 	{
-		//@ real value template class
+		//@ Class <Real>
+		//@ template class for literal type
+		//@ Inherit <IComputable>
 		template <typename _real_type>
 		class __declspec(dllexport) Real :
 			public IComputable
@@ -21,13 +23,13 @@ namespace Makers
 			//@ get value
 			_real_type value() const;
 			//@ set value
-			void set_value(_real_type _value);
+			void set_value(_real_type value);
 
 		public:
 			//@ Constructor
 			Real();
 			//@ Constructor with value
-			Real(_real_type _value);
+			Real(_real_type value);
 			//@ destructor
 			virtual ~Real();
 
@@ -37,7 +39,7 @@ namespace Makers
 
 		public:
 			//@ Can attach input to this
-			bool CanAttachInto(IComputable* _computable) override;
+			bool CanAttachInto(IComputable* computable) override;
 			//@ To string
 			std::string ToString() override;
 		};

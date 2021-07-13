@@ -7,7 +7,6 @@
 #include "../../Properties/StaticProperty.h"
 #include "../../Properties/OutputProperty.h"
 
-#include "../../Computables/ImagePointer.h"
 #include "../../Computables/Image.h"
 
 Makers::Items::Images::StreamImageItem::StreamImageItem() :
@@ -43,11 +42,14 @@ Makers::Items::Compute Makers::Items::Images::StreamImageItem::SetCompute()
 		auto image = stream_image->image();
 		auto width = stream_image->width();
 		auto height = stream_image->height();
-		if (stream_image == nullptr) return false;
+		if (stream_image == nullptr)
+		{
+			throw std::exception("No stream image for running");
+		}
 
-		auto com_stream_image = dynamic_cast<Makers::Computables::ImagePointer<float>*>(
+		auto com_stream_image = dynamic_cast<Makers::Computables::Image<float>*>(
 			_outputs->QueryPropertyName(here->kOutputStreaImage)->data_object());
-		com_stream_image->set_buffer(image, width, height);
+		com_stream_image->set_image(image, width, height);
 		return true;
 	};
 }
@@ -55,20 +57,20 @@ Makers::Items::Compute Makers::Items::Images::StreamImageItem::SetCompute()
 Makers::Properties::PropertyGroup * Makers::Items::Images::StreamImageItem::SetInputProperties()
 {
 	// non - inputs
-	return new Makers::Properties::PropertyGroup();
+	return new Makers::Properties::PropertyGroup(this);
 }
 
 Makers::Properties::PropertyGroup * Makers::Items::Images::StreamImageItem::SetStaticProperties()
 {
 	// non - statics
-	return new Makers::Properties::PropertyGroup();
+	return new Makers::Properties::PropertyGroup(this);
 }
 
 Makers::Properties::PropertyGroup * Makers::Items::Images::StreamImageItem::SetOutputProperties()
 {
-	auto output_properties = new Makers::Properties::PropertyGroup();
+	auto output_properties = new Makers::Properties::PropertyGroup(this);
 
-	output_properties->AddProperty("Stream_Image", new Makers::Computables::ImagePointer<float>(), false, Properties::eOutputProperty);
+	output_properties->AddProperty("Stream_Image", new Makers::Computables::Image<float>(true), false, Properties::eOutputProperty);
 
 	return output_properties;
 }

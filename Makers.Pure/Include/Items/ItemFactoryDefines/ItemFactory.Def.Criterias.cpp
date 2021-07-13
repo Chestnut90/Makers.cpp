@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "ItemFactory.h"
+#include "../ItemFactory.h"
 
 void Makers::Items::ItemFactory::InitItems_Criterias()
 {

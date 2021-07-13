@@ -11,7 +11,6 @@
 #include "../../Computables/Image.h"
 #include "../../Computables/Real.h"
 #include "../../Computables/ROI.h"
-#include "../../Computables/ImagePointer.h"
 
 //nexensor
 #include "C:\Program Files\Nexensor\NEXENSORSDK\include\Algorithm\ImageProcessing.h"
@@ -76,9 +75,9 @@ Makers::Items::Compute Makers::Items::Images::FillImageItem::SetCompute()
 		auto filled = com_fill->value();
 
 		// send to output
-		auto com_filled_image = dynamic_cast<Makers::Computables::ImagePointer<float>*>(
+		auto com_filled_image = dynamic_cast<Makers::Computables::Image<float>*>(
 			_outputs->QueryPropertyName(here->kOutputFloatImage)->data_object());
-		com_filled_image->set_buffer(here->buffers_.at(0), width, height);
+		com_filled_image->set_image((float*)here->buffers_.at(0), width, height);
 		auto filled_image = com_filled_image->image();
 
 		return retStatus::success == NXSIP::ImageFill(roi, width, height, filled, filled_image);
@@ -87,7 +86,7 @@ Makers::Items::Compute Makers::Items::Images::FillImageItem::SetCompute()
 
 Makers::Properties::PropertyGroup * Makers::Items::Images::FillImageItem::SetInputProperties()
 {
-	auto properties = new Makers::Properties::PropertyGroup();
+	auto properties = new Makers::Properties::PropertyGroup(this);
 
 	// add input float image
 	properties->AddProperty("Input_Image", new Makers::Computables::Image<float>(), false, Properties::eInputProperty);
@@ -99,7 +98,7 @@ Makers::Properties::PropertyGroup * Makers::Items::Images::FillImageItem::SetInp
 
 Makers::Properties::PropertyGroup * Makers::Items::Images::FillImageItem::SetStaticProperties()
 {
-	auto properties = new Makers::Properties::PropertyGroup();
+	auto properties = new Makers::Properties::PropertyGroup(this);
 
 	// add static filled value, init with 0.f
 	properties->AddProperty("Filled_Value", new Makers::Computables::Real<float>(0.f), false, Properties::eStaticProperty);
@@ -109,10 +108,10 @@ Makers::Properties::PropertyGroup * Makers::Items::Images::FillImageItem::SetSta
 
 Makers::Properties::PropertyGroup * Makers::Items::Images::FillImageItem::SetOutputProperties()
 {
-	auto output_properties = new Makers::Properties::PropertyGroup();
+	auto output_properties = new Makers::Properties::PropertyGroup(this);
 
 	// add output filled image
-	output_properties->AddProperty("Filled_Image", new Makers::Computables::ImagePointer<float>(), false, Properties::eOutputProperty);
+	output_properties->AddProperty("Filled_Image", new Makers::Computables::Image<float>(true), false, Properties::eOutputProperty);
 
 	return output_properties;
 }

@@ -14,8 +14,12 @@ namespace Makers
 	{
 		class ItemBase;
 
+		// TODO : singleton or single instance
+		//@ Class <ItemFactory>
+		//@ Factory class of items
 		class __declspec(dllexport) ItemFactory
 		{
+			//@ item creator
 			typedef ItemBase* (*ItemCreator)();
 
 		private:
@@ -29,7 +33,6 @@ namespace Makers
 			std::map<std::string, ItemCreator> item_symbols_;
 			std::map<std::string, ItemCreator> item_samples_;
 
-		//@ initializers
 		public:
 			void InitItems();
 			void InitItems_Criterias();
@@ -41,17 +44,22 @@ namespace Makers
 			void InitItems_Samples();
 
 		public:
+			//@ Constructor
 			ItemFactory();
+			//@ Destructor
 			~ItemFactory();
 
 		public:
-
-			void DeleteItem(ItemBase*);
+			//@ Destroy item
+			void DestroyItem(ItemBase*);
+			//@ Create item
 			ItemBase* Create(std::string);
+			//@ map data of containing items
 			std::map<std::string, std::vector<std::string>> ContainingItems();
 
+		public:
 			//@ document id handle when load files
-			static void IDHandle(Makers::Documents::Document*, std::string);
+			static void IDHandle(Makers::Documents::Document&, std::string);
 			//@ item base id handle when load files
 			static void IDHandle(ItemBase&, std::string);
 			//@ property base id handle when load files

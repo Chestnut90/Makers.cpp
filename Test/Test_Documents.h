@@ -71,12 +71,12 @@ namespace Test
 					QueryPropertyName(stream_image_item->kOutputStreaImage));
 
 			// add items
-			document->AddItem(stream_image_item);
-			document->AddItem(CreateFloatThresholdingItem(output_stream_image_property, "th1"));
-			document->AddItem(CreateFloatThresholdingItem(output_stream_image_property, "th2"));
-			document->AddItem(CreateFloatThresholdingItem(output_stream_image_property, "th3"));
-			document->AddItem(CreateFloatThresholdingItem(output_stream_image_property, "th4"));
-			document->AddItem(CreateFloatThresholdingItem(output_stream_image_property, "th5"));
+			document->AddItem(*stream_image_item);
+			document->AddItem(*CreateFloatThresholdingItem(output_stream_image_property, "th1"));
+			document->AddItem(*CreateFloatThresholdingItem(output_stream_image_property, "th2"));
+			document->AddItem(*CreateFloatThresholdingItem(output_stream_image_property, "th3"));
+			document->AddItem(*CreateFloatThresholdingItem(output_stream_image_property, "th4"));
+			document->AddItem(*CreateFloatThresholdingItem(output_stream_image_property, "th5"));
 
 			return document;
 		}
@@ -135,6 +135,7 @@ namespace Test
 			auto start = std::chrono::high_resolution_clock::now();
 
 			doc->set_stream_image(_image, _width, _height);
+			//doc->InitMemoryPool();
 			doc->RunAsync();
 
 			auto end = std::chrono::high_resolution_clock::now();

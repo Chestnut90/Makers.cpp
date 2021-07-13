@@ -102,7 +102,7 @@ int main()
 	//Beds::GoToBedsAsync();
 
 	// serial and multi-threading test
-	//serial_document_compare();
+	serial_document_compare();
 
 	//Test::Documents::Test_FreeDocument();
 	//Test::Documents::Test_FreeItem();
@@ -114,7 +114,7 @@ int main()
 	//Test::Items::ItemFactory_Item_List();
 
 	//Test::Instances::Test_FreeItemsInDocument();
-	AsyncException::GoToBedAsync_Exception();
+	//AsyncException::GoToBedAsync_Exception();
 
 	_CrtDumpMemoryLeaks();
 	//_CrtSetBreakAlloc(2239);

@@ -11,6 +11,11 @@ namespace Makers
 
 	namespace Documents
 	{
+		// TODO : need to define input image
+		//@ Class <Document>
+		//@ Root of items
+		//@ Contain items and memory pool
+		//@ Inherit <IMapableData>
 		class __declspec(dllexport) Document :
 			public IMapableData
 		{
@@ -32,7 +37,6 @@ namespace Makers
 			MemoryPools::ArrayMemoryPool* memory_pool_;
 			//@ stream image float
 			Makers::Computables::Image<float>* stream_image_;
-			
 			//@ unique id 
 			std::string id_;
 			//@ item collection
@@ -68,11 +72,11 @@ namespace Makers
 
 		public:
 			//@ set title
-			void set_title(std::string _title);
+			void set_title(std::string title);
 			//@ set stream image
-			void set_stream_image(Makers::Computables::Image<float>* _stream_image);
+			void set_stream_image(Makers::Computables::Image<float>* stream_image);
 			//@ set stream image
-			void set_stream_image(float* _image, unsigned long _width, unsigned long _height);
+			void set_stream_image(float* image, unsigned long width, unsigned long height);
 
 #pragma endregion
 #pragma region Constructors & Destructors
@@ -81,9 +85,9 @@ namespace Makers
 			//@ constructor
 			Document();
 			//@ constructor with id
-			Document(std::string _id);
+			Document(std::string id);
 			//@ constructor with id and items
-			Document(std::string _id, std::vector<Items::ItemBase*> _items);
+			Document(std::string id, std::vector<Items::ItemBase*> items);
 			//@ destructor
 			virtual ~Document();
 
@@ -94,19 +98,19 @@ namespace Makers
 			//@ items count
 			int Count();
 			//@ add item
-			void AddItem(Items::ItemBase* _itembase);
+			void AddItem(Items::ItemBase& itembase);
 			//@ remove item
-			void RemoveItem(Items::ItemBase* _itembase);
+			void RemoveItem(Items::ItemBase& itembase);
 			//@ remove item
-			void RemoveItem(std::string _id);
+			void RemoveItem(std::string id);
 			//@ search item with id
-			Items::ItemBase* SearchItem(std::string _id);
+			Items::ItemBase* SearchItem(std::string id);
 			//@ search item with index
-			Items::ItemBase* SearchItem(int _index);
+			Items::ItemBase* SearchItem(int index);
 			//@ serach index
-			int SearchItemIndex(Items::ItemBase* _itembase);
+			int SearchItemIndex(Items::ItemBase* itembase);
 			//@ search index
-			int SearchItemIndex(std::string _id);
+			int SearchItemIndex(std::string id);
 			//@ find root items
 			std::vector<Items::ItemBase*> FindRootItems();
 			//@ clear all items
@@ -116,6 +120,7 @@ namespace Makers
 
 		public:
 
+			// TODO : memory initialized
 			//@ initialize memory pool
 			//@ 
 			void InitMemoryPool();
@@ -124,8 +129,8 @@ namespace Makers
 
 			//@ runable
 			bool RunAsync(
-				std::vector<Items::ItemBase*> _items = std::vector<Items::ItemBase*>(),	// default size 0
-				Makers::Computables::Image<float>* _stream = nullptr // default nullptr
+				std::vector<Items::ItemBase*> items = std::vector<Items::ItemBase*>(),	// default size 0
+				Makers::Computables::Image<float>* stream = nullptr // default nullptr
 			);
 
 			//@ to data -> IMapableData override 

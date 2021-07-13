@@ -11,6 +11,7 @@ namespace Makers
 	namespace Items { class ItemBase; }
 	namespace Properties
 	{
+		//@ type of property
 		enum ePropertyType
 		{
 			eInputProperty,
@@ -19,7 +20,8 @@ namespace Makers
 		};
 
 		class PropertyBase;
-		//@ class Property Group
+		
+		//@ Class <PropertyGroup>
 		//@ container of property base
 		class __declspec(dllexport) PropertyGroup
 		{
@@ -28,48 +30,47 @@ namespace Makers
 		private:
 			//@ properties
 			std::vector<PropertyBase*> properties_;
-
 			//@ owner item
 			Makers::Items::ItemBase* owner_item_;
 
 		public:
-			//@ count
-			int Count();
-
 			//@ owner item
 			Makers::Items::ItemBase* owner_item() const;
 
 		public:
 			//@ constructor
-			PropertyGroup();
+			PropertyGroup(Items::ItemBase* owner_item);
 			//@ destructor
 			~PropertyGroup();
 
 		public:
 			//@ [name] operator
-			PropertyBase* operator[](const std::string _name);
+			PropertyBase* operator[](const std::string name);
+			//@ count
+			int Count();
+
 		public:
-			//@ add property
-			void AddProperty(PropertyBase* _property);
-			
-			//@ TODO : implement
-			//@ add property
+			//@ add property with property
+			void AddProperty(PropertyBase* property);
+			//@ add property with property datas
 			PropertyBase* AddProperty(
-				std::string _name,
-				Computables::IComputable* _computable,
-				bool _is_optional,
-				ePropertyType _property_type);
+				std::string name,
+				Computables::IComputable* computable,
+				bool is_optional,
+				ePropertyType property_type);
 			
+		public:
 			//@ map iterator begin
 			std::vector<PropertyBase*>::iterator Begin();
 			//@ map iterator end
 			std::vector<PropertyBase*>::iterator End();
 
+		public:
 			// TODO: nullable
 			//@ query property with id
-			PropertyBase* QueryPropertyID(std::string _id);
+			PropertyBase* QueryPropertyID(std::string id);
 			//@ query property with name
-			PropertyBase* QueryPropertyName(std::string _name);
+			PropertyBase* QueryPropertyName(std::string name);
 
 		private:
 			//@ clear all properties

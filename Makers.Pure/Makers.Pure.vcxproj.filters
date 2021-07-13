@@ -46,6 +46,9 @@
     <Filter Include="Utils\Rects">
       <UniqueIdentifier>{e12d9b1f-fab6-4496-ade4-f28588648dfc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Include\Items\ItemFactoryDefines">
+      <UniqueIdentifier>{c4ee9de5-4465-4cbc-8255-e625503a6f5b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\Items\Samples\FloatThresholdingItem.h">
@@ -111,9 +114,6 @@
     <ClInclude Include="Include\Items\Images\StreamImageItem.h">
       <Filter>Include\Items\Images</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Computables\ImagePointer.h">
-      <Filter>Include\Computables</Filter>
-    </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>default_runs</Filter>
     </ClInclude>
@@ -150,9 +150,6 @@
     <ClInclude Include="Utils\Rects\RectangleF.h">
       <Filter>Utils\Rects</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Computables\Combo.h">
-      <Filter>Include\Computables</Filter>
-    </ClInclude>
     <ClInclude Include="Include\Items\ROIs\ROIItem.h">
       <Filter>Include\Items\ROIs</Filter>
     </ClInclude>
@@ -161,6 +158,9 @@
     </ClInclude>
     <ClInclude Include="Include\Properties\IQueryAbleProperty.h">
       <Filter>Include\Properties</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Computables\Enum.h">
+      <Filter>Include\Computables</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -180,9 +180,6 @@
       <Filter>Include\Computables</Filter>
     </ClCompile>
     <ClCompile Include="Include\Computables\Image.cpp">
-      <Filter>Include\Computables</Filter>
-    </ClCompile>
-    <ClCompile Include="Include\Computables\ImagePointer.cpp">
       <Filter>Include\Computables</Filter>
     </ClCompile>
     <ClCompile Include="Include\Computables\Real.cpp">
@@ -236,27 +233,6 @@
     <ClCompile Include="Include\Items\ItemFactory.cpp">
       <Filter>Include\Items</Filter>
     </ClCompile>
-    <ClCompile Include="Include\Items\ItemFactory.Def.Criterias.cpp">
-      <Filter>Include\Items</Filter>
-    </ClCompile>
-    <ClCompile Include="Include\Items\ItemFactory.Def.Images.cpp">
-      <Filter>Include\Items</Filter>
-    </ClCompile>
-    <ClCompile Include="Include\Items\ItemFactory.Def.InspInfos.cpp">
-      <Filter>Include\Items</Filter>
-    </ClCompile>
-    <ClCompile Include="Include\Items\ItemFactory.Def.Numericals.cpp">
-      <Filter>Include\Items</Filter>
-    </ClCompile>
-    <ClCompile Include="Include\Items\ItemFactory.Def.ROIs.cpp">
-      <Filter>Include\Items</Filter>
-    </ClCompile>
-    <ClCompile Include="Include\Items\ItemFactory.Def.Samples.cpp">
-      <Filter>Include\Items</Filter>
-    </ClCompile>
-    <ClCompile Include="Include\Items\ItemFactory.Def.Symbols.cpp">
-      <Filter>Include\Items</Filter>
-    </ClCompile>
     <ClCompile Include="Include\Properties\InputProperty.cpp">
       <Filter>Include\Properties</Filter>
     </ClCompile>
@@ -284,9 +260,6 @@
     <ClCompile Include="Utils\Rects\RectangleF.cpp">
       <Filter>Utils\Rects</Filter>
     </ClCompile>
-    <ClCompile Include="Include\Computables\Combo.cpp">
-      <Filter>Include\Computables</Filter>
-    </ClCompile>
     <ClCompile Include="Include\Items\ROIs\ROIItem.cpp">
       <Filter>Include\Items\ROIs</Filter>
     </ClCompile>
@@ -295,6 +268,30 @@
     </ClCompile>
     <ClCompile Include="Include\Properties\IQueryAbleProperty.cpp">
       <Filter>Include\Properties</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\ItemFactoryDefines\ItemFactory.Def.Criterias.cpp">
+      <Filter>Include\Items\ItemFactoryDefines</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\ItemFactoryDefines\ItemFactory.Def.Images.cpp">
+      <Filter>Include\Items\ItemFactoryDefines</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\ItemFactoryDefines\ItemFactory.Def.InspInfos.cpp">
+      <Filter>Include\Items\ItemFactoryDefines</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\ItemFactoryDefines\ItemFactory.Def.Numericals.cpp">
+      <Filter>Include\Items\ItemFactoryDefines</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\ItemFactoryDefines\ItemFactory.Def.ROIs.cpp">
+      <Filter>Include\Items\ItemFactoryDefines</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\ItemFactoryDefines\ItemFactory.Def.Samples.cpp">
+      <Filter>Include\Items\ItemFactoryDefines</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\ItemFactoryDefines\ItemFactory.Def.Symbols.cpp">
+      <Filter>Include\Items\ItemFactoryDefines</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Computables\Enum.cpp">
+      <Filter>Include\Computables</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
