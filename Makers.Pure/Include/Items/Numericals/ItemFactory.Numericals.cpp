@@ -2,17 +2,19 @@
 #include "../ItemFactory.h"
 
 #pragma region Include Numericals Item
-#include "../Numericals/BlobItem.h"
-#include "../Numericals/EdgeDetectItem.h"
+#include "BlobItem.h"
+#include "EdgeDetectItem.h"
 #pragma endregion
 
 void Makers::Items::ItemFactory::InitItems_Numericals()
 {
 	item_numericals_.clear();
 
+	// add Blob 
 	item_numericals_["BlobItem"] = []()
 	{ return static_cast<ItemBase*>(new Makers::Items::Numericals::BlobItem()); };
 
+	// add edge detect
 	item_numericals_["EdgeDetectItem"] = []()
 	{ return static_cast<ItemBase*>(new Makers::Items::Numericals::EdgeDetectItem()); };
 

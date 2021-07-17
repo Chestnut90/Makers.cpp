@@ -41,8 +41,13 @@ namespace Makers
 
 		public:
 			//@ constructor
+			//@ default
+			Enum();
+			//@ constructor
+			//@ with enumerations
 			Enum(std::vector<std::string> enumeration);
-			//@ named constructor
+			//@ constructor
+			//@ with name and enumerations
 			Enum(std::string name, std::vector<std::string> enumeration);
 			//@ destructor
 			virtual ~Enum();
@@ -51,12 +56,17 @@ namespace Makers
 			//@ get max enum count
 			int Count() const;
 
-		// implement IComputable abstract functions
+		// implement <IComputable> abstract functions
 		public:
 			//@ Can attach input to this
 			virtual bool CanAttachInto(IComputable* computable) override;
 			//@ To string
 			virtual std::string ToString() override;
+
+		// override virtual functions <IMapableData>
+		public:
+			//@ To data
+			std::map<std::string, std::string> ToData() override;
 
 		};
 	}

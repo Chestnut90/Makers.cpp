@@ -35,15 +35,15 @@ namespace Makers
 			_image_type* image() const;
 			
 			//@ set image
+			//@ when is buffer, just point memory location
 			void set_image(_image_type* image, long width, long height);
 			//@ set image -> copy
 			void set_image(Image<_image_type>* image);
 
 		public:
-			//@ constructor
-			Image();
-			//@ Constructor with buffer
-			Image(bool is_buffer);
+			//@ Constructor 
+			//@ with buffer flag
+			Image(bool is_buffer = false);
 			//@ destructor
 			virtual ~Image();
 
@@ -51,11 +51,17 @@ namespace Makers
 			//@ set data type
 			void _SetDataType();
 
+			// implement <IComputable> abstract functions
 		public:
 			//@ Can attach input to this
-			virtual bool CanAttachInto(IComputable* computable) override;
+			bool CanAttachInto(IComputable* computable) override;
 			//@ To string
-			virtual std::string ToString() override;
+			std::string ToString() override;
+
+			// override virtual functions <IMapableData>
+		public:
+			//@ To data
+			std::map<std::string, std::string> ToData() override;
 
 		};
 

@@ -25,23 +25,23 @@ namespace Makers
 		private:
 			std::map<std::string, std::map<std::string, ItemCreator>> item_maps_;
 
-			std::map<std::string, ItemCreator> item_criterias_;
+			std::map<std::string, ItemCreator> item_streams_;
 			std::map<std::string, ItemCreator> item_images_;
-			std::map<std::string, ItemCreator> item_inspinfos_;
 			std::map<std::string, ItemCreator> item_numericals_;
 			std::map<std::string, ItemCreator> item_rois_;
+			std::map<std::string, ItemCreator> item_criterias_;
+			std::map<std::string, ItemCreator> item_inspinfos_;
 			std::map<std::string, ItemCreator> item_symbols_;
-			std::map<std::string, ItemCreator> item_samples_;
 
 		public:
 			void InitItems();
+			void InitItems_Streams();
 			void InitItems_Criterias();
 			void InitItems_Images();
 			void InitItems_InspInfos();
 			void InitItems_Numericals();
 			void InitItems_Rois();
 			void InitItems_Symbols();
-			void InitItems_Samples();
 
 		public:
 			//@ Constructor

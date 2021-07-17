@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "IComputable.h"
 
+#include "../Properties/PropertyBase.h"
+
 //@ get data type
 Makers::Computables::eInstanceType Makers::Computables::IComputable::instance_type() const
 {
@@ -16,6 +18,7 @@ Makers::Computables::eDataType Makers::Computables::IComputable::data_type() con
 //@ constructor
 Makers::Computables::IComputable::IComputable()
 {
+	owner_property_ = nullptr;
 	instance_type_ = eInstanceType::None;
 	data_type_ = eDataType::Void;
 }
@@ -23,6 +26,8 @@ Makers::Computables::IComputable::IComputable()
 //@ destructor
 Makers::Computables::IComputable::~IComputable()
 {
+	// !do not release owner property memory
+	// !delete owner_property_
 }
 
 //@ instance type to string
@@ -39,7 +44,7 @@ std::string Makers::Computables::IComputable::InstanceType() const
 	case eInstanceType::ROI:
 		return "ROI";
 	case eInstanceType::Enum:
-		return "Combo";
+		return "Enum";
 	}
 	throw std::exception("not defined instance type");
 }
@@ -69,5 +74,20 @@ std::string Makers::Computables::IComputable::DataType() const
 		return "String";
 	}
 	throw std::exception("not defined data type");
+}
+
+//@ To data
+std::map<std::string, std::string> Makers::Computables::IComputable::ToData()
+{
+	std::map<std::string, std::string> data;
+
+	// instance type
+	data["InstanceType"] = InstanceType();
+	// data type
+	data["DataType"] = DataType();
+	// owner property id
+	data["OwnerPropertyID"] = owner_property_ == nullptr ? "" : owner_property_->id();
+	
+	return data;
 }
 

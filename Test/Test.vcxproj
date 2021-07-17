@@ -162,6 +162,7 @@
     <ClInclude Include="Future_exception.h" />
     <ClInclude Include="GotoBed.h" />
     <ClInclude Include="Itemfactory_test.h" />
+    <ClInclude Include="Surf_IO.h" />
     <ClInclude Include="Test_Documents.h" />
     <ClInclude Include="Test_Instances.h" />
     <ClInclude Include="Test_RandomImageFloat.h" />

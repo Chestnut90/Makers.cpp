@@ -2,7 +2,7 @@
 #include "../ItemFactory.h"
 
 #pragma region Include ROIs Item
-#include "../ROIs/RoiItem.h"
+#include "RoiItem.h"
 #pragma endregion
 
 void Makers::Items::ItemFactory::InitItems_Rois()

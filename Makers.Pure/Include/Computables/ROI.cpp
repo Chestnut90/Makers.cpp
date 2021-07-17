@@ -82,3 +82,16 @@ std::string Makers::Computables::ROI::ToString()
 		std::to_string(right_) + ", " +
 		std::to_string(bottom_) + ")";
 }
+
+//@ To Data
+std::map<std::string, std::string> Makers::Computables::ROI::ToData()
+{
+	auto data = IComputable::ToData();
+
+	data["Left"] = std::to_string(left_);
+	data["Top"] = std::to_string(top_);
+	data["Right"] = std::to_string(right_);
+	data["Bottom"] = std::to_string(bottom_);
+
+	return data;
+}

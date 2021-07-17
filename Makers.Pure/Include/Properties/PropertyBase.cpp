@@ -70,6 +70,7 @@ Makers::Properties::PropertyBase::PropertyBase(
 	name_ = name;
 	owner_item_ = owner_item;
 	data_object_ = data_object;
+	data_object_->owner_property_ = this;	// set owner property
 	is_optional_ = is_optional;
 	is_used_ = true;
 }
@@ -90,16 +91,13 @@ Makers::Properties::PropertyBase::~PropertyBase()
 std::map<std::string, std::string> Makers::Properties::PropertyBase::ToData()
 {
 	std::map<std::string, std::string> data;
+	
 	// property info
 	data["ID"] = id_;
 	data["Name"] = name_;
 	data["OwnerID"] = std::string(owner_item_->id());
 	data["Optional"] = std::to_string(is_optional_);
 	data["Used"] = std::to_string(is_used_);
-
-	// data_object
-	data["DataType"] = "";	// TODO : 
-
 
 	return data;
 }

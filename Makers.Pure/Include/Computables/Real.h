@@ -28,7 +28,7 @@ namespace Makers
 		public:
 			//@ Constructor
 			Real();
-			//@ Constructor with value
+			//@ Constructor with default value
 			Real(_real_type value);
 			//@ destructor
 			virtual ~Real();
@@ -37,11 +37,17 @@ namespace Makers
 			//@ set data type
 			void _SetDataType();
 
+			// implement <IComputable> abstract functions
 		public:
 			//@ Can attach input to this
 			bool CanAttachInto(IComputable* computable) override;
 			//@ To string
 			std::string ToString() override;
+
+			// override virtual functions <IMapableData>
+		public:
+			//@ To data
+			std::map<std::string, std::string> ToData() override;
 		};
 
 		template class Real<bool>;

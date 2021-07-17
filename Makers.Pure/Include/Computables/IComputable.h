@@ -2,10 +2,11 @@
 #ifndef _ICOMPUTABLE_H_
 #define _ICOMPUTABLE_H_
 
-#include <string>
+#include "../IMapableData.h"
 
 namespace Makers
 {
+	namespace Properties { class PropertyBase; }
 	namespace Computables
 	{
 		enum class eInstanceType : int
@@ -33,8 +34,17 @@ namespace Makers
 		};
 
 		//@ interface of data
-		class __declspec(dllexport) IComputable
+		class __declspec(dllexport) IComputable :
+			public IMapableData
 		{
+			friend Makers::Properties::PropertyBase;
+
+		private:
+			// TODO : is it needed?
+			//@ owner property
+			//@ life cycle depend on owner property
+			Properties::PropertyBase* owner_property_;
+
 		protected:
 			//@ intance type of IComputable
 			eInstanceType instance_type_;
@@ -64,6 +74,11 @@ namespace Makers
 			virtual bool CanAttachInto(IComputable* _computable) = 0;
 			//@ To string
 			virtual std::string ToString() = 0;
+			
+			// implement <IMapableData>
+		public:
+			//@ To data
+			virtual std::map<std::string, std::string> ToData() override;
 		};
 	}
 }

@@ -16,11 +16,11 @@
 #pragma region Nexensor SDK Dependencies
 
 #pragma region ALGORITHMS
-//#include "C:\Program Files\Nexensor\NEXENSORSDK\include\Algorithm\ImageProcessing.h"
-//#include "C:\Program Files\Nexensor\NEXENSORSDK\include\Algorithm\ImageProcessingHelper.h"
-//#include "C:\Program Files\Nexensor\NEXENSORSDK\include\Algorithm\Geometry.h"
-//#include "C:\Program Files\Nexensor\NEXENSORSDK\include\Algorithm\ImageCondition.h"
-//#include "C:\Program Files\Nexensor\NEXENSORSDK\include\Algorithm\BlobInfo.h"
+#include "C:\Program Files\Nexensor\NEXENSORSDK\include\Algorithm\ImageProcessing.h"
+#include "C:\Program Files\Nexensor\NEXENSORSDK\include\Algorithm\ImageProcessingHelper.h"
+#include "C:\Program Files\Nexensor\NEXENSORSDK\include\Algorithm\Geometry.h"
+#include "C:\Program Files\Nexensor\NEXENSORSDK\include\Algorithm\ImageCondition.h"
+#include "C:\Program Files\Nexensor\NEXENSORSDK\include\Algorithm\BlobInfo.h"
 //#include "C:\Program Files\Nexensor\NEXENSORSDK\include\Algorithm\EdgeDetect.h"
 //#include "C:\Program Files\Nexensor\NEXENSORSDK\include\Algorithm\MultiProcessing.h"
 
@@ -28,7 +28,7 @@
 
 
 #pragma region BASEMETHODS
-//#include "C:\Program Files\Nexensor\NEXENSORSDK\include\BaseMethod\ZmapFormat.h"
+#include "C:\Program Files\Nexensor\NEXENSORSDK\include\BaseMethod\ZmapFormat.h"
 //#include "C:\Program Files\Nexensor\NEXENSORSDK\include\BaseMethod\IniReadWriter.h"
 //#include "C:\Program Files\Nexensor\NEXENSORSDK\include\BaseMethod\GraphControl.h"
 //#include "C:\Program Files\Nexensor\NEXENSORSDK\include\BaseMethod\ShareMemory.h"

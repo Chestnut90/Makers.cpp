@@ -77,6 +77,7 @@ void Makers::Computables::Real<_real_type>::_SetDataType()
 	}
 }
 
+//@ Check input data can attach into 
 template<typename _real_type>
 bool Makers::Computables::Real<_real_type>::CanAttachInto(IComputable * computable)
 {
@@ -90,4 +91,16 @@ template<typename _real_type>
 std::string Makers::Computables::Real<_real_type>::ToString()
 {
 	return "<class Real<" + DataType() + ">> " + std::to_string(value_);
+}
+
+//@ To data
+template<typename _real_type>
+std::map<std::string, std::string> Makers::Computables::Real<_real_type>::ToData()
+{
+	auto data = IComputable::ToData();
+
+	// value
+	data["Value"] = std::to_string(value_);
+
+	return data;
 }

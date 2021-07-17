@@ -17,6 +17,9 @@
     <Filter Include="InstanceTest">
       <UniqueIdentifier>{d4837954-4a60-484f-a93d-7f0eab32f749}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Surf_Test">
+      <UniqueIdentifier>{7c50350c-0200-4096-b8f4-1002546acb74}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -42,6 +45,9 @@
     </ClInclude>
     <ClInclude Include="Future_exception.h">
       <Filter>AsyncTest</Filter>
+    </ClInclude>
+    <ClInclude Include="Surf_IO.h">
+      <Filter>Surf_Test</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

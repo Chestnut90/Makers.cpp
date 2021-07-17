@@ -14,10 +14,11 @@
 #include "../Makers.Pure/Include/Computables/Real.h"
 #include "../Makers.Pure/Include/Computables/Image.h"
 
-
+#include "../Makers.Pure/Include/Items/Streams/StreamZmapItem.h"
 #include "../Makers.Pure/Include/Items/Samples/FloatThresholdingItem.h"
-#include "../Makers.Pure/Include/Items/Images/StreamImageItem.h"
 #include "../Makers.Pure/Include/Items/Samples/SampleItem0.h"
+
+#include "../Makers.Pure/Include/nxSurfs/Surf.h"
 
 using namespace Makers;
 using namespace Makers::Items::Samples;
@@ -63,12 +64,12 @@ namespace Test
 			Document_* document = new Document_();
 
 			// streams
-			auto stream_image_item = new Makers::Items::Images::StreamImageItem();
+			auto stream_image_item = new Makers::Items::Streams::StreamZmapItem();
 
 			auto output_stream_image_property =
 				dynamic_cast<Properties::OutputProperty*>(
 					stream_image_item->output_properties()->
-					QueryPropertyName(stream_image_item->kOutputStreaImage));
+					QueryPropertyName(stream_image_item->kOutputZmap));
 
 			// add items
 			document->AddItem(*stream_image_item);
@@ -134,9 +135,8 @@ namespace Test
 			auto doc = CreateDocument();
 			auto start = std::chrono::high_resolution_clock::now();
 
-			doc->set_stream_image(_image, _width, _height);
-			//doc->InitMemoryPool();
-			doc->RunAsync();
+			doc->surf().Load("E:\\Test\\SDK.NET\\sample.surf");
+			doc->Run_Async();
 
 			auto end = std::chrono::high_resolution_clock::now();
 			std::chrono::duration<double> sec = end - start;
@@ -157,7 +157,6 @@ namespace Test
 					std::cout << "zero count : " << com_zero_count->value() << std::endl;
 				}
 			}
-
 
 			delete doc;
 		}

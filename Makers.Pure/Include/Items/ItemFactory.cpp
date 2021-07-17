@@ -52,13 +52,13 @@ Makers::Items::ItemBase * Makers::Items::ItemFactory::Create(std::string item_na
 void Makers::Items::ItemFactory::InitItems()
 {
 	item_maps_.clear();
-	InitItems_Criterias();
+	InitItems_Streams();
 	InitItems_Images();
-	InitItems_InspInfos();
 	InitItems_Numericals();
 	InitItems_Rois();
+	InitItems_Criterias();
+	InitItems_InspInfos();
 	InitItems_Symbols();
-	InitItems_Samples();
 }
 
 std::map<std::string, std::vector<std::string>> Makers::Items::ItemFactory::ContainingItems()

@@ -72,21 +72,14 @@ void Makers::Computables::Image<_image_type>::set_image(Image<_image_type>* imag
 
 #pragma endregion
 
-//@ constructor
+//@ constructor with buffer flag
 template<typename _image_type>
-Makers::Computables::Image<_image_type>::Image() :
+Makers::Computables::Image<_image_type>::Image(bool is_buffer) :
 	IComputable()
 {
 	instance_type_ = eInstanceType::Image;	// set data type
 	_SetDataType();							// set literal type
 	set_image(nullptr, 0, 0);				// init image
-	is_buffer_ = false;
-}
-
-template<typename _image_type>
-Makers::Computables::Image<_image_type>::Image(bool is_buffer) :
-	Image()
-{
 	is_buffer_ = is_buffer;
 }
 
@@ -132,9 +125,22 @@ bool Makers::Computables::Image<_image_type>::CanAttachInto(IComputable * comput
 	return !is_buffer_;
 }
 
-//@ to string
+//@ To string
 template<typename _image_type>
 std::string Makers::Computables::Image<_image_type>::ToString()
 {
 	return "<class Image<" + DataType() + ">> " + std::to_string(width_) + ", " + std::to_string(height_);
+}
+
+//@ To data
+template<typename _image_type>
+std::map<std::string, std::string> Makers::Computables::Image<_image_type>::ToData()
+{
+	auto data = IComputable::ToData();
+
+	data["IsBuffer"] = std::to_string(is_buffer_);
+	// No Width
+	// No Height
+
+	return data;
 }

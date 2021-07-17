@@ -1,8 +1,10 @@
 #pragma once
 
 #include "../IMapableData.h"
+#include "../IRunAble.h"
 #include <vector>
 
+namespace nXSDK { class Surf; }
 namespace Makers
 {
 	namespace Computables { template <typename _image_type>class Image; }
@@ -17,32 +19,28 @@ namespace Makers
 		//@ Contain items and memory pool
 		//@ Inherit <IMapableData>
 		class __declspec(dllexport) Document :
-			public IMapableData
+			public IMapableData,
+			public IRunAble
 		{
 			friend class Makers::Items::ItemFactory;
 
 			// TODO : input images
-			
-			
-			//@ stream image red
-			//Makers::Computables::Image<unsigned char>* stream_image_red_;
-			//@ stream image green
-			//Makers::Computables::Image<unsigned char>* stream_image_green_;
-			//@ stream image blue
-			//Makers::Computables::Image<unsigned char>* stream_image_blue_;
+		protected:
+			//@ surf
+			nXSDK::Surf* surf_;
+
+		public:
+			//@ get surf
+			nXSDK::Surf& surf() const;
 
 #pragma region members
 		private:
 			//@ memory pool
 			MemoryPools::ArrayMemoryPool* memory_pool_;
-			//@ stream image float
-			Makers::Computables::Image<float>* stream_image_;
 			//@ unique id 
 			std::string id_;
 			//@ item collection
 			std::vector<Items::ItemBase*> items_;
-			//@ last computed time
-			long long last_computed_time_;
 
 		public:
 			//@ title
@@ -50,7 +48,6 @@ namespace Makers
 
 #pragma endregion
 #pragma region Getters
-
 		public:
 			//@ get id
 			std::string id() const;
@@ -58,25 +55,12 @@ namespace Makers
 			std::string title() const;
 			//@ get memory pool
 			MemoryPools::ArrayMemoryPool* memory_pool() const;
-			//@ get stream image
-			Makers::Computables::Image<float>* stream_image() const;
-			//@ stream image width
-			unsigned long width() const;
-			//@ stream image height
-			unsigned long height() const;
-			//@ last computed time
-			long long last_computed_time() const;
 #pragma endregion
 
 #pragma region Setters
-
 		public:
 			//@ set title
 			void set_title(std::string title);
-			//@ set stream image
-			void set_stream_image(Makers::Computables::Image<float>* stream_image);
-			//@ set stream image
-			void set_stream_image(float* image, unsigned long width, unsigned long height);
 
 #pragma endregion
 #pragma region Constructors & Destructors
@@ -84,8 +68,10 @@ namespace Makers
 		public:
 			//@ constructor
 			Document();
+			//@ deprecated
 			//@ constructor with id
 			Document(std::string id);
+			//@ deprecated
 			//@ constructor with id and items
 			Document(std::string id, std::vector<Items::ItemBase*> items);
 			//@ destructor
@@ -119,20 +105,25 @@ namespace Makers
 #pragma endregion
 
 		public:
-
 			// TODO : memory initialized
 			//@ initialize memory pool
 			//@ 
 			void InitMemoryPool();
-
-		public:
-
 			//@ runable
-			bool RunAsync(
-				std::vector<Items::ItemBase*> items = std::vector<Items::ItemBase*>(),	// default size 0
-				Makers::Computables::Image<float>* stream = nullptr // default nullptr
+			bool Run_Async(
+				std::vector<Items::ItemBase*> items = std::vector<Items::ItemBase*>()	// default size 0
 			);
 
+			// implement <IRunAble>
+		public:
+			//@ !deprecated
+			//@ runable method
+			bool Run(
+				Document* document = nullptr, 
+				Items::ItemBase* sender = nullptr, 
+				long long timestampe = 0) override;
+
+		public:
 			//@ to data -> IMapableData override 
 			std::map<std::string, std::string> ToData() override;
 		};

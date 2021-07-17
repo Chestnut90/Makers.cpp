@@ -10,19 +10,19 @@ std::string Makers::Computables::Enum::name() const
 //@ get selected index
 int Makers::Computables::Enum::selected_index() const
 {
-	return 0;
+	return selected_index_;
 }
 
 //@ get selected string
 std::string Makers::Computables::Enum::selected_value() const
 {
-	return std::string();
+	return enumerations_.at(selected_index());
 }
 
 //@ get all enumeration list
 std::vector<std::string> Makers::Computables::Enum::enumeration() const
 {
-	return std::vector<std::string>();
+	return enumerations_;
 }
 
 //@ set selected index
@@ -37,17 +37,26 @@ void Makers::Computables::Enum::set_selected_index(int index)
 	selected_index_ = index;
 }
 
-//@ contructor with enumeration
-Makers::Computables::Enum::Enum(std::vector<std::string> enumeration) :
+//@ default constructor
+Makers::Computables::Enum::Enum() :
 	IComputable()
 {
 	instance_type_ = eInstanceType::Enum;
 	data_type_ = eDataType::String;
-	enumerations_ = enumeration;
+	enumerations_.resize(0);
+	selected_index_ = -1;
 	name_ = "";
 }
 
-//@ contructor with name
+//@ contructor with enumeration
+Makers::Computables::Enum::Enum(std::vector<std::string> enumeration) :
+	Enum()
+{
+	enumerations_ = enumeration;
+	selected_index_ = 0;
+}
+
+//@ contructor with name and enumeration
 Makers::Computables::Enum::Enum(
 	std::string name, 
 	std::vector<std::string> enumeration) :
@@ -78,4 +87,17 @@ bool Makers::Computables::Enum::CanAttachInto(IComputable * computable)
 std::string Makers::Computables::Enum::ToString()
 {
 	return "<class Enum> " + name() + ", "+ enumerations_.at(selected_index_);
+}
+
+//@ To data
+std::map<std::string, std::string> Makers::Computables::Enum::ToData()
+{
+	auto data = IComputable::ToData();
+
+	// selected index to string
+	data["SelectedIndex"] = std::to_string(selected_index_);
+	// selected value
+	data["SelectedValue"] = selected_value();
+
+	return data;
 }

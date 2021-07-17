@@ -11,7 +11,6 @@
 #include "../Makers.Pure/Include/Computables/Image.h"
 
 #include "../Makers.Pure/Include/Items/Samples/FloatThresholdingItem.h"
-#include "../Makers.Pure/Include/Items/Images/StreamImageItem.h"
 #include "../Makers.Pure/Include/Items/Samples/SampleItem0.h"
 
 using namespace Makers::Items::Samples;
@@ -98,7 +97,7 @@ namespace Test
 			doc->AddItem(*item);
 
 			// run
-			doc->RunAsync();
+			doc->Run_Async();
 
 			doc->RemoveItem(*item);
 

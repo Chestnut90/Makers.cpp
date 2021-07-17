@@ -15,10 +15,19 @@
 // computables - image
 #include "../Computables/IComputable.h"
 #include "../Computables/Image.h"
+
+// surf interface
+#include "../nxSurfs/Surf.h"
+
 // id
 #include "../../Utils/UniqueIDs/GUIDGen.h"
 
 #pragma region getters
+
+nXSDK::Surf & Makers::Documents::Document::surf() const
+{
+	return *surf_;
+}
 
 //@ id getter
 std::string Makers::Documents::Document::id() const
@@ -38,29 +47,6 @@ Makers::MemoryPools::ArrayMemoryPool * Makers::Documents::Document::memory_pool(
 	return memory_pool_;
 }
 
-//@ get stream image
-Makers::Computables::Image<float>* Makers::Documents::Document::stream_image() const
-{
-	return stream_image_;
-}
-
-//@ get width of stream image
-unsigned long Makers::Documents::Document::width() const
-{
-	return stream_image_->width();
-}
-
-//@ get height of stream image
-unsigned long Makers::Documents::Document::height() const
-{
-	return stream_image_->height();
-}
-
-long long Makers::Documents::Document::last_computed_time() const
-{
-	return last_computed_time_;
-}
-
 #pragma endregion
 #pragma region setters
 
@@ -70,30 +56,16 @@ void Makers::Documents::Document::set_title(std::string title)
 	title_ = title;
 }
 
-//@ set stream image
-void Makers::Documents::Document::set_stream_image(Makers::Computables::Image<float>* stream_image)
-{
-	stream_image_->set_image(stream_image);
-	memory_pool_->AllocateMemory(stream_image->width(), stream_image->height());
-}
-
-//@ set stream image
-void Makers::Documents::Document::set_stream_image(float* image, unsigned long width, unsigned long height)
-{
-	stream_image_->set_image(image, width, height);
-	InitMemoryPool();
-	//memory_pool_->AllocateMemory(width, height);
-}
-
 #pragma endregion
 #pragma region ctors
 
 //@ constructor
 Makers::Documents::Document::Document() :
-	IMapableData()
+	IMapableData(),
+	IRunAble()
 {
 	memory_pool_ = nullptr;// = new MemoryPools::ArrayMemoryPool();
-	stream_image_ = new Makers::Computables::Image<float>();
+	surf_ = new nXSDK::Surf();	// init surf
 	id_ = Utils::IDGenerators::GUIDGen().Generate();
 	title_ = "";
 }
@@ -123,12 +95,12 @@ Makers::Documents::Document::Document(
 Makers::Documents::Document::~Document()
 {
 	if (memory_pool_ != nullptr) { delete memory_pool_; }
-	delete stream_image_;
+	delete surf_;
 	ClearItems();
 }
 
 #pragma endregion
-
+#pragma region item collection methods
 //@ items count
 int Makers::Documents::Document::Count()
 {
@@ -257,50 +229,52 @@ void Makers::Documents::Document::ClearItems()
 	items_.resize(0);
 }
 
+#pragma endregion
+
 //@ Init memory pool
 void Makers::Documents::Document::InitMemoryPool()
 {
-	if (memory_pool_ == nullptr)
-	{
-		memory_pool_ = new Makers::MemoryPools::ArrayMemoryPool();
-	}
+	// init memory pool
+	if (memory_pool_ == nullptr) { memory_pool_ = new Makers::MemoryPools::ArrayMemoryPool(); }
 
+	// aggregate buffer counts
 	int buffer_counts = 0;
 	std::for_each(items_.begin(), items_.end(), [&buffer_counts](Makers::Items::ItemBase* item)
 	{
 		buffer_counts += item->buffer_count();
 	});
 
-	// init memory_pool
-	auto width = stream_image_->width();
-	auto height = stream_image_->height();
+	auto width = surf_->width();
+	auto height = surf_->height();
+	
+	// allocate memory pool
 	memory_pool_->AllocateMemory(width, height, buffer_counts);
 }
 
 //@ runable
-bool Makers::Documents::Document::RunAsync(
-	std::vector<Items::ItemBase*> items, 
-	Makers::Computables::Image<float>* stream)
+bool Makers::Documents::Document::Run_Async(
+	std::vector<Items::ItemBase*> items)
 {
-	// set last computed time
-	last_computed_time_ = std::chrono::high_resolution_clock::now().time_since_epoch().count();
-	
-	// copy stream into document
-	if (stream != nullptr) { stream_image_->set_image(stream); }
-	
+	// reset IRunAble state
+	ResetState();
+
 	// init memory pool
 	if (memory_pool_ == nullptr) { InitMemoryPool(); }	
 
 	// find end items
 	if (items.size() == 0) { items = FindRootItems(); }			
 
+	// set current time
+	auto current_time = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+
+	// run items with async
 	std::vector<std::future<bool>> futures;
 	std::for_each(items.begin(), items.end(),
-		[this, &futures, stream](Items::ItemBase* item)
+		[this, &futures, current_time](Items::ItemBase* item)
 	{
 		auto future = std::async(std::launch::async, 
 			&Items::ItemBase::Run, item,	// func and instance
-			this, nullptr, 0				// arguments
+			this, nullptr, current_time				// arguments
 		);
 		futures.push_back(std::move(future));
 	});
@@ -309,7 +283,18 @@ bool Makers::Documents::Document::RunAsync(
 	std::vector<bool> results;
 	for (auto &future : futures) { results.push_back(future.get()); }
 
+	// set last computed time
+	last_computed_time_ = std::chrono::high_resolution_clock::now().time_since_epoch().count();
+
 	return std::all_of(results.begin(), results.end(), [](const bool res) { return res; });
+}
+
+//@ !deprecated
+//@ runable method
+bool Makers::Documents::Document::Run(Document * document, Items::ItemBase * sender, long long timestampe)
+{
+	// not use
+	return false;
 }
 
 //@ to data

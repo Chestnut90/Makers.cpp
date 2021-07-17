@@ -24,6 +24,10 @@
 #include "Test_Thresholdings.h"		//@ serial test
 #include "Test_Documents.h"			//@ test document and stream
 #include "Test_Instances.h"			//@ test for memory release and removing
+
+//@ Surf
+#include "Surf_IO.h"
+
 void serial_document_compare()
 {
 	// create image
@@ -115,6 +119,8 @@ int main()
 
 	//Test::Instances::Test_FreeItemsInDocument();
 	//AsyncException::GoToBedAsync_Exception();
+
+	//Test::Surf::Load_Surf();
 
 	_CrtDumpMemoryLeaks();
 	//_CrtSetBreakAlloc(2239);

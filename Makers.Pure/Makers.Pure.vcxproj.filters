@@ -46,8 +46,11 @@
     <Filter Include="Utils\Rects">
       <UniqueIdentifier>{e12d9b1f-fab6-4496-ade4-f28588648dfc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Include\Items\ItemFactoryDefines">
-      <UniqueIdentifier>{c4ee9de5-4465-4cbc-8255-e625503a6f5b}</UniqueIdentifier>
+    <Filter Include="Include\nxSurfs">
+      <UniqueIdentifier>{092295dc-2507-4197-ad33-3c3334c8ba20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Items\Streams">
+      <UniqueIdentifier>{f1ee33fd-5c42-4edb-bd74-01a38ae4a0a8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -111,9 +114,6 @@
     <ClInclude Include="Utils\UniqueIDs\GUIDGen.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Items\Images\StreamImageItem.h">
-      <Filter>Include\Items\Images</Filter>
-    </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>default_runs</Filter>
     </ClInclude>
@@ -153,14 +153,29 @@
     <ClInclude Include="Include\Items\ROIs\ROIItem.h">
       <Filter>Include\Items\ROIs</Filter>
     </ClInclude>
-    <ClInclude Include="Include\Items\Images\ZmapItem.h">
-      <Filter>Include\Items\Images</Filter>
-    </ClInclude>
     <ClInclude Include="Include\Properties\IQueryAbleProperty.h">
       <Filter>Include\Properties</Filter>
     </ClInclude>
     <ClInclude Include="Include\Computables\Enum.h">
       <Filter>Include\Computables</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nxSurfs\Surf.h">
+      <Filter>Include\nxSurfs</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nxSurfs\SurfIOException.h">
+      <Filter>Include\nxSurfs</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Items\Streams\StreamGrayItem.h">
+      <Filter>Include\Items\Streams</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Items\Streams\StreamRGBItem.h">
+      <Filter>Include\Items\Streams</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Items\Streams\StreamZmapItem.h">
+      <Filter>Include\Items\Streams</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\Items\ItemException.h">
+      <Filter>Include\Items</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -207,9 +222,6 @@
       <Filter>Include\Items\Images</Filter>
     </ClCompile>
     <ClCompile Include="Include\Items\Images\NoiseFilterItem.cpp">
-      <Filter>Include\Items\Images</Filter>
-    </ClCompile>
-    <ClCompile Include="Include\Items\Images\StreamImageItem.cpp">
       <Filter>Include\Items\Images</Filter>
     </ClCompile>
     <ClCompile Include="Include\Items\Numericals\BlobItem.cpp">
@@ -263,35 +275,50 @@
     <ClCompile Include="Include\Items\ROIs\ROIItem.cpp">
       <Filter>Include\Items\ROIs</Filter>
     </ClCompile>
-    <ClCompile Include="Include\Items\Images\ZmapItem.cpp">
-      <Filter>Include\Items\Images</Filter>
-    </ClCompile>
     <ClCompile Include="Include\Properties\IQueryAbleProperty.cpp">
       <Filter>Include\Properties</Filter>
     </ClCompile>
-    <ClCompile Include="Include\Items\ItemFactoryDefines\ItemFactory.Def.Criterias.cpp">
-      <Filter>Include\Items\ItemFactoryDefines</Filter>
-    </ClCompile>
-    <ClCompile Include="Include\Items\ItemFactoryDefines\ItemFactory.Def.Images.cpp">
-      <Filter>Include\Items\ItemFactoryDefines</Filter>
-    </ClCompile>
-    <ClCompile Include="Include\Items\ItemFactoryDefines\ItemFactory.Def.InspInfos.cpp">
-      <Filter>Include\Items\ItemFactoryDefines</Filter>
-    </ClCompile>
-    <ClCompile Include="Include\Items\ItemFactoryDefines\ItemFactory.Def.Numericals.cpp">
-      <Filter>Include\Items\ItemFactoryDefines</Filter>
-    </ClCompile>
-    <ClCompile Include="Include\Items\ItemFactoryDefines\ItemFactory.Def.ROIs.cpp">
-      <Filter>Include\Items\ItemFactoryDefines</Filter>
-    </ClCompile>
-    <ClCompile Include="Include\Items\ItemFactoryDefines\ItemFactory.Def.Samples.cpp">
-      <Filter>Include\Items\ItemFactoryDefines</Filter>
-    </ClCompile>
-    <ClCompile Include="Include\Items\ItemFactoryDefines\ItemFactory.Def.Symbols.cpp">
-      <Filter>Include\Items\ItemFactoryDefines</Filter>
-    </ClCompile>
     <ClCompile Include="Include\Computables\Enum.cpp">
       <Filter>Include\Computables</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\nxSurfs\Surf.cpp">
+      <Filter>Include\nxSurfs</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\nxSurfs\SurfIOException.cpp">
+      <Filter>Include\nxSurfs</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\Streams\StreamGrayItem.cpp">
+      <Filter>Include\Items\Streams</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\Streams\StreamRGBItem.cpp">
+      <Filter>Include\Items\Streams</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\Streams\StreamZmapItem.cpp">
+      <Filter>Include\Items\Streams</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\ItemException.cpp">
+      <Filter>Include\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\Streams\ItemFactory.Streams.cpp">
+      <Filter>Include\Items\Streams</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\Criterias\ItemFactory.Criterias.cpp">
+      <Filter>Include\Items\Criterias</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\Images\ItemFactory.Images.cpp">
+      <Filter>Include\Items\Images</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\InspInfos\ItemFactory.InspInfos.cpp">
+      <Filter>Include\Items\InspInfos</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\Numericals\ItemFactory.Numericals.cpp">
+      <Filter>Include\Items\Numericals</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\ROIs\ItemFactory.ROIs.cpp">
+      <Filter>Include\Items\ROIs</Filter>
+    </ClCompile>
+    <ClCompile Include="Include\Items\Symbols\ItemFactory.Symbols.cpp">
+      <Filter>Include\Items\Symbols</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

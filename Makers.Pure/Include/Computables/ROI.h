@@ -39,7 +39,8 @@ namespace Makers
 			void set_roi(long, long, long, long);
 
 		public:
-			//@ constructor with 0
+			//@ constructor 
+			//@ default, init with 0
 			ROI();
 			//@ constructor
 			//@ left - top - right - bottom
@@ -47,11 +48,17 @@ namespace Makers
 			//@ destructor
 			virtual ~ROI();
 		
+			// implement <IComputable> abstract functions
 		public:
 			//@ Can attach input to this
 			bool CanAttachInto(IComputable* computable) override;
-			//@ To String
+			//@ To string
 			std::string ToString() override;
+
+			// override virtual functions <IMapableData>
+		public:
+			//@ To data
+			std::map<std::string, std::string> ToData() override;
 		};
 	}
 }
